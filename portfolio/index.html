@@ -1,0 +1,63 @@
+﻿<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- ==========================================================
+         ЗАГОЛОВОК И ОПИСАНИЕ ДЛЯ ПОИСКОВИКОВ
+         Это то, что видно в результатах поиска Google и Яндекса,
+         и в превью ссылки, когда её кидают в мессенджер.
+         Меняйте текст прямо здесь.
+         ========================================================== -->
+    <title>Лиза Иванова — продуктовый дизайнер</title>
+    <meta
+      name="description"
+      content="Портфолио продуктового дизайнера. Проектирую цифровые продукты для e-commerce — от исследования и гипотез до готового интерфейса."
+    />
+
+    <!-- Превью ссылки в Telegram, ВКонтакте и других соцсетях -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Лиза Иванова — продуктовый дизайнер" />
+    <meta
+      property="og:description"
+      content="Портфолио продуктового дизайнера: кейсы по e-commerce и wellness."
+    />
+    <!-- Картинка превью.
+
+         ВАЖНО, когда сайт окажется на домене: Telegram и ВКонтакте
+         понимают только полный адрес. Впишите сюда адрес с доменом,
+         например https://ваш-домен.ru/images/me.webp — иначе в
+         превью ссылки картинки не будет.
+         Свою картинку можно положить в папку public/. -->
+    <meta property="og:image" content="/images/me.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Цвет адресной строки на телефоне -->
+    <meta name="theme-color" content="#f8f6f3" />
+
+    <!-- ==========================================================
+         ДАННЫЕ ДЛЯ ПОИСКОВИКОВ В МАШИННОМ ВИДЕ
+         Помогает Google понять, что это портфолио человека.
+         ========================================================== -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Лиза Иванова",
+        "jobTitle": "Продуктовый дизайнер",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Самара",
+          "addressCountry": "RU"
+        },
+        "sameAs": ["https://t.me/xdovee"]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

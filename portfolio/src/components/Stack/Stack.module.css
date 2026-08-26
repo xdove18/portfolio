@@ -1,0 +1,92 @@
+/* ============================================================
+   СТИЛИ РАЗДЕЛА «СТЕК»
+   ============================================================ */
+
+.stack {
+  background: var(--bg-white);
+  border-radius: 40px;
+  margin-inline: var(--pad-side);
+  margin-top: 24px;
+}
+
+.title {
+  font-size: var(--fs-h2);
+  margin-bottom: 44px;
+}
+
+/* Сетка плиток.
+   auto-fit + minmax = браузер сам решает, сколько колонок влезет:
+   3 на компьютере, 2 на планшете, 1 на телефоне.
+   Отдельные правила под каждый экран не нужны. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* ---------- ПЛИТКА ---------- */
+.tile {
+  padding: 26px 24px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: background var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.tile:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.04);
+  box-shadow: var(--shadow-md);
+}
+
+.icon {
+  display: block;
+  color: var(--text-muted);   /* обычное состояние — серая иконка */
+  margin-bottom: 18px;
+  transition: color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+/* При наведении иконка чернеет и слегка подрастает */
+.tile:hover .icon {
+  color: var(--text-strong);
+  transform: scale(1.08);
+}
+
+.name {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.desc {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  transition: color var(--t-fast) var(--ease);
+}
+
+.tile:hover .desc {
+  color: var(--text-strong);
+}
+
+@media (max-width: 900px) {
+  .stack {
+    border-radius: 28px;
+    margin-inline: 12px;
+  }
+
+  .grid {
+    /* На телефоне плитки уже — иначе одна колонка появлялась бы
+       слишком рано и список получался бы очень длинным */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .tile {
+    padding: 20px 18px;
+  }
+}

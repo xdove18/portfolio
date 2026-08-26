@@ -1,0 +1,247 @@
+/* ============================================================
+   СТИЛИ ГЛАВНОГО ЭКРАНА
+   ============================================================ */
+
+.hero {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  padding-block: 60px 180px;  /* снизу больше — там лежат цветки */
+  overflow: hidden;           /* цветки не вылезают за края экрана */
+}
+
+.inner {
+  position: relative;
+  z-index: 2;                 /* текст поверх цветков */
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: var(--pad-side);
+}
+
+/* Строка «Лиза Иванова · Самара · 23» */
+.eyebrow {
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+/* ---------- ЗАГОЛОВОК ---------- */
+.title {
+  font-size: var(--fs-hero);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  margin-bottom: 28px;
+}
+
+/* Каждое слово — отдельной строкой, как на макете */
+.titleLine {
+  display: block;
+}
+
+/* ============================================================
+   ЦВЕТОК, РАСТУЩИЙ ИЗ БУКВЫ
+   ============================================================
+   Буква становится «домиком» для цветка: внутри неё лежат
+   сам цветок и стебелёк, а буква рисуется поверх них.
+   ============================================================ */
+.letterHost {
+  position: relative;
+  display: inline-block;
+}
+
+/* Буква поверх цветка */
+.letterChar {
+  position: relative;
+  z-index: 2;
+}
+
+/* Цветок за буквой. Размер задан в em — значит он
+   подстраивается под размер шрифта заголовка сам,
+   и на телефоне уменьшается вместе с текстом.
+
+   ВАЖНО: этот слой только ставит цветок на место, а вращает
+   его вложенный слой. Если повесить вращение сюда же,
+   анимация затрёт центрирование и цветок уедет вбок. */
+.letterFlower {
+  position: absolute;
+  /* z-index: -1 уводит цветок за ВЕСЬ текст заголовка,
+     а не только за свою букву. Иначе он накрывал соседние
+     буквы, потому что они рисуются без своего слоя. */
+  z-index: -1;
+  left: 50%;
+
+  /* 62.5% — это оптический центр самой буквы «о», а не центр
+     строки. Разница есть потому, что строчная буква занимает
+     только нижнюю часть строки: сверху остаётся место под
+     заглавные и выносные элементы.
+
+     Замерено для этого шрифта и высоты строки 0.92:
+     глиф занимает 30–90px внутри строки высотой 96px,
+     значит его середина приходится на 60px, то есть 62.5%.
+     Если поменяете шрифт или line-height у .title —
+     значение нужно будет пересчитать. */
+  top: 62.5%;
+
+  /* 1.7em — цветок заметно крупнее буквы, но не наезжает
+     на строку с именем над заголовком */
+  width: 1.7em;
+  height: 1.7em;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Вложенный слой — только вращение */
+.letterFlowerSpin {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: spin 14s linear infinite;
+}
+
+/* Цветок нарисован фиксированного размера, поэтому вписываем
+   его в отведённое место */
+.letterFlowerSpin svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Стебелька здесь намеренно нет: тонкая линия, торчащая
+   из-под буквы вниз, читалась как подтёк, а не как стебель. */
+
+.subtitle {
+  max-width: 520px;
+  font-size: 1.0625rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* ---------- КНОПКА РЕЗЮМЕ ---------- */
+.resume {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+  padding: 14px 34px;
+  min-height: 48px;
+  background: var(--accent);
+  color: var(--text-strong);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  transition: transform var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.resume:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------- СЛОЙ С ЦВЕТКАМИ ---------- */
+.flowers {
+  position: absolute;
+  inset: 0;      /* растянуть на весь блок: top/right/bottom/left = 0 */
+  z-index: 1;
+}
+
+.flowerWrap {
+  position: absolute;
+  /* Плавный возврат на место после перетаскивания */
+  transition: transform var(--t-mid) var(--ease);
+  /* touch-action: none нужен, чтобы на планшете перетаскивание
+     не конфликтовало с прокруткой страницы */
+  touch-action: none;
+}
+
+.flowerDraggable {
+  cursor: grab;
+}
+
+.flowerDraggable:hover .flowerSpin {
+  /* Чуть крупнее и ярче при наведении */
+  filter: brightness(1.12);
+  scale: 1.1;
+}
+
+/* Пока цветок держат мышью — возврат отключён,
+   иначе он «убегал» бы от курсора */
+.flowerDragging {
+  transition: none;
+  cursor: grabbing;
+  z-index: 3;
+}
+
+/* ---------- ДВА СЛОЯ ДВИЖЕНИЯ ----------
+   flowerFloat — покачивание вверх-вниз, обычная CSS-анимация
+   flowerSpin  — вращение и отклонение «по ветру»
+
+   У flowerSpin намеренно НЕТ CSS-анимации: поворот задаётся
+   из кода, кадр за кадром. Раньше здесь стояла анимация
+   с меняющейся длительностью, и при прокрутке цветы дёргались,
+   потому что браузер пересчитывал положение внутри анимации.  */
+
+.flowerFloat {
+  animation: floatY 5.5s ease-in-out infinite alternate;
+}
+
+.flowerSpin {
+  /* will-change подсказывает браузеру, что этот элемент будет
+     постоянно двигаться — он готовит для него отдельный слой */
+  will-change: transform;
+  transition: scale var(--t-fast) var(--ease),
+    filter var(--t-fast) var(--ease);
+}
+
+/* Медленное покачивание вверх-вниз */
+@keyframes floatY {
+  from {
+    transform: translateY(-10px);
+  }
+  to {
+    transform: translateY(10px);
+  }
+}
+
+/* Вращение вокруг своей оси.
+   ВАЖНО: этот блок обязан лежать именно в этом файле.
+   Файлы с окончанием .module.css переименовывают имена
+   анимаций под себя, поэтому обратиться к общему spin
+   из styles/animations.css отсюда нельзя — анимация просто
+   не запустится. Поэтому в каждом таком файле свой spin. */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   ТЕЛЕФОН
+   ============================================================ */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 88vh;
+    padding-block: 40px 200px;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  /* Кнопка на всю ширину — так удобнее попадать пальцем */
+  .resume {
+    width: 100%;
+  }
+
+  /* Цветки помельче, чтобы не загораживали текст */
+  .flowerWrap {
+    scale: 0.62;
+  }
+}

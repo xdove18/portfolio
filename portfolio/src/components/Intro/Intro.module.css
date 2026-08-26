@@ -1,0 +1,233 @@
+﻿/* ============================================================
+   СТИЛИ ЗАСТАВКИ
+   ============================================================ */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  /* Тот же фон, что и у сайта — переход получается незаметным */
+  background: var(--bg);
+  transition: opacity 280ms var(--ease);
+}
+
+/* Фон растворяется вместе с разлётом цветов */
+.introFading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ============================================================
+   ПОЛЁТ ПЧЁЛКИ
+   ============================================================
+   Полоса в верхней части экрана. Внутри неё по одной и той же
+   кривой движутся пчёлка и чёрточки её следа.
+
+   Кривая приходит из кода как переменная --flight, поэтому
+   задана в одном месте и не может разъехаться.
+   ============================================================ */
+.flightZone {
+  position: absolute;
+  top: 12%;
+  left: 0;
+  right: 0;
+  height: 200px;
+}
+
+/* ---------- ЧЁРТОЧКА СЛЕДА ----------
+   Каждая стоит на своей точке кривой и просто вспыхивает
+   в нужный момент. Вместе они читаются как след самолёта:
+   появляется за пчёлкой и тает с хвоста. */
+.dash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 2.5px;
+  background: var(--text-muted);
+  border-radius: 2px;
+
+  /* Ставим чёрточку на кривую и разворачиваем вдоль неё,
+     чтобы след повторял изгибы полёта */
+  offset-path: var(--flight);
+  offset-distance: var(--d);
+  offset-rotate: auto;
+
+  opacity: 0;
+  animation: dashPuff var(--life) ease-out var(--delay) forwards;
+}
+
+/* Вспыхнула — и растаяла */
+@keyframes dashPuff {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.2);
+  }
+  15% {
+    opacity: 0.7;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1.35);
+  }
+}
+
+/* ---------- САМА ПЧЁЛКА ----------
+   Летит равномерно (linear). Равномерность важна: чёрточки
+   следа рассчитаны в коде исходя из ровной скорости, и при
+   плавном разгоне след отставал бы от пчелы. */
+.bee {
+  position: absolute;
+  top: 0;
+  left: 0;
+  offset-path: var(--flight);
+  offset-rotate: 0deg;      /* пчёлка не кувыркается на поворотах */
+  offset-distance: 0%;
+  opacity: 0;
+  /* Длительность и задержка приходят из кода — см. Intro.jsx */
+  animation: beeFly var(--fly-dur) linear var(--fly-delay) forwards;
+}
+
+@keyframes beeFly {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* Крылья машут. Два крыла — в противофазе, поэтому у них
+   разная задержка. */
+.wing {
+  animation: flap 0.14s ease-in-out infinite alternate;
+}
+
+.wingBack {
+  animation-delay: -0.07s;
+}
+
+.wingFront {
+  animation-delay: 0s;
+}
+
+@keyframes flap {
+  from {
+    transform: rotate(-16deg) scaleY(0.9);
+  }
+  to {
+    transform: rotate(14deg) scaleY(1.1);
+  }
+}
+
+/* ============================================================
+   НАДПИСЬ В ЦЕНТРЕ ЗАСТАВКИ
+   ============================================================ */
+.caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  /* Сдвигаем на половину своей ширины и высоты — так надпись
+     оказывается точно по центру экрана */
+  transform: translate(-50%, -50%) translateY(14px);
+
+  font-size: clamp(1.5rem, 4.5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-strong);
+  white-space: nowrap;
+
+  opacity: 0;
+  transition: opacity 220ms var(--ease), transform 300ms var(--ease);
+}
+
+/* Проявляется, когда цветы уже выросли */
+.captionIn {
+  opacity: 1;
+  transform: translate(-50%, -50%) translateY(0);
+}
+
+/* ============================================================
+   ЦВЕТЫ, РАСТУЩИЕ СНИЗУ
+   ============================================================ */
+.field {
+  position: absolute;
+  inset: 0;
+}
+
+/* Точка роста цветка находится у нижнего края экрана */
+.stem {
+  position: absolute;
+  bottom: -60px;
+  transform: translate(-50%, 0) scale(0.2);
+  transform-origin: 50% 100%;   /* растёт вверх от своего основания */
+  opacity: 0;
+
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 260ms ease-out;
+  transition-delay: var(--grow-delay);
+}
+
+/* Стадия «вырос»: поднялся на свою высоту в полный размер */
+.stemGrown {
+  opacity: 1;
+  transform: translate(-50%, calc(var(--rise) * -1)) scale(1);
+}
+
+/* Стадия «разлёт»: улетает в сторону, крутится и тает */
+.stemScatter {
+  opacity: 0;
+  transform: translate(calc(-50% + var(--x)), var(--y)) rotate(var(--spin))
+    scale(0.35);
+  transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 200ms ease-in;
+  transition-delay: var(--delay);
+}
+
+/* Пока цветок стоит — мягко покачивается, будто на ветру */
+.sway {
+  animation: swayFlower 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes swayFlower {
+  from {
+    rotate: -5deg;
+  }
+  to {
+    rotate: 5deg;
+  }
+}
+
+/* ============================================================
+   ТЕЛЕФОН
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Цветы мельче, чтобы поместились по ширине экрана */
+  .stemGrown {
+    transform: translate(-50%, calc(var(--rise) * -0.55)) scale(0.55);
+  }
+
+  .flightZone {
+    top: 16%;
+    height: 150px;
+  }
+
+  .bee {
+    scale: 0.7;
+  }
+
+  .dash {
+    width: 10px;
+  }
+}

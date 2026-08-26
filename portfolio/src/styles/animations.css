@@ -1,0 +1,107 @@
+/* ============================================================
+   АНИМАЦИИ
+   ============================================================
+   Здесь описано, КАК движутся элементы. Сами элементы
+   подключают анимацию у себя в стилях.
+
+   Чтобы замедлить вращение цветков, найдите класс .spin
+   и увеличьте число секунд: 8s → 15s.
+   ============================================================ */
+
+/* ---------- ВРАЩЕНИЕ (цветки) ---------- */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 8s linear infinite;
+}
+
+/* ---------- ПАДЕНИЕ ЛЕПЕСТКОВ (футер) ----------
+   Лепесток начинается выше экрана, падает вниз,
+   по дороге вращается и покачивается вбок. */
+@keyframes fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift, 40px), 110vh, 0) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ---------- ПЛАВНОЕ ПОЯВЛЕНИЕ ---------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- ПУЛЬСАЦИЯ (карточка «скоро») ---------- */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+/* ---------- ПОКАЧИВАНИЕ (иконка телеграма) ---------- */
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-12deg);
+  }
+  75% {
+    transform: rotate(12deg);
+  }
+}
+
+/* ---------- МИГАНИЕ ЛАМПОЧЕК АВТОМАТА ---------- */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* Готовый класс: элемент плавно выезжает снизу */
+.fade-up {
+  animation: fadeUp var(--t-slow) var(--ease) both;
+}

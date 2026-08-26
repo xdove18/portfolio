@@ -1,0 +1,226 @@
+/* ============================================================
+   СТИЛИ ШАПКИ
+   ============================================================ */
+
+.header {
+  position: sticky;   /* прилипает к верху при прокрутке */
+  top: 0;
+  z-index: 100;       /* поверх остального содержимого */
+  padding: 14px 0;
+  background: rgba(248, 246, 243, 0.75);
+  /* Размытие фона под шапкой — контент мягко просвечивает */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: var(--pad-side);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ---------- ЛОГОТИП ---------- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px 8px 8px;
+  background: var(--bg-white);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--t-fast) var(--ease);
+  flex-shrink: 0;
+}
+
+.logo:hover {
+  transform: translateY(-2px);
+}
+
+.logoMark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  background: var(--black);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.logoName {
+  font-weight: 700;
+  font-size: var(--fs-body);
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+
+/* ---------- НАВИГАЦИЯ ---------- */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--bg-white);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+}
+
+.navLink {
+  position: relative;
+  padding: 6px 16px;
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  border-radius: var(--radius-pill);
+  transition: color var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: var(--text-strong);
+}
+
+/* Активный пункт — заливка акцентным цветом */
+.navLinkActive {
+  color: var(--text-strong);
+  background: var(--accent);
+  font-weight: 600;
+}
+
+/* ---------- ПРАВАЯ ЧАСТЬ ---------- */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px 10px 22px;
+  background: var(--black);
+  color: var(--bg-white);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  transition: transform var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+  white-space: nowrap;
+}
+
+/* При наведении кнопка заливается акцентным цветом,
+   текст становится тёмным */
+.cta:hover {
+  transform: translateY(-2px);
+  background: var(--accent);
+  color: var(--text-strong);
+}
+
+.ctaIcon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: #2aa3e0;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background var(--t-fast) var(--ease);
+}
+
+/* Кружок иконки при наведении становится чёрным,
+   чтобы телеграм-самолётик остался читаемым на акценте */
+.cta:hover .ctaIcon {
+  background: var(--black);
+  animation: wiggle 600ms var(--ease);
+}
+
+/* Бургер прячем на больших экранах */
+.burger {
+  display: none;
+  width: 44px;   /* 44px — минимальный удобный размер для пальца */
+  height: 44px;
+  place-items: center;
+  background: var(--bg-white);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  color: var(--text-strong);
+}
+
+/* ============================================================
+   ПЛАНШЕТ И ТЕЛЕФОН
+   ============================================================ */
+@media (max-width: 900px) {
+  .burger {
+    display: grid;
+  }
+
+  /* Меню превращается в выпадающую панель под шапкой */
+  .nav {
+    position: fixed;
+    top: 74px;
+    left: var(--pad-side);
+    right: var(--pad-side);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 12px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+
+    /* Спрятано: прозрачное, чуть приподнято и не ловит клики */
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    transition: opacity var(--t-fast) var(--ease),
+      transform var(--t-fast) var(--ease);
+  }
+
+  /* Класс navOpen добавляется, когда меню открыто */
+  .navOpen {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .navLink {
+    padding: 14px 18px;
+    font-size: 1rem;
+  }
+
+  /* На телефоне у кнопки прячем текст — остаётся круглая иконка */
+  .cta span:first-child {
+    display: none;
+  }
+
+  .cta {
+    padding: 8px;
+  }
+
+  .logoName {
+    display: none;
+  }
+
+  .logo {
+    padding: 8px;
+  }
+}
+
+/* ============================================================
+   ЛОКАЛЬНЫЕ АНИМАЦИИ ЭТОГО ФАЙЛА
+   ============================================================
+   Эти блоки обязаны лежать именно здесь. Файлы с окончанием
+   .module.css переименовывают имена анимаций под себя, поэтому
+   обратиться к общим анимациям из styles/animations.css отсюда
+   нельзя — анимация просто не запустится.
+   ============================================================ */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-12deg); }
+  75%      { transform: rotate(12deg); }
+}

@@ -1,0 +1,203 @@
+/* ============================================================
+   СТИЛИ ФУТЕРА
+   ============================================================ */
+
+.footer {
+  position: relative;
+  overflow: hidden;                 /* лепестки не вылезают наружу */
+  background: var(--black);
+  color: var(--bg-white);
+  border-radius: 40px 40px 0 0;     /* скруглены только верхние углы */
+  margin-top: 40px;
+  padding-block: 100px 40px;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;                       /* текст поверх лепестков */
+}
+
+.label {
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+/* ---------- КРУПНЫЙ НИК ---------- */
+.nick {
+  display: block;
+  font-size: var(--fs-huge);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--bg-white);
+  transition: color var(--t-fast) var(--ease);
+  /* Ник шире экрана на телефоне — даём ему сжиматься */
+  word-break: break-word;
+}
+
+.nick:hover {
+  color: var(--accent);
+}
+
+/* ---------- КНОПКА ТЕЛЕГРАМА ---------- */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  padding: 15px 30px;
+  min-height: 48px;
+  background: var(--accent);
+  color: var(--text-strong);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.cta:hover {
+  transform: translateY(-3px);
+}
+
+.cta:hover svg {
+  animation: wiggle 600ms var(--ease);
+}
+
+/* ---------- НИЖНЯЯ СТРОКА ---------- */
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 80px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* Имя в подвале — ссылка на главную страницу */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: opacity var(--t-fast) var(--ease);
+}
+
+.brand:hover {
+  opacity: 0.75;
+}
+
+.brandMark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.brandName {
+  display: block;
+  font-weight: 700;
+  font-size: var(--fs-small);
+}
+
+.brandRole {
+  display: block;
+  font-size: var(--fs-tiny);
+  color: var(--text-muted);
+}
+
+.links {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.links a {
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, 0.75);
+  transition: color var(--t-fast) var(--ease);
+}
+
+.links a:hover {
+  color: var(--accent);
+}
+
+.copy {
+  font-size: var(--fs-tiny);
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.copy span {
+  display: block;
+}
+
+/* ============================================================
+   ПАДАЮЩИЕ ЦВЕТЫ
+   ============================================================ */
+
+/* Поле, по которому летают цветы. Занимает весь футер.
+   pointer-events: none — слой полностью прозрачен для мыши,
+   поэтому ссылки и текст под ним нажимаются как обычно.
+   Положение курсора отслеживается на уровне всего окна. */
+.flowerField {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Отдельный цветок. Его положение задаётся из кода
+   через transform — так браузер рисует плавнее всего. */
+.flower {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;   /* подсказка браузеру: элемент будет двигаться */
+  pointer-events: none;     /* цветы не мешают выделять текст и жать ссылки */
+}
+
+/* ============================================================
+   ТЕЛЕФОН
+   ============================================================ */
+@media (max-width: 768px) {
+  .footer {
+    border-radius: 28px 28px 0 0;
+    padding-block: 70px 32px;
+  }
+
+  .bottom {
+    margin-top: 56px;
+    justify-content: flex-start;
+  }
+
+  .copy {
+    text-align: left;
+  }
+
+  .cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   ЛОКАЛЬНЫЕ АНИМАЦИИ ЭТОГО ФАЙЛА
+   ============================================================
+   Эти блоки обязаны лежать именно здесь. Файлы с окончанием
+   .module.css переименовывают имена анимаций под себя, поэтому
+   обратиться к общим анимациям из styles/animations.css отсюда
+   нельзя — анимация просто не запустится.
+   ============================================================ */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-12deg); }
+  75%      { transform: rotate(12deg); }
+}
