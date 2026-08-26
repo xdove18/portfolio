@@ -13,7 +13,14 @@
 #   на гитхабе во вкладке Actions.
 #
 #   Один раз нужно включить публикацию: на гитхабе
-#   Settings → Pages → Source → выбрать GitHub Actions.
+#   Settings -> Pages -> Source -> выбрать GitHub Actions.
+#
+#   ВАЖНО про язык. Русский текст здесь допустим только после
+#   слова name и в комментариях — это подписи для человека.
+#   Все служебные имена (build, deploy, deployment) обязаны
+#   быть латиницей: гитхаб ссылается на них в выражениях
+#   вида ${{ steps.deployment.outputs.page_url }} и русские
+#   буквы там не понимает.
 # ============================================================
 
 name: Сборка и публикация сайта
@@ -37,7 +44,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  сборка:
+  build:
+    name: Собрать сайт
     runs-on: ubuntu-latest
     steps:
       - name: Скачать код
@@ -59,18 +67,22 @@ jobs:
         run: npm run build
         working-directory: portfolio
 
+      - name: Настроить Pages
+        uses: actions/configure-pages@v5
+
       - name: Передать готовый сайт на публикацию
         uses: actions/upload-pages-artifact@v3
         with:
           path: portfolio/dist
 
-  публикация:
-    needs: сборка
+  deploy:
+    name: Опубликовать
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.адрес.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Выложить на GitHub Pages
-        id: адрес
+        id: deployment
         uses: actions/deploy-pages@v4
