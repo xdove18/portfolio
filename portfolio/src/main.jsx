@@ -11,8 +11,14 @@ import "./styles/animations.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* BrowserRouter включает адреса страниц вида /projects/smart-size */}
-    <BrowserRouter>
+    {/* BrowserRouter включает адреса страниц вида /projects/smart-size.
+
+        basename — это начало адреса, общее для всех страниц.
+        Оно нужно, когда сайт лежит не в корне, а во вложенной
+        папке (так работает GitHub Pages). Значение берётся
+        из строки BASE в файле vite.config.js — менять здесь
+        ничего не нужно. */}
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <App />
     </BrowserRouter>
   </StrictMode>

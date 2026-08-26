@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { asset } from "../../utils/asset";
 import { isSlowNetwork } from "../../utils/network";
 import s from "./Projects.module.css";
 
@@ -64,7 +65,7 @@ export default function CoverVideo({ src, className, fallback }) {
           className={`${className || s.coverVideo} ${
             ready ? s.coverVideoReady : ""
           }`}
-          src={visible ? src : undefined}
+          src={visible ? asset(src) : undefined}
           autoPlay={visible}
           loop
           muted

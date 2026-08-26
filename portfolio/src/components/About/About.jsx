@@ -1,4 +1,5 @@
 ﻿import { site } from "../../data/site";
+import { asset } from "../../utils/asset";
 import Flower from "../Flower/Flower";
 import StrengthIcon from "./StrengthIcons";
 import s from "./About.module.css";
@@ -34,7 +35,7 @@ export default function About() {
             <div className={s.photoFrame}>
               <img
                 className={s.photo}
-                src="/images/me.webp"
+                src={asset("/images/me.webp")}
                 alt={`${site.name} — ${site.role}`}
                 loading="lazy"   /* картинка грузится, только когда нужна */
               />

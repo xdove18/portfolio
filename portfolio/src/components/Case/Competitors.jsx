@@ -1,4 +1,5 @@
 ﻿import { useState } from "react";
+import { asset } from "../../utils/asset";
 import RichText from "./RichText";
 import s from "./Case.module.css";
 
@@ -68,7 +69,7 @@ export default function Competitors({ competitors, summary, accent }) {
             {current.logo ? (
               <img
                 className={s.competitorLogoImg}
-                src={current.logo}
+                src={asset(current.logo)}
                 alt=""
                 loading="lazy"
               />
@@ -92,7 +93,7 @@ export default function Competitors({ competitors, summary, accent }) {
           {current.image && (
             <img
               className={s.competitorShot}
-              src={current.image}
+              src={asset(current.image)}
               alt={`Интерфейс ${current.name}`}
               loading="lazy"
               data-cursor="image"

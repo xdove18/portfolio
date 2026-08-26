@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { asset } from "../../utils/asset";
 import { isSlowNetwork } from "../../utils/network";
 import RichText from "./RichText";
 import s from "./Case.module.css";
@@ -236,8 +237,8 @@ function DemoRow({ clips }) {
                   videos.current[i] = el;
                 }}
                 className={s.demoVideo}
-                src={clip.src}
-                poster={clip.poster}
+                src={asset(clip.src)}
+                poster={asset(clip.poster)}
                 /* Целиком скачиваем только то, что играет сейчас,
                    и следующее по очереди. У остальных берём
                    "metadata" — это несколько килобайт служебных

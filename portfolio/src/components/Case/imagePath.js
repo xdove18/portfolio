@@ -13,22 +13,28 @@
 
    Уменьшенные копии делаются автоматически при оптимизации
    картинок, вручную создавать их не нужно.
+
+   Заодно функция подставляет к адресу нужное начало (asset) —
+   без этого картинки не открылись бы на GitHub Pages, где сайт
+   лежит во вложенной папке.
    ============================================================ */
+
+import { asset } from "../../utils/asset";
 
 export function thumb(src) {
   if (!src) return src;
 
   // Видео уменьшать нечем — отдаём как есть
-  if (!/\.(webp|png|jpe?g)$/i.test(src)) return src;
+  if (!/\.(webp|png|jpe?g)$/i.test(src)) return asset(src);
 
   const slash = src.lastIndexOf("/");
-  if (slash === -1) return src;
+  if (slash === -1) return asset(src);
 
   const folder = src.slice(0, slash);
   const file = src.slice(slash + 1);
 
   // Если путь уже ведёт в thumb — ничего не меняем
-  if (folder.endsWith("/thumb")) return src;
+  if (folder.endsWith("/thumb")) return asset(src);
 
-  return `${folder}/thumb/${file}`;
+  return asset(`${folder}/thumb/${file}`);
 }

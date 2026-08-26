@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { asset } from "../../utils/asset";
 import { CloseIcon } from "../icons/Icons";
 import s from "./Case.module.css";
 
@@ -43,7 +44,7 @@ export default function Lightbox({ screens, index, onClose, onChange }) {
         <CloseIcon size={22} color="#fff" />
       </button>
 
-      <img className={s.lightboxImage} src={screens[index]} alt="" />
+      <img className={s.lightboxImage} src={asset(screens[index])} alt="" />
 
       {/* Стрелки показываем, только если экранов больше одного */}
       {screens.length > 1 && (

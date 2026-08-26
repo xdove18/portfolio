@@ -1,0 +1,76 @@
+# ============================================================
+#   АВТОМАТИЧЕСКАЯ СБОРКА И ПУБЛИКАЦИЯ САЙТА
+# ============================================================
+#   Этот файл — инструкция для гитхаба. Каждый раз, когда вы
+#   заливаете изменения в ветку main, гитхаб сам:
+#
+#     1. скачивает код,
+#     2. ставит нужные библиотеки,
+#     3. собирает сайт командой npm run build,
+#     4. выкладывает готовый результат на GitHub Pages.
+#
+#   Вручную запускать ничего не нужно. Ход сборки виден
+#   на гитхабе во вкладке Actions.
+#
+#   Один раз нужно включить публикацию: на гитхабе
+#   Settings → Pages → Source → выбрать GitHub Actions.
+# ============================================================
+
+name: Сборка и публикация сайта
+
+on:
+  # Запускать при каждой заливке в главную ветку
+  push:
+    branches: [main]
+  # И по кнопке во вкладке Actions, если захочется вручную
+  workflow_dispatch:
+
+# Разрешения, без которых гитхаб откажется публиковать
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Если залили два раза подряд — доводим до конца только последнюю сборку
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  сборка:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Скачать код
+        uses: actions/checkout@v4
+
+      - name: Подготовить Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          # Сайт лежит во вложенной папке portfolio
+          cache-dependency-path: portfolio/package-lock.json
+
+      - name: Поставить библиотеки
+        run: npm ci
+        working-directory: portfolio
+
+      - name: Собрать сайт
+        run: npm run build
+        working-directory: portfolio
+
+      - name: Передать готовый сайт на публикацию
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: portfolio/dist
+
+  публикация:
+    needs: сборка
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.адрес.outputs.page_url }}
+    steps:
+      - name: Выложить на GitHub Pages
+        id: адрес
+        uses: actions/deploy-pages@v4
