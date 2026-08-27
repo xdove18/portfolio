@@ -12,8 +12,9 @@
   bottom: calc(22px + env(safe-area-inset-bottom, 0px));
   z-index: 90;   /* ниже шапки (100), выше содержимого */
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   padding: 0;

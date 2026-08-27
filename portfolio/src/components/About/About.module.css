@@ -79,8 +79,9 @@
 
 /* Значок в кружке акцентного цвета */
 .strengthIcon {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 42px;
   height: 42px;
   color: var(--text-strong);

@@ -64,8 +64,9 @@
 }
 
 .logoMark {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 30px;
   height: 30px;
   background: var(--black);
@@ -145,8 +146,9 @@
 }
 
 .ctaIcon {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 28px;
   height: 28px;
   background: #2aa3e0;
@@ -162,16 +164,30 @@
   animation: wiggle 600ms var(--ease);
 }
 
-/* Бургер прячем на больших экранах */
+/* Бургер прячем на больших экранах.
+
+   Значок внутри центрируем через flex с полной записью
+   (align-items + justify-content), а не сокращённой.
+   Сокращённую запись понимают не все браузеры, и там, где
+   не понимают, она молча отбрасывается — значок прижимался
+   к краю кружка. Полная запись работает везде. */
 .burger {
   display: none;
+  align-items: center;
+  justify-content: center;
   width: 44px;   /* 44px — минимальный удобный размер для пальца */
   height: 44px;
-  place-items: center;
+  padding: 0;
   background: var(--bg-white);
   border-radius: 50%;
   box-shadow: var(--shadow-sm);
   color: var(--text-strong);
+}
+
+/* Значок не должен ужиматься или растягиваться внутри кружка */
+.burger svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 /* ============================================================
@@ -179,7 +195,7 @@
    ============================================================ */
 @media (max-width: 900px) {
   .burger {
-    display: grid;
+    display: flex;
   }
 
   /* Меню превращается в выпадающую панель под шапкой.

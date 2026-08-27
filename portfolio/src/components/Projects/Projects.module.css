@@ -46,8 +46,9 @@
 .cover {
   position: relative;
   z-index: 2;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 210px;
   border-radius: var(--radius) var(--radius) 0 0;
   overflow: hidden;
@@ -284,8 +285,9 @@
 .soon {
   position: relative;
   z-index: 1;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 14px;
 }
 

@@ -482,8 +482,9 @@
 }
 
 .competitorLogo {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 42px;
   height: 42px;
   font-weight: 800;
@@ -618,8 +619,9 @@
 /* ---------- КНОПКА-СТРЕЛКА В СТИЛЕ ЛОГОТИПА ---------- */
 .hypoArrow {
   position: relative;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 46px;
   height: 46px;
   color: var(--text-strong);
@@ -869,8 +871,9 @@
 
 /* Стрелка между карточками */
 .flowChevron {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--line);
   flex-shrink: 0;
 }
@@ -928,8 +931,9 @@
 
 /* Крестик, чтобы свернуть схему обратно */
 .canvasClose {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 36px;
   height: 36px;
   flex-shrink: 0;
@@ -1210,8 +1214,9 @@
   position: fixed;
   inset: 0;
   z-index: 2000;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 56px 24px 24px;
   animation: fadeIn var(--t-fast) var(--ease);
 }
@@ -1227,8 +1232,9 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 44px;
   height: 44px;
   background: rgba(255, 255, 255, 0.14);
@@ -1546,8 +1552,9 @@
   position: fixed;
   inset: 0;
   z-index: 2000;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 40px 20px;
   animation: fadeIn var(--t-fast) var(--ease);
 }
@@ -1576,8 +1583,9 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 44px;
   height: 44px;
   background: rgba(255, 255, 255, 0.14);
@@ -1593,8 +1601,9 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   font-size: 1.3rem;
