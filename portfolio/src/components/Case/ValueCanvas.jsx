@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CloseIcon } from "../icons/Icons";
 import ZoomableFigure from "./ZoomableFigure";
 import RichText from "./RichText";
 import s from "./Case.module.css";
@@ -53,13 +54,43 @@ export default function ValueCanvas({ canvas, accent, accentDeep }) {
         style={{ background: accent }}
         onClick={() => setОткрыто(true)}
       >
-        ценностное предложение по Остервальдеру
+        Ценностное предложение по Остервальдеру
+        {/* Стрелка вниз — знак, что блок раскрывается */}
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
       </button>
     );
   }
 
   return (
     <div className={s.canvasWrap}>
+      {/* Заголовок раскрытого блока и кнопка, чтобы свернуть */}
+      <div className={s.canvasHead}>
+        <h3 className={s.canvasTitle}>
+          Ценностное предложение по Остервальдеру
+        </h3>
+
+        <button
+          type="button"
+          className={s.canvasClose}
+          onClick={() => setОткрыто(false)}
+          aria-label="Свернуть ценностное предложение"
+        >
+          <CloseIcon size={18} />
+        </button>
+      </div>
+
       <div className={s.canvasPair}>
         {/* ---------- КАРТА ЦЕННОСТИ (квадрат) ---------- */}
         <ZoomableFigure title="Карта ценности — что делает продукт">

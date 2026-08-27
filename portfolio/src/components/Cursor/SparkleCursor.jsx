@@ -34,6 +34,26 @@ const LABELS = {
   drag: "подвинь меня",
 };
 
+/* ------------------------------------------------------------
+   НАСКОЛЬКО БЫСТРО КУРСОР ДОГОНЯЕТ МЫШЬ
+   ------------------------------------------------------------
+   Число в «разах в секунду». Чем больше, тем резче курсор
+   бросается за мышью; чем меньше, тем ленивее и мягче тянется.
+
+   13  — мягкое, чуть запаздывающее движение (так сейчас)
+   20  — заметно живее
+   40  — почти как обычная стрелка
+
+   Важно: скорость считается от ВРЕМЕНИ, а не от числа кадров.
+   Раньше курсор за каждый кадр проходил пятую часть пути до
+   мыши — и это была ошибка. На обычном мониторе (60 кадров
+   в секунду) движение получалось мягким, а на быстром
+   (120 или 144 кадра) тот же код срабатывал вдвое чаще, и
+   курсор дёргался за мышью вдвое резче. Теперь на любом
+   мониторе он движется одинаково.
+   ------------------------------------------------------------ */
+const СКОРОСТЬ = 13;
+
 export default function SparkleCursor() {
   const dotRef = useRef(null);
 
@@ -59,51 +79,116 @@ export default function SparkleCursor() {
     if (!dot) return;
 
     // Где мышь сейчас и где курсор-искра догоняет её
-    let target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     const current = { ...target };
-    let frameId;
+
+    let frameId = 0;
+    let идётАнимация = false;
+    let прошлоеВремя = 0;
+
+    /* Элемент под мышью, который ещё не проверили.
+       Проверку «над чем мы» делаем не на каждое движение мыши,
+       а один раз за кадр — см. пояснение в tick(). */
+    let элементПодМышью = null;
+
+    // Помним, что уже показали, чтобы не дёргать перерисовку зря
+    let показанРежим = "";
+    let показанаВидимость = false;
 
     function onMouseMove(event) {
-      target = { x: event.clientX, y: event.clientY };
-      setVisible(true);
+      target.x = event.clientX;
+      target.y = event.clientY;
+      элементПодМышью = event.target;
 
-      /* Определяем, над чем находится мышь.
-         closest() поднимается вверх по дереву от элемента под
-         курсором и ищет ближайшего подходящего родителя —
-         поэтому работает и когда мышь над картинкой внутри
-         кнопки. */
-      const el = event.target;
-      const marked = el.closest?.("[data-cursor]");
-
-      if (marked) {
-        setMode(marked.dataset.cursor);
-      } else if (el.closest?.("a, button, [role='button']")) {
-        setMode("link");
-      } else {
-        setMode("");
+      if (!показанаВидимость) {
+        показанаВидимость = true;
+        setVisible(true);
       }
+
+      запустить();
     }
 
-    const onLeave = () => setVisible(false);
-    const onEnter = () => setVisible(true);
-    const onDown = () => setPressed(true);
-    const onUp = () => setPressed(false);
+    /* Определяем, над чем находится мышь.
+       closest() поднимается вверх по дереву от элемента под
+       курсором и ищет ближайшего подходящего родителя —
+       поэтому работает и когда мышь над картинкой внутри
+       кнопки. */
+    function определитьРежим(el) {
+      const marked = el.closest?.("[data-cursor]");
+      if (marked) return marked.dataset.cursor;
+      if (el.closest?.("a, button, [role='button']")) return "link";
+      return "";
+    }
 
-    /* Плавное следование.
-       Каждый кадр курсор сдвигается на пятую часть расстояния
-       до мыши. Получается мягкое «догоняющее» движение вместо
-       резких скачков. Меньше 0.2 — курсор ленивее, больше —
-       ближе к обычной стрелке. */
-    function tick() {
-      current.x += (target.x - current.x) * 0.2;
-      current.y += (target.y - current.y) * 0.2;
+    function tick(время) {
+      /* Сколько секунд прошло с прошлого кадра. Потолок в 0.1
+         нужен на случай, когда вкладка была свёрнута: иначе
+         курсор рванул бы через весь экран одним прыжком. */
+      const шаг = Math.min((время - прошлоеВремя) / 1000, 0.1);
+      прошлоеВремя = время;
+
+      /* Доля пути до мыши, которую проходим за этот кадр.
+         Формула даёт одинаковое движение при любой частоте
+         обновления экрана. */
+      const доля = 1 - Math.exp(-СКОРОСТЬ * шаг);
+
+      current.x += (target.x - current.x) * доля;
+      current.y += (target.y - current.y) * доля;
 
       dot.style.transform = `translate3d(${current.x}px, ${current.y}px, 0) translate(-50%, -50%)`;
+
+      /* Проверку «над чем мы» делаем здесь, раз в кадр.
+         Раньше она шла на каждое движение мыши, а мышь может
+         присылать до тысячи движений в секунду — и на каждое
+         код лазил вверх по всему дереву страницы и дёргал
+         перерисовку. Раз в кадр этого более чем достаточно. */
+      if (элементПодМышью) {
+        const режим = определитьРежим(элементПодМышью);
+        элементПодМышью = null;
+
+        if (режим !== показанРежим) {
+          показанРежим = режим;
+          setMode(режим);
+        }
+      }
+
+      /* Догнали мышь — останавливаем цикл до следующего
+         движения. Пока курсор стоит на месте, браузер вообще
+         ничего не пересчитывает. Раньше цикл крутился без
+         остановки и заставлял перерисовывать курсор даже когда
+         мышь лежала неподвижно. */
+      const далеко =
+        Math.abs(target.x - current.x) > 0.05 ||
+        Math.abs(target.y - current.y) > 0.05;
+
+      if (!далеко) {
+        идётАнимация = false;
+        return;
+      }
 
       frameId = requestAnimationFrame(tick);
     }
 
-    tick();
+    function запустить() {
+      if (идётАнимация) return;
+      идётАнимация = true;
+      прошлоеВремя = performance.now();
+      frameId = requestAnimationFrame(tick);
+    }
+
+    const onLeave = () => {
+      показанаВидимость = false;
+      setVisible(false);
+    };
+    const onEnter = () => {
+      показанаВидимость = true;
+      setVisible(true);
+    };
+    const onDown = () => setPressed(true);
+    const onUp = () => setPressed(false);
+
+    // Ставим курсор на место сразу, не дожидаясь движения мыши
+    dot.style.transform = `translate3d(${current.x}px, ${current.y}px, 0) translate(-50%, -50%)`;
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     document.addEventListener("mouseleave", onLeave);

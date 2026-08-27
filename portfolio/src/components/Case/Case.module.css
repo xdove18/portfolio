@@ -879,8 +879,11 @@
    Сделана как у разбора конкурентов, чтобы на странице
    не появлялось двух разных на вид кнопок. */
 .canvasToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 22px;
-  padding: 12px 24px;
+  padding: 12px 22px;
   min-height: 44px;
   font-size: var(--fs-small);
   font-weight: 700;
@@ -896,6 +899,52 @@
 .canvasToggle:hover {
   transform: translateY(-2px);
   filter: brightness(1.08);
+}
+
+/* Стрелка чуть опускается при наведении — подсказка,
+   что блок раскроется вниз */
+.canvasToggle svg {
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.canvasToggle:hover svg {
+  transform: translateY(2px);
+}
+
+/* ---------- ЗАГОЛОВОК РАСКРЫТОГО БЛОКА ---------- */
+.canvasHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.canvasTitle {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--text-strong);
+}
+
+/* Крестик, чтобы свернуть схему обратно */
+.canvasClose {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  background: var(--bg-white);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease);
+}
+
+.canvasClose:hover {
+  color: var(--text-strong);
+  border-color: var(--text-strong);
 }
 
 /* ============================================================
