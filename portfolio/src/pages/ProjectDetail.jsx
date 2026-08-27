@@ -307,16 +307,11 @@ export default function ProjectDetail() {
                   Стоит перед гипотезами: сначала видно, из чего
                   они выросли, потом сами гипотезы. */}
               {project.valueCanvas && (
-                <>
-                  <h3 className={s.subTitle}>
-                    ценностное предложение по Остервальдеру
-                  </h3>
-                  <ValueCanvas
-                    canvas={project.valueCanvas}
-                    accent={project.color}
-                    accentDeep={project.colorDeep}
-                  />
-                </>
+                <ValueCanvas
+                  canvas={project.valueCanvas}
+                  accent={project.color}
+                  accentDeep={project.colorDeep}
+                />
               )}
 
               <h3 className={s.subTitle}>построение гипотез</h3>

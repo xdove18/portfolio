@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { lockScroll, unlockScroll } from "../../utils/scrollLock";
 import { asset } from "../../utils/asset";
 import { CloseIcon } from "../icons/Icons";
 import s from "./Case.module.css";
@@ -23,11 +24,11 @@ export default function Lightbox({ screens, index, onClose, onChange }) {
 
     window.addEventListener("keydown", onKeyDown);
     // Пока лайтбокс открыт, страница под ним не прокручивается
-    document.body.style.overflow = "hidden";
+    lockScroll();
 
     return () => {
       window.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
+      unlockScroll();
     };
   }, [index, screens.length, onClose, onChange]);
 

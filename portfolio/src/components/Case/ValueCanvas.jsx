@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ZoomableFigure from "./ZoomableFigure";
 import RichText from "./RichText";
 import s from "./Case.module.css";
@@ -36,7 +37,26 @@ import s from "./Case.module.css";
    ============================================================ */
 
 export default function ValueCanvas({ canvas, accent, accentDeep }) {
+  /* Схема разворачивается по кнопке — так же, как разбор
+     конкурентов. Она большая, и показывать её сразу означало
+     бы вывалить на человека стену блоков ещё до гипотез.
+     Кому интересно — нажмёт и посмотрит. */
+  const [открыто, setОткрыто] = useState(false);
+
   if (!canvas) return null;
+
+  if (!открыто) {
+    return (
+      <button
+        type="button"
+        className={s.canvasToggle}
+        style={{ background: accent }}
+        onClick={() => setОткрыто(true)}
+      >
+        ценностное предложение по Остервальдеру
+      </button>
+    );
+  }
 
   return (
     <div className={s.canvasWrap}>

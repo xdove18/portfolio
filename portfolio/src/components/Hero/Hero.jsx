@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { site } from "../../data/site";
+import { asset } from "../../utils/asset";
 import useScrollVelocity from "../../hooks/useScrollVelocity";
 import DraggableFlower from "./DraggableFlower";
 import Flower from "../Flower/Flower";
@@ -112,7 +113,14 @@ export default function Hero() {
             Пусто в site.js — кнопки нет, и никто не наткнётся
             на ссылку в никуда. */}
         {site.resumeUrl && (
-          <a className={s.resume} href={site.resumeUrl} download>
+          <a
+            className={s.resume}
+            href={asset(site.resumeUrl)}
+            /* download подсказывает браузеру сохранить файл,
+               а не открывать его во вкладке. Значение — имя,
+               под которым файл ляжет в «Загрузки». */
+            download={`${site.name} — резюме.pdf`}
+          >
             Скачать резюме
           </a>
         )}

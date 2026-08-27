@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { lockScroll, unlockScroll } from "../../utils/scrollLock";
 import { CloseIcon } from "../icons/Icons";
 import RichText from "./RichText";
 import s from "./Case.module.css";
@@ -31,11 +32,11 @@ export default function ZoomableFigure({ title, note, label, children }) {
     }
 
     window.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = "hidden";
+    lockScroll();
 
     return () => {
       window.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
+      unlockScroll();
     };
   }, [open]);
 

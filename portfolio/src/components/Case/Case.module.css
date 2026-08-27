@@ -694,9 +694,20 @@
 
 .hypothesis {
   display: grid;
-  grid-template-rows: subgrid;
-  grid-row: span 3;
   gap: 14px;
+  align-content: start;
+}
+
+/* Выравнивание частей карточек между соседями.
+   subgrid умеют не все браузеры (в Safari он появился только
+   в 2022 году). Где не умеют — правила внутри пропускаются,
+   и карточки просто будут разной высоты. Всё остальное
+   работает как обычно, ничего не ломается. */
+@supports (grid-template-rows: subgrid) {
+  .hypothesis {
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+  }
 }
 
 .hypothesisNumber {
@@ -775,11 +786,19 @@
    строки одинаковой высоты, поэтому карточки не «прыгают»,
    даже когда часть из них перенеслась на вторую строку. */
 .flow {
+  /* Сброс для списка. Браузер по умолчанию отодвигает
+     содержимое <ol> на 40 пикселей вправо — под номера пунктов.
+     Номера мы рисуем сами внутри карточек, поэтому отступ
+     не нужен: из-за него на телефоне вся лента съезжала
+     вправо и упиралась в край экрана. */
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-auto-rows: 1fr;
   gap: 6px;
-  margin-top: 22px;
 }
 
 .flowItem {
@@ -854,6 +873,29 @@
   place-items: center;
   color: var(--line);
   flex-shrink: 0;
+}
+
+/* Кнопка, по которой разворачивается схема Остервальдера.
+   Сделана как у разбора конкурентов, чтобы на странице
+   не появлялось двух разных на вид кнопок. */
+.canvasToggle {
+  margin-top: 22px;
+  padding: 12px 24px;
+  min-height: 44px;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--bg-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-align: left;
+  transition: transform var(--t-fast) var(--ease),
+    filter var(--t-fast) var(--ease);
+}
+
+.canvasToggle:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
 }
 
 /* ============================================================

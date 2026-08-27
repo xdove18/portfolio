@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ScrollToTop from "./components/ScrollToTop";
 import SparkleCursor from "./components/Cursor/SparkleCursor";
+import BackToTop from "./components/BackToTop/BackToTop";
 
 /* ============================================================
    КОРЕНЬ ПРИЛОЖЕНИЯ
@@ -29,6 +30,10 @@ export default function App() {
 
       {/* При переходе на новую страницу прокручиваем её в начало */}
       <ScrollToTop />
+
+      {/* Кнопка «наверх» в правом нижнем углу. Появляется,
+          когда пролистана половина страницы. */}
+      <BackToTop />
 
       {/* Suspense показывает заглушку, пока страница подгружается */}
       <Suspense fallback={<PageLoader />}>

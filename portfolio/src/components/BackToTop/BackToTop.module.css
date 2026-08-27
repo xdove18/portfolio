@@ -1,0 +1,76 @@
+/* ============================================================
+   СТИЛИ КНОПКИ «НАВЕРХ»
+   ============================================================ */
+
+.button {
+  position: fixed;
+  right: 22px;
+  /* env(safe-area-inset-bottom) — высота полоски-«домика»
+     внизу айфонов без кнопки. Прибавляем её, чтобы кнопка
+     не пряталась под ней. На остальных устройствах это
+     просто ноль. */
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  z-index: 90;   /* ниже шапки (100), выше содержимого */
+
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+
+  color: var(--text-strong);
+  background: var(--bg-white);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+
+  /* Спрятана: прозрачная, чуть опущена и не ловит нажатия */
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.button:hover {
+  background: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* Обводка при переходе клавишей Tab — чтобы кнопкой можно
+   было пользоваться без мыши */
+.button:focus-visible {
+  outline: 2px solid var(--text-strong);
+  outline-offset: 3px;
+}
+
+/* На телефоне кнопка чуть меньше и ближе к краю */
+@media (max-width: 768px) {
+  .button {
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    width: 44px;   /* 44px — минимальный удобный размер для пальца */
+    height: 44px;
+  }
+}
+
+/* Человек отключил анимации в системе — показываем кнопку
+   сразу, без выезда */
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: opacity 1ms linear;
+    transform: none;
+  }
+
+  .visible {
+    transform: none;
+  }
+}

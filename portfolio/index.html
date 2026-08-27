@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <!-- Путь к значку обязательно с косой чертой в начале.
+         Без неё браузер ищет файл рядом с текущей страницей:
+         на кейсе /projects/habits это был бы адрес
+         /projects/favicon.svg — такого файла нет, и значок
+         во вкладке пропадал. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- ==========================================================
          ЗАГОЛОВОК И ОПИСАНИЕ ДЛЯ ПОИСКОВИКОВ
@@ -31,13 +36,12 @@
          Короткий вида /images/me.webp соцсети не понимают,
          и картинка в превью просто не появится.
 
-         Сейчас указан адрес на GitHub Pages. Когда подключите
-         свой домен — замените начало на него, например
-         https://ваш-домен.ru/images/me.webp
+         Сейчас указан ваш домен xdovee.ru. Если домен
+         поменяется — поправьте начало адреса здесь.
          Свою картинку можно положить в папку public/. -->
     <meta
       property="og:image"
-      content="https://xdove18.github.io/portfolio/images/me.webp"
+      content="https://xdovee.ru/images/me.webp"
     />
     <meta name="twitter:card" content="summary_large_image" />
 
