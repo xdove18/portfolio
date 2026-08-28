@@ -618,10 +618,12 @@
 
 /* ---------- КНОПКА-СТРЕЛКА В СТИЛЕ ЛОГОТИПА ---------- */
 .hypoArrow {
-  position: relative;
-  display: flex;
+  /* Сетка из одной клетки: и шеврон, и искра лежат в ней друг
+     на друге и обе по центру. Так они не зависят от способа
+     растягивания — см. пояснение к их размерам ниже. */
+  display: grid;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
   width: 46px;
   height: 46px;
   color: var(--text-strong);
@@ -649,11 +651,21 @@
    а на её месте появляется искра из логотипа и раскручивается.
    Одновременно они не показываются — иначе получается каша. */
 
+/* ВАЖНО про размеры значков внутри кнопки.
+
+   Раньше размер задавался отступами от краёв (inset), а ширина
+   и высота стояли auto. В Chrome такой значок растягивается на
+   всё оставшееся место, а Safari так не умеет: для картинок и
+   значков он берёт их собственный размер и прижимает к углу.
+   Из-за этого на айфоне шеврон вылезал за пределы кружка
+   и стрелки выглядели съехавшими.
+
+   Теперь размер задан прямо, в пикселях, а по центру значок
+   ставит сетка кнопки. Это работает одинаково везде. */
 .hypoArrowChevron {
-  position: absolute;
-  inset: 13px;
-  width: auto;
-  height: auto;
+  grid-area: 1 / 1;
+  width: 20px;
+  height: 20px;
   opacity: 1;
   transform: scale(1);
   transition: opacity var(--t-fast) var(--ease),
@@ -666,8 +678,9 @@
 }
 
 .hypoArrowSpark {
-  position: absolute;
-  inset: 12px;
+  grid-area: 1 / 1;
+  width: 22px;
+  height: 22px;
   fill: var(--text-strong);
   opacity: 0;
   transform: scale(0.6);

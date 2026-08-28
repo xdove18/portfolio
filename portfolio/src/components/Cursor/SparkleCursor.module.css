@@ -15,6 +15,13 @@
   z-index: 9999;
   width: 30px;
   height: 30px;
+
+  /* Сетка из одной клетки: искра, кольцо и надпись лежат в ней
+     друг на друге и все по центру. */
+  display: grid;
+  align-items: center;
+  justify-items: center;
+
   pointer-events: none;   /* курсор не мешает нажимать то, что под ним */
   opacity: 0;
   will-change: transform;
@@ -33,33 +40,39 @@
 }
 
 /* ---------- ИСКРА ----------
-   Размер задаётся только через inset (отступы от краёв курсора).
-   Ширину и высоту здесь указывать НЕЛЬЗЯ: width: 100% перебивает
-   отступы, и вместо того чтобы уменьшиться и встать по центру,
-   искра уезжала вправо вниз. */
+   Размер задаётся прямо, в долях от размера курсора, а по центру
+   искру ставит сетка выше.
+
+   Раньше размер задавался отступами от краёв (inset). В Chrome
+   так можно, а Safari для значков и картинок отступы не
+   растягивает — берёт собственный размер и прижимает к углу.
+   Значок уезжал вбок. Прямой размер понимают все браузеры. */
 .sparkle {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
   fill: #fff;   /* в режиме difference белый и даёт инверсию */
   animation: spin 6s linear infinite;
-  transition: inset 420ms var(--ease), opacity var(--t-fast) var(--ease);
+  transition: width 420ms var(--ease), height 420ms var(--ease),
+    opacity var(--t-fast) var(--ease);
 }
 
 /* ---------- КОЛЬЦО ---------- */
 .ring {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
   border: 1.5px solid #fff;
   border-radius: 50%;
   opacity: 0;   /* по умолчанию спрятано */
-  transition: opacity var(--t-fast) var(--ease),
-    inset 420ms var(--ease);
+  transition: opacity var(--t-fast) var(--ease);
 }
 
 /* ---------- НАДПИСЬ ПО КРУГУ ---------- */
 .label {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   /* Текст едет по кругу против часовой стрелки —
      навстречу вращению искры */
@@ -92,9 +105,12 @@
   opacity: 0.9;
 }
 
-/* Искра внутри кольца становится компактнее */
+/* Искра внутри кольца становится компактнее.
+   33% отступа с каждой стороны оставляли ей 34% ширины —
+   столько и ставим. */
 .overLink .sparkle {
-  inset: 33%;
+  width: 34%;
+  height: 34%;
 }
 
 /* ============================================================
@@ -115,9 +131,10 @@
 }
 
 /* Искра ровно в центре круга и совсем маленькая:
-   отступ 43% с каждой стороны оставляет ей 14% ширины. */
+   14% от ширины курсора. */
 .overImage .sparkle {
-  inset: 43%;
+  width: 14%;
+  height: 14%;
 }
 
 .overImage .label {

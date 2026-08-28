@@ -248,12 +248,34 @@
     padding: 8px;
   }
 
+  /* Имя оставляем видимым и на телефоне: без него в шапке
+     остаётся один значок, и непонятно, чей это сайт.
+     Чтобы имя поместилось, чуть уменьшаем его и сокращаем
+     отступы вокруг. */
   .logoName {
-    display: none;
+    font-size: var(--fs-small);
   }
 
   .logo {
-    padding: 8px;
+    padding: 6px 14px 6px 6px;
+    gap: 8px;
+  }
+
+  .logoMark {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* Логотипу разрешаем сжиматься, если места совсем мало,
+     а кнопкам справа — нет: они и так минимального размера */
+  .logo {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .logoName {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

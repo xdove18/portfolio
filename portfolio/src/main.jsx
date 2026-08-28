@@ -4,7 +4,9 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 
 // Порядок подключения стилей важен:
-// сначала переменные (цвета и размеры), потом всё остальное.
+// сначала шрифт, потом переменные (цвета и размеры),
+// потом всё остальное.
+import "./styles/fonts.css";
 import "./styles/variables.css";
 import "./styles/globals.css";
 import "./styles/animations.css";
