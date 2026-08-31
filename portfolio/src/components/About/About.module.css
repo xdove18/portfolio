@@ -16,6 +16,15 @@
   align-items: start;
 }
 
+/* Разрешаем колонкам сжиматься уже своего содержимого.
+   По умолчанию колонка сетки не становится уже самого
+   длинного слова внутри неё — и на узком экране распирала
+   страницу вбок. Вместе с переносом длинных слов (см. globals)
+   это полностью убирает горизонтальную прокрутку. */
+.grid > * {
+  min-width: 0;
+}
+
 /* ---------- ФОТО ---------- */
 .photoCol {
   /* position: sticky — фото «прилипает» и едет рядом с текстом,
@@ -72,9 +81,17 @@
   display: flex;
   gap: 14px;
   align-items: flex-start;
+  min-width: 0;   /* разрешаем карточке сжиматься на узком экране */
   padding: 18px 20px;
   background: var(--bg);
   border-radius: var(--radius-sm);
+}
+
+/* Текст рядом со значком. min-width: 0 обязателен: без него
+   длинное слово («Мультифункциональность») не даёт колонке
+   сжаться и распирает страницу вбок. */
+.strengthBody {
+  min-width: 0;
 }
 
 /* Значок в кружке акцентного цвета */
@@ -198,6 +215,17 @@
   }
 }
 
+/* Совсем узкие телефоны (примерно 320 точек в ширину).
+   Цветки вокруг фото стоят по краям рамки и торчат наружу
+   примерно на свой радиус. На такой ширине они упирались
+   в край страницы и появлялась горизонтальная прокрутка.
+   Делаем рамку меньше — цветкам хватает места. */
+@media (max-width: 380px) {
+  .photoFrame {
+    max-width: 200px;
+  }
+}
+
 @media (max-width: 560px) {
   /* Годы переезжают на строку выше — иначе колонки слишком узкие */
   .job {
@@ -221,4 +249,104 @@
 @keyframes spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
+}
+
+
+/* ============================================================
+   БЛАГОДАРСТВЕННОЕ ПИСЬМО
+   ============================================================ */
+.letter {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+/* Само письмо. Это кнопка: по клику открывается на весь экран. */
+.letterShot {
+  display: block;
+  flex-shrink: 0;
+  width: 132px;
+  padding: 0;
+  background: var(--bg-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.letterShot:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.letterShot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.letterSide {
+  min-width: 0;   /* разрешаем колонке сжиматься под длинный текст */
+}
+
+.letterNote {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.letterActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.letterOpen,
+.letterDownload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 18px;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: transform var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+}
+
+.letterOpen {
+  color: var(--text-strong);
+  background: var(--accent);
+}
+
+.letterDownload {
+  color: var(--text-strong);
+  background: var(--bg-white);
+  border: 1px solid var(--line);
+}
+
+.letterOpen:hover,
+.letterDownload:hover {
+  transform: translateY(-2px);
+}
+
+.letterDownload:hover {
+  border-color: var(--text-strong);
+}
+
+/* На узком экране письмо встаёт сверху, а текст и кнопки — под ним */
+@media (max-width: 560px) {
+  .letter {
+    flex-direction: column;
+  }
+
+  .letterShot {
+    width: 100%;
+    max-width: 240px;
+  }
 }

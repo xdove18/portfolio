@@ -2,6 +2,7 @@
 import { asset } from "../../utils/asset";
 import Flower from "../Flower/Flower";
 import StrengthIcon from "./StrengthIcons";
+import Letter from "./Letter";
 import s from "./About.module.css";
 
 /* ============================================================
@@ -73,7 +74,7 @@ export default function About() {
                   <span className={s.strengthIcon}>
                     <StrengthIcon name={item.icon} />
                   </span>
-                  <div>
+                  <div className={s.strengthBody}>
                     <p className={s.strengthTitle}>{item.title}</p>
                     <p className={s.strengthText}>{item.text}</p>
                   </div>
@@ -112,6 +113,10 @@ export default function About() {
                 ))}
               </ul>
             </div>
+
+            {/* Благодарственное письмо. Настраивается
+                в src/data/site.js, блок letter. */}
+            <Letter />
           </div>
         </div>
       </div>
