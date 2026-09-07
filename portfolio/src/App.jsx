@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ScrollToTop from "./components/ScrollToTop";
+import Metrika from "./components/Metrika";
 import SparkleCursor from "./components/Cursor/SparkleCursor";
 import BackToTop from "./components/BackToTop/BackToTop";
 
@@ -44,6 +45,11 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+
+      {/* Сообщает Яндекс Метрике о переходах между страницами.
+          Стоит последним намеренно: так к моменту отправки
+          страница уже успела поменять заголовок вкладки. */}
+      <Metrika />
     </>
   );
 }

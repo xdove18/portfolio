@@ -3,6 +3,79 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ==========================================================
+         ЯНДЕКС МЕТРИКА — СЧЁТЧИК ПОСЕЩЕНИЙ
+         ==========================================================
+         Стоит как можно ближе к началу страницы: так счётчик
+         успевает отправить данные, даже если человек сразу
+         закроет вкладку.
+
+         Номер счётчика вписан ниже одной строкой — METRIKA_ID.
+         Если когда-нибудь заведёте новый счётчик, поменять номер
+         нужно в двух местах: здесь и в самом низу этого блока,
+         в картинке для браузеров без JavaScript.
+
+         На вашем компьютере счётчик намеренно НЕ работает —
+         иначе ваши же правки сайта попадали бы в статистику
+         как визиты посетителей.
+         ========================================================== -->
+    <script type="text/javascript">
+      window.METRIKA_ID = 112349313;
+
+      // Локальная разработка — считать не нужно
+      if (
+        location.hostname !== "localhost" &&
+        location.hostname !== "127.0.0.1"
+      ) {
+        (function (m, e, t, r, i, k, a) {
+          m[i] =
+            m[i] ||
+            function () {
+              (m[i].a = m[i].a || []).push(arguments);
+            };
+          m[i].l = 1 * new Date();
+          for (var j = 0; j < document.scripts.length; j++) {
+            if (document.scripts[j].src === r) {
+              return;
+            }
+          }
+          k = e.createElement(t);
+          a = e.getElementsByTagName(t)[0];
+          k.async = 1;
+          k.src = r;
+          a.parentNode.insertBefore(k, a);
+        })(
+          window,
+          document,
+          "script",
+          "https://mc.yandex.ru/metrika/tag.js?id=" + window.METRIKA_ID,
+          "ym"
+        );
+
+        ym(window.METRIKA_ID, "init", {
+          ssr: true,
+          webvisor: true,
+          clickmap: true,
+          ecommerce: "dataLayer",
+          referrer: document.referrer,
+          url: location.href,
+          accurateTrackBounce: true,
+          trackLinks: true,
+        });
+      }
+    </script>
+
+    <noscript
+      ><div>
+        <img
+          src="https://mc.yandex.ru/watch/112349313"
+          style="position: absolute; left: -9999px"
+          alt=""
+        /></div
+    ></noscript>
+    <!-- /Яндекс Метрика -->
+
     <!-- Путь к значку обязательно с косой чертой в начале.
          Без неё браузер ищет файл рядом с текущей страницей:
          на кейсе /projects/habits это был бы адрес
