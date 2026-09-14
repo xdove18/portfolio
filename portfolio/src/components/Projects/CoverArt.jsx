@@ -8,7 +8,11 @@ import s from "./Projects.module.css";
    «Умный размер»  — измерительные кольца, которые расходятся
                      от центра, как замер параметров;
    «HabitFlow»     — росток, который тянется вверх, и кольцо
-                     прогресса вокруг него.
+                     прогресса вокруг него;
+   «Агентство Pro» — тёмная заставка CRM: свечение, столбики
+                     касаний и уведомления, которые сменяют
+                     друг друга. Перенесена из макета Claude
+                     Design один в один, только на CSS.
 
    Анимация идёт постоянно, а не только при наведении.
    ============================================================ */
@@ -16,6 +20,7 @@ import s from "./Projects.module.css";
 export default function CoverArt({ slug }) {
   if (slug === "smart-size") return <SmartSizeArt />;
   if (slug === "habits") return <HabitsArt />;
+  if (slug === "agency-crm") return <AgencyArt />;
   return null;
 }
 
@@ -134,5 +139,79 @@ function HabitsArt() {
         strokeLinecap="round"
       />
     </svg>
+  );
+}
+
+/* ---------- АГЕНТСТВО PRO (CRM) ---------- */
+/* В отличие от двух знаков выше, это не рисунок по центру,
+   а полноценная заставка: она заливает всю обложку папки
+   тёмным фоном, как экран приложения. Все элементы
+   позиционируются от краёв, поэтому заставка подстраивается
+   под любую ширину карточки. */
+function AgencyArt() {
+  return (
+    <div className={s.agency} aria-hidden="true">
+      {/* Два «дышащих» пятна света: зелёное слева сверху,
+          голубое справа снизу */}
+      <span className={`${s.agencyGlow} ${s.agencyGlowGreen}`} />
+      <span className={`${s.agencyGlow} ${s.agencyGlowBlue}`} />
+
+      {/* Белый круг с домиком — знак недвижимости */}
+      <span className={s.agencyLogo}>
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#0F100E"
+          strokeWidth="1.7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M3 10.5L12 3.5l9 7V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" />
+        </svg>
+      </span>
+
+      <span className={s.agencyTitle}>Агентство Pro</span>
+
+      {/* Столбики касаний с клиентом: растут по очереди.
+          Серый столбик — день без касаний. */}
+      <span className={s.agencyBars}>
+        {[8, 14, 6, 16, 11, 18].map((h, i) => (
+          <i
+            key={i}
+            className={i === 2 ? s.agencyBarEmpty : s.agencyBar}
+            style={{
+              height: h,
+              animationDelay: `${i * 0.15}s`,
+              opacity: [0.55, 0.7, 1, 0.85, 0.6, 1][i],
+            }}
+          />
+        ))}
+      </span>
+
+      {/* Две карточки уведомлений сменяют друг друга каждые 7 секунд */}
+      <span className={s.agencyCards}>
+        <span className={`${s.agencyCard} ${s.agencyCardA}`}>
+          <b className={s.agencyAvatar}>СГ</b>
+          <span className={s.agencyCardText}>
+            <span className={s.agencyCardTitle}>Показ ул. Толстого д.25</span>
+            <span className={s.agencyCardMeta}>Василий Петров · записал касание</span>
+          </span>
+          <span className={s.agencyCardTime}>сейчас</span>
+        </span>
+
+        <span className={`${s.agencyCard} ${s.agencyCardB}`}>
+          <b className={s.agencyAvatar} style={{ background: "#E4F2EB" }}>МГ</b>
+          <span className={s.agencyCardText}>
+            <span className={s.agencyCardTitle}>Подборка из 4 объектов</span>
+            <span className={s.agencyCardMeta}>Марина видит историю коллеги</span>
+          </span>
+          <span className={s.agencyDots}>
+            <i /><i /><i />
+          </span>
+        </span>
+      </span>
+    </div>
   );
 }

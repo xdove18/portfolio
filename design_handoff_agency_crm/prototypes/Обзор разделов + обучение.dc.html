@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<![CDATA[<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #0B0B0A; }
+  * { box-sizing: border-box; }
+  a { color: #27C08B; text-decoration: none; }
+  a:hover { color: #4AE8A8; }
+</style>
+<script>window.OM_SCENES = '[{"name":"Главная","dur":4,"desc":"Главный экран: меню, список клиентов, карточка Сергея Грина с историей"},{"name":"Обучение","dur":9,"desc":"Четыре подсказки по ходу действия: строка клиента, звонок, запись касания, фильтры"},{"name":"Показы","dur":2.5,"desc":"Раздел Показы: таблица с объектом, клиентом, риелтором и итогом каждого показа","nat":4},{"name":"Сделки","dur":3,"desc":"Сделки по этапам: подбор, оформление, закрыты","nat":4},{"name":"Дашборд","dur":2.9,"desc":"Метрики агентства, график касаний по дням и показы по риелторам","nat":5},{"name":"Отчёты","dur":1.9,"desc":"Четыре выгрузки с кнопками скачать и ссылка","nat":3.5},{"name":"Команда","dur":2.2,"desc":"Команда: клиенты, показы и нагрузка по каждому человеку","nat":4.5}]';</script>
+<script>window.OM_PLAYBACK = '{"mode":"loop"}';</script>
+</helmet>
+
+<div style="min-height:100vh;background:#0B0B0A;display:flex;align-items:center;justify-content:center;padding:24px">
+  <x-import component-from-global-scope="Movie" from="./animations-v3.jsx ./crm-tour.jsx" hint-size="100%,100%"></x-import>
+</div>
+]]>
+</x-dc>
+</body>
+</html>

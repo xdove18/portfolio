@@ -29,6 +29,10 @@ import s from "./Case.module.css";
    poster — картинка первого кадра. Она лёгкая (десятки
    килобайт) и показывается сразу, пока видео не загружено.
    Без неё какое-то время висел бы пустой прямоугольник.
+
+   wide: true — для горизонтального видео с экрана компьютера.
+   Такие видео встают друг под другом на всю ширину, а не
+   в узкие колонки, как вертикальные записи с телефона.
    ============================================================ */
 
 export default function DemoVideo({ demo }) {
@@ -77,6 +81,10 @@ function DemoRow({ clips }) {
   const [fsIndex, setFsIndex] = useState(null); // что развёрнуто на весь экран
 
   const many = clips.length > 1;
+
+  // Хотя бы одно горизонтальное видео — весь ряд в одну колонку
+
+  const wide = clips.some((c) => c.wide);
   const single = clips.length === 1;
 
   /* Запускать ли очередь самостоятельно. На телефоне и на
@@ -222,7 +230,11 @@ function DemoRow({ clips }) {
         </p>
       )}
 
-      <div className={many ? s.demoGrid : undefined}>
+      <div
+        className={
+          many ? (wide ? s.demoGridWide : s.demoGrid) : undefined
+        }
+      >
         {clips.map((clip, i) => (
           <div
             className={s.demoItem}
@@ -231,7 +243,9 @@ function DemoRow({ clips }) {
               items.current[i] = el;
             }}
           >
-            <div className={s.demoFrame}>
+            <div
+              className={`${s.demoFrame} ${clip.wide ? s.demoFrameWide : ""}`}
+            >
               <video
                 ref={(el) => {
                   videos.current[i] = el;

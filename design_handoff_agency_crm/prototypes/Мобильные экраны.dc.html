@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<![CDATA[<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #0B0B0A; }
+  * { box-sizing: border-box; }
+  a { color: #27C08B; text-decoration: none; }
+  a:hover { color: #4AE8A8; }
+</style>
+<script>window.OM_SCENES = '[{"name":"Клиенты","dur":3.4,"desc":"Мобильный список клиентов: плашки статусов, поиск, чипы фильтров"},{"name":"Меню","dur":2.9,"desc":"Тап по бургеру: шторка меню снизу, палец выбирает пункт Клиенты"},{"name":"Фильтры","dur":2.8,"desc":"Тап по иконке фильтров: статус, срок контакта, кнопка Применить"},{"name":"Карточка","dur":3.8,"desc":"Тап по строке клиента: контакты, метрики, история с заметками"},{"name":"Событие","dur":3.4,"desc":"Тап по кнопке Добавить событие: тип, адрес печатается, статус и заметка"},{"name":"Возврат","dur":1,"desc":"Назад к списку клиентов"},{"name":"Меню - Показы","dur":1.6,"desc":"Бургер, шторка меню, выбор пункта Показы"},{"name":"Показы","dur":1.8,"desc":"Мобильные показы: объект, цена, клиент, итог"},{"name":"Меню - Сделки","dur":1.4,"desc":"Бургер и выбор Сделки в шторке"},{"name":"Сделки","dur":1.8,"desc":"Сделки по этапам: подбор, оформление, закрыты"},{"name":"Меню - Дашборд","dur":1.4,"desc":"Бургер и выбор Дашборд"},{"name":"Дашборд","dur":2.2,"desc":"Метрики, график касаний по дням, показы по риелторам"},{"name":"Меню - Отчёты","dur":1.4,"desc":"Бургер и выбор Отчёты"},{"name":"Отчёты","dur":1.6,"desc":"Строки отчётов с кнопками Скачать и Ссылка"},{"name":"Меню - Команда","dur":1.4,"desc":"Бургер и выбор Команда"},{"name":"Команда","dur":3.6,"desc":"Команда: клиенты, показы и нагрузка по каждому человеку"}]';</script>
+<script>window.OM_PLAYBACK = '{"mode":"loop"}';</script>
+</helmet>
+
+<div style="min-height:100vh;background:#0B0B0A;display:flex;align-items:center;justify-content:center;padding:24px">
+  <x-import component-from-global-scope="Movie" from="./animations-v3.jsx ./crm-mobile.jsx" hint-size="100%,100%"></x-import>
+</div>
+]]>
+</x-dc>
+</body>
+</html>

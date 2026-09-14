@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<![CDATA[<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #0B0B0A; }
+  * { box-sizing: border-box; }
+  a { color: #27C08B; text-decoration: none; }
+  a:hover { color: #4AE8A8; }
+</style>
+<script>window.OM_SCENES = '[{"name":"Open","dur":3,"desc":"Риелтор открывает базу: список клиентов и курсор идут к кнопке нового клиента"},{"name":"NewClient","dur":6,"desc":"Форма нового клиента заполняется: имя Сергей Грин, телефон, бюджет — и он появляется в списке"},{"name":"FirstCall","dur":6,"desc":"Первый звонок: тип события, длительность, заметка и статус Активен, событие уходит в историю"},{"name":"Showing","dur":6,"desc":"Показ на Толстого 25: адрес и заметка о первом этаже, счётчик показов растёт"},{"name":"TeamNote","dur":2.1,"desc":"Марина видит касание коллеги и дописывает свою подборку в ту же историю","nat":4},{"name":"Result","dur":2.8,"desc":"Итог: три касания, метрики и полная история клиента в одном месте","nat":5}]';</script>
+<script>window.OM_PLAYBACK = '{"mode":"loop"}';</script>
+</helmet>
+
+<div style="min-height:100vh;background:#0B0B0A;display:flex;align-items:center;justify-content:center;padding:24px">
+  <x-import component-from-global-scope="Movie" from="./animations-v3.jsx ./crm-timelapse.jsx" hint-size="100%,100%"></x-import>
+</div>
+]]>
+</x-dc>
+</body>
+</html>

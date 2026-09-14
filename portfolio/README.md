@@ -53,7 +53,9 @@ public/images/
     │   └── thumb/            ← их уменьшенные копии
     ├── checkout/             ← экраны кейса «Оптимизация чекаута»
     │   └── thumb/
-    └── habits/               ← экраны кейса HabitFlow
+    ├── habits/               ← экраны кейса HabitFlow
+    │   └── thumb/
+    └── agency-crm/           ← экраны и видео кейса «Агентство Pro»
         └── thumb/
 ```
 

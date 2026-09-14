@@ -159,6 +159,13 @@
   filter: drop-shadow(0 -4px 22px rgba(0, 0, 0, 0.22));
 }
 
+/* Широкая обложка: один экран компьютера вместо трёх телефонов.
+   Включается полем coverWide: true в src/data/projects.js */
+.coverWide .coverShot {
+  width: 86%;
+  max-width: none;
+}
+
 .headline {
   font-size: clamp(1.5rem, 3vw, 2.125rem);
   line-height: 1.25;
@@ -1468,6 +1475,19 @@
   display: block;
   width: 100%;
   background: var(--bg);
+}
+
+/* Горизонтальные видео с экрана компьютера: одна колонка
+   и вся доступная ширина, иначе интерфейс не разглядеть */
+.demoGridWide {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+
+.demoFrameWide {
+  max-width: none;
+  background: #0b0b0a;
 }
 
 /* Подсказка над рядом видео: объясняет, что они по очереди */

@@ -38,6 +38,13 @@ QUALITY_FULL = 92    # качество полных версий (текст о
 QUALITY_THUMB = 84   # качество уменьшенных копий
 THUMB_WIDTH = 560    # ширина уменьшенной копии, в пикселях
 MAX_WIDTH = 1400     # больше этого полные версии не нужны
+
+# Широкие (десктопные) экраны показываются почти на всю ширину
+# страницы, а на Retina-экранах ещё и в двойном разрешении.
+# Поэтому превью для них — 1600 px, а полная версия не уменьшается
+# вовсе: иначе интерфейс с мелким текстом выглядит мыльным.
+THUMB_WIDTH_WIDE = 1600
+MAX_WIDTH_WIDE = 2880
 PHOTO_MAX_HEIGHT = 1000  # для фотографий (не скриншотов)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -56,6 +63,9 @@ def convert(path, make_thumb=True, max_width=MAX_WIDTH, max_height=None,
             (round(im.width * max_height / im.height), max_height),
             Image.LANCZOS,
         )
+    # Широкие экраны оставляем в полном размере (см. MAX_WIDTH_WIDE)
+    if im.width > im.height and max_width == MAX_WIDTH:
+        max_width = MAX_WIDTH_WIDE
     if max_width and im.width > max_width:
         im = im.resize(
             (max_width, round(im.height * max_width / im.width)),
@@ -67,11 +77,16 @@ def convert(path, make_thumb=True, max_width=MAX_WIDTH, max_height=None,
     im.save(target, "WEBP", quality=quality, method=6)
     after = os.path.getsize(target)
 
-    if make_thumb and im.width > THUMB_WIDTH:
+    # Постеры к видео — только полная версия, превью им не нужно
+    if "-poster" in os.path.basename(path):
+        make_thumb = False
+
+    thumb_width = THUMB_WIDTH_WIDE if im.width > im.height else THUMB_WIDTH
+    if make_thumb and im.width > thumb_width:
         folder = os.path.join(os.path.dirname(path), "thumb")
         os.makedirs(folder, exist_ok=True)
         small = im.resize(
-            (THUMB_WIDTH, round(im.height * THUMB_WIDTH / im.width)),
+            (thumb_width, round(im.height * thumb_width / im.width)),
             Image.LANCZOS,
         )
         small.save(

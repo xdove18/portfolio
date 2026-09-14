@@ -105,6 +105,17 @@
   transform: scale(1.06);
 }
 
+/* Заставка «Агентство Pro» — не знак по центру, а целый
+   экран: её обёртка растягивается на всю обложку */
+.coverArt:has(.agency) {
+  position: absolute;
+  inset: 0;
+}
+
+.card:hover .coverArt:has(.agency) {
+  transform: scale(1.04);
+}
+
 /* ---------- АНИМАЦИИ ЗНАКОВ НА ОБЛОЖКЕ ----------
    Идут постоянно, а не только при наведении. */
 
@@ -381,6 +392,223 @@
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+
+/* ---------- ЗАСТАВКА «АГЕНТСТВО PRO» ----------
+   Заливает всю обложку папки, как экран приложения.
+   Размеры и тайминги — из макета заставки 457,5 × 210. */
+.agency {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0f100e;
+  font-family: var(--font);
+  color: #f5f3f0;
+}
+
+.agencyGlow {
+  position: absolute;
+  border-radius: 50%;
+  animation: agencyGlow 9s ease-in-out infinite;
+}
+
+.agencyGlowGreen {
+  left: -90px;
+  top: -120px;
+  width: 380px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(39, 192, 139, 0.34), transparent 68%);
+}
+
+.agencyGlowBlue {
+  right: -70px;
+  bottom: -110px;
+  width: 300px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(127, 168, 212, 0.2), transparent 70%);
+  animation-duration: 11s;
+  animation-direction: reverse;
+}
+
+@keyframes agencyGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.85; }
+  50%      { transform: translate(18px, 10px) scale(1.12); opacity: 1; }
+}
+
+.agencyLogo {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  width: 52px;
+  height: 52px;
+  margin-left: -26px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+.agencyTitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 78px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.agencyBars {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 108px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.agencyBar,
+.agencyBarEmpty {
+  display: block;
+  width: 4px;
+  border-radius: 2px;
+  background: #27c08b;
+  transform-origin: bottom;
+}
+
+.agencyBar {
+  animation: agencyBar 2.4s ease-in-out infinite alternate;
+}
+
+.agencyBarEmpty {
+  background: #26241f;
+}
+
+@keyframes agencyBar {
+  from { transform: scaleY(0.18); }
+  to   { transform: scaleY(1); }
+}
+
+.agencyCards {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 16px;
+  height: 56px;
+}
+
+.agencyCard {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border-radius: 14px;
+  background: #fff;
+  color: #0f100e;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  animation: agencyCardA 7s ease-in-out infinite;
+}
+
+.agencyCardB {
+  animation-name: agencyCardB;
+}
+
+@keyframes agencyCardA {
+  0%   { opacity: 0; transform: translateY(16px) scale(0.97); }
+  8%   { opacity: 1; transform: translateY(0) scale(1); }
+  42%  { opacity: 1; transform: translateY(0) scale(1); }
+  50%  { opacity: 0; transform: translateY(-12px) scale(0.98); }
+  100% { opacity: 0; transform: translateY(-12px) scale(0.98); }
+}
+
+@keyframes agencyCardB {
+  0%   { opacity: 0; transform: translateY(16px) scale(0.97); }
+  50%  { opacity: 0; transform: translateY(16px) scale(0.97); }
+  58%  { opacity: 1; transform: translateY(0) scale(1); }
+  92%  { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-12px) scale(0.98); }
+}
+
+.agencyAvatar {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #edeae5;
+  font-size: 10px;
+  font-weight: 600;
+  font-style: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agencyCardText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.agencyCardTitle {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.agencyCardMeta {
+  font-size: 11px;
+  line-height: 1.2;
+  color: #8b8680;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.agencyCardTime {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #8b8680;
+}
+
+.agencyDots {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.agencyDots i {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #27c08b;
+  animation: agencyDot 1.4s ease-in-out infinite;
+}
+
+.agencyDots i:nth-child(2) { animation-delay: 0.2s; }
+.agencyDots i:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes agencyDot {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1; }
+}
+
 @keyframes pulse {
   0%, 100% { transform: scale(1);    opacity: 0.85; }
   50%      { transform: scale(1.06); opacity: 1; }

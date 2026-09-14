@@ -173,7 +173,7 @@ export default function ProjectDetail() {
             {/* ---------- ОБЗОР ---------- */}
             <section id="overview">
               <div
-                className={s.cover}
+                className={`${s.cover} ${project.coverWide ? s.coverWide : ""}`}
                 style={{
                   // Тот же градиент, что и на карточке проекта
                   background: `linear-gradient(150deg, ${project.color} 0%, ${

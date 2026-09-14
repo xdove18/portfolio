@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<![CDATA[<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: #0B0B0A; font-family: Inter, -apple-system, "SF Pro Text", "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; font-feature-settings: "tnum" 1; }
+  * { box-sizing: border-box; }
+  a { color: #27C08B; text-decoration: none; }
+  a:hover { color: #4AE8A8; }
+  button, input, select, textarea { font-family: inherit; }
+  input::placeholder, textarea::placeholder { color: #8B8680; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: rgba(160,155,148,.28); border-radius: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  @keyframes omFade { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes omSlideUp { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
+  @keyframes omToast { from { opacity: 0; transform: translate(-50%,20px) } to { opacity: 1; transform: translate(-50%,0) } }
+</style>
+</helmet>
+
+<div style="{{ themeVars }}">
+<div style="background:var(--bg,#0B0B0A);color:var(--tx1,#F5F3F0);padding:56px;display:flex;flex-direction:column;gap:72px;min-height:100vh">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;max-width:1440px">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.4;letter-spacing:.16em;text-transform:uppercase;color:var(--cta,#27C08B)">Идапроджект · CRM для риелторов</div>
+      <div style="font-size:34px;font-weight:600;line-height:1.2;letter-spacing:-.02em;margin-top:10px">Агентство Pro</div>
+      <div style="font-size:14px;line-height:1.6;color:var(--tx2,#BCB8B2);margin-top:8px;max-width:600px">Вторая редакция визуала: тёмная база, приглушённые панели, мятный акцент. Структура и все состояния — по ТЗ.</div>
+    </div>
+    <div style="display:flex;gap:4px;padding:4px;border-radius:999px;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--panel,#131312)">
+      <button onClick="{{ setLight }}" style="{{ lightBtnStyle }}">Light</button>
+      <button onClick="{{ setDark }}" style="{{ darkBtnStyle }}">Dark</button>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:12px">
+      <div style="font-size:20px;font-weight:600;line-height:1.3">Экран 1 — Главный (Desktop)</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">1440 × 900</div>
+    </div>
+
+    <div style="position:relative;width:1440px;height:900px;border-radius:20px;overflow:hidden;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--bg,#0B0B0A);box-shadow:0 24px 80px rgba(0,0,0,.45)">
+      <div style="position:absolute;left:-160px;top:-220px;width:720px;height:520px;border-radius:50%;background:var(--glow,radial-gradient(circle,rgba(39,192,139,.16),transparent 70%));pointer-events:none"></div>
+
+      <div style="position:relative;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="font-size:15px;font-weight:700;letter-spacing:.04em">АГЕНТСТВО<span style="color:var(--cta,#27C08B)">.</span></div>
+          <div style="width:1px;height:18px;background:var(--hair,rgba(255,255,255,.08))"></div>
+          <div style="font-size:12px;line-height:1.5;color:var(--tx3,#8B8680)">Клиентская база</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:20px">
+          <div style="display:flex;align-items:center;gap:18px">
+            <div style="display:flex;align-items:baseline;gap:6px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500;color:var(--tx1,#F5F3F0)">26</span>
+              <span style="font-size:12px;color:var(--tx3,#8B8680)">клиентов</span>
+            </div>
+            <div style="width:1px;height:14px;background:var(--hair,rgba(255,255,255,.08))"></div>
+            <div style="display:flex;align-items:baseline;gap:6px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500;color:var(--cta,#27C08B)">14</span>
+              <span style="font-size:12px;color:var(--tx3,#8B8680)">показов за неделю</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:2px">
+            <button onClick="{{ toggleFilters }}" style="{{ filtersBtnStyle }}">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16"></path><path d="M4 17h16"></path><circle cx="9" cy="7" r="2.4"></circle><circle cx="15" cy="17" r="2.4"></circle></svg>
+            </button>
+            <button style="width:34px;height:34px;border-radius:10px;border:none;background:transparent;color:var(--tx3,#8B8680);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 1 0-12 0c0 5-2 6.5-2 6.5h16s-2-1.5-2-6.5z"></path><path d="M10.5 19a2 2 0 0 0 3 0"></path></svg>
+            </button>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px;padding-left:16px;border-left:1px solid var(--hair,rgba(255,255,255,.08))">
+            <div style="text-align:right;line-height:1.25">
+              <div style="font-size:12px;font-weight:600;color:var(--tx1,#F5F3F0)">Василий Петров</div>
+              <div style="font-size:11px;color:var(--tx3,#8B8680)">Риелтор</div>
+            </div>
+            <div style="width:32px;height:32px;border-radius:10px;background:var(--bg3,#26241F);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--tx1,#F5F3F0)">ВП</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="position:relative;display:flex;height:839px">
+
+        <div style="width:212px;flex:0 0 212px;border-right:1px solid var(--hair,rgba(255,255,255,.08));padding:16px 12px;display:flex;flex-direction:column;gap:6px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680);padding:4px 10px 8px 10px">Меню</div>
+          <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+            <div onClick="{{ n.pick }}" style="{{ n.style }}">
+              <span style="{{ n.dotStyle }}"></span>
+              <span style="flex:1">{{ n.label }}</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ n.count }}</span>
+            </div>
+          </sc-for>
+          <div style="flex:1"></div>
+          <div style="border-radius:16px;padding:14px;background:var(--bg2,#1C1B19);border:1px solid var(--hair,rgba(255,255,255,.08))">
+            <div style="font-size:14px;font-weight:600;line-height:1.4">Ни одного повторного звонка</div>
+            <div style="font-size:12px;line-height:1.5;color:var(--tx2,#BCB8B2);margin-top:6px">Коллеги видят каждое ваше касание клиента в общей ленте.</div>
+            <button onClick="{{ openTour }}" style="margin-top:12px;width:100%;height:32px;border-radius:999px;border:1px solid var(--hair,rgba(255,255,255,.08));background:transparent;color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Как это работает</button>
+          </div>
+        </div>
+
+        <sc-if value="{{ isClients }}" hint-placeholder-val="{{ true }}">
+        <div style="width:296px;flex:0 0 296px;border-right:1px solid var(--hair,rgba(255,255,255,.08));display:flex;flex-direction:column">
+          <div style="padding:16px 14px 12px 14px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:20px;font-weight:600;line-height:1.3;letter-spacing:-.01em">Клиенты</div>
+              <button onClick="{{ toggleFilters }}" style="width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:var(--tx3,#8B8680);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16"></path><path d="M4 17h16"></path><circle cx="9" cy="7" r="2.4"></circle><circle cx="15" cy="17" r="2.4"></circle></svg>
+              </button>
+            </div>
+            <div style="position:relative">
+              <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--tx3,#8B8680);display:flex">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4.2-4.2"></path></svg>
+              </span>
+              <input value="{{ query }}" onChange="{{ setQuery }}" placeholder="Поиск по имени, телефону..." style="width:100%;height:38px;padding:8px 12px 8px 34px;border-radius:999px;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;line-height:1.6;outline:none" style-hover="border-color:var(--bd2,#4A4540)" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))">
+            </div>
+          </div>
+          <div style="flex:1;overflow-y:auto;padding:0 14px 16px 14px">
+            <sc-for list="{{ clients }}" as="c" hint-placeholder-count="7">
+              <div onClick="{{ c.select }}" style="position:relative;padding:12px;margin-bottom:6px;border-radius:14px;border:1px solid transparent;cursor:pointer;display:flex;align-items:center;gap:10px" style-hover="background:var(--bg2,#1C1B19)">
+                <sc-if value="{{ c.selected }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;inset:0;border-radius:14px;background:var(--bg3,#26241F);pointer-events:none"></div>
+                </sc-if>
+                <div style="{{ c.avatarStyle }}">{{ c.initials }}</div>
+                <div style="position:relative;flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
+                    <span style="{{ c.dotStyle }}"></span>
+                    <span style="{{ c.statusTextStyle }}">{{ c.statusLabel }}</span>
+                    <span style="font-size:11px;color:var(--tx3,#8B8680)">· {{ c.last }}</span>
+                  </div>
+                </div>
+                <span style="position:relative;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ c.budgetShort }}</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:28px 8px;text-align:center;font-size:12px;color:var(--tx3,#8B8680)">Клиентов не найдено</div>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+          <div style="flex:1;overflow-y:auto;padding:24px 28px 8px 28px">
+            <div style="display:flex;flex-direction:column;gap:16px">
+
+              <sc-if value="{{ never }}" hint-placeholder-val="{{ false }}">
+                <div style="border-radius:18px;background:var(--bg2,#1C1B19);padding:20px;display:flex;flex-direction:column;gap:16px;animation:omSlideUp 260ms ease-out">
+                  <div style="display:flex;gap:24px;align-items:flex-start">
+                    <div style="flex:1;min-width:0">
+                      <div style="display:flex;align-items:center;gap:10px">
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--cta,#27C08B)">Обучение</span>
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">шаг {{ tour.num }} из {{ tour.total }}</span>
+                      </div>
+                      <div style="font-size:20px;font-weight:600;line-height:1.3;letter-spacing:-.01em;margin-top:10px">{{ tour.title }}</div>
+                      <div style="font-size:13px;line-height:1.65;color:var(--tx2,#BCB8B2);margin-top:8px;max-width:420px">{{ tour.text }}</div>
+                    </div>
+                    <div style="width:320px;flex:0 0 320px;display:flex;flex-direction:column;gap:8px">
+                      <sc-for list="{{ tour.demo }}" as="d" hint-placeholder-count="3">
+                        <div style="{{ d.rowStyle }}">
+                          <div style="{{ d.iconStyle }}">{{ d.icon }}</div>
+                          <div style="flex:1;min-width:0">
+                            <div style="font-size:12px;font-weight:500;line-height:1.4">{{ d.title }}</div>
+                            <div style="font-size:11px;color:var(--tx3,#8B8680);margin-top:2px">{{ d.meta }}</div>
+                          </div>
+                          <sc-if value="{{ d.tag }}" hint-placeholder-val="{{ true }}">
+                            <span style="{{ d.tagStyle }}">{{ d.tag }}</span>
+                          </sc-if>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+                    <div style="display:flex;gap:6px">
+                      <sc-for list="{{ tourDots }}" as="p" hint-placeholder-count="4">
+                        <span onClick="{{ p.pick }}" style="{{ p.style }}"></span>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center">
+                      <button onClick="{{ closeTour }}" style="height:36px;padding:0 14px;border-radius:999px;border:none;background:transparent;color:var(--tx3,#8B8680);font-size:12px;font-weight:600;cursor:pointer" style-hover="color:var(--tx1,#F5F3F0)">Закрыть</button>
+                      <sc-if value="{{ tour.canBack }}" hint-placeholder-val="{{ false }}">
+                        <button onClick="{{ prevTour }}" style="height:36px;padding:0 18px;border-radius:999px;border:none;background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--bd2,#4A4540)">Назад</button>
+                      </sc-if>
+                      <button onClick="{{ nextTour }}" style="height:36px;padding:0 20px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.98)">{{ tour.nextLabel }}</button>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <div style="display:flex;align-items:flex-start;gap:16px">
+                <div style="{{ sel.bigAvatarStyle }}">{{ sel.initials }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:28px;font-weight:600;line-height:1.2;letter-spacing:-.02em">{{ sel.name }}</div>
+                  <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+                    <span style="{{ sel.badgeStyle }}"><span style="{{ sel.dotStyle }}"></span>{{ sel.statusLabel }}</span>
+                    <span style="font-size:12px;color:var(--tx3,#8B8680)">Создан {{ sel.created }} · ведёт {{ sel.owner }}</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:8px">
+                  <button onClick="{{ copyPhone }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 150ms ease-out" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.98)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9z"></path></svg>
+                    Позвонить
+                  </button>
+                  <button onClick="{{ openWhatsapp }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)" style-active="transform:scale(.98)">WhatsApp</button>
+                  <div style="position:relative">
+                    <button onClick="{{ toggleMore }}" style="{{ moreBtnStyle }}" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg>
+                    </button>
+                    <sc-if value="{{ moreOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;right:0;top:42px;width:218px;padding:6px;border-radius:14px;background:var(--panel,#131312);box-shadow:0 20px 50px rgba(0,0,0,.55);z-index:25;animation:omFade 140ms ease-out">
+                        <sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="4">
+                          <button onClick="{{ m.pick }}" style="{{ m.style }}" style-hover="background:var(--bg2,#1C1B19)">
+                            <span style="display:flex;opacity:.8">{{ m.icon }}</span>
+                            {{ m.label }}
+                          </button>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+                <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+                  <div style="border-radius:16px;padding:14px 16px;background:var(--panel,#131312)">
+                    <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3,#8B8680)">{{ s.label }}</div>
+                    <div style="display:flex;align-items:baseline;gap:6px;margin-top:8px">
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:500;line-height:1.1">{{ s.value }}</span>
+                      <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ s.unit }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="border-radius:18px;padding:18px;background:var(--panel,#131312)">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Основная информация</div>
+                  <div style="display:flex;flex-direction:column;margin-top:14px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Телефон</span>
+                      <a href="#top" onClick="{{ copyPhone }}" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cta,#27C08B)">{{ sel.phone }}</a>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Email</span>
+                      <a href="#top" onClick="{{ copyMail }}" style="font-size:13px;color:var(--cta,#27C08B)">{{ sel.email }}</a>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Статус</span>
+                      <span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500"><span style="{{ sel.dotStyle }}"></span>{{ sel.statusLabel }}</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0">
+                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Ответственный</span>
+                      <span style="font-size:13px">{{ sel.owner }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="border-radius:18px;padding:18px;background:var(--panel,#131312)">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Предпочтения</div>
+                  <div style="display:flex;flex-direction:column;margin-top:14px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Бюджет</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500">{{ sel.budget }}</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Районы</span>
+                      <span style="font-size:13px;text-align:right">{{ sel.districts }}</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Срочность</span>
+                      <span style="font-size:13px">{{ sel.urgency }}</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0">
+                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Комнаты</span>
+                      <span style="font-size:13px">{{ sel.rooms }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="border-radius:18px;background:var(--panel,#131312);overflow:hidden">
+                <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                  <div style="display:flex;align-items:baseline;gap:10px">
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">История взаимодействий</div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cta,#27C08B)">{{ histCount }}</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="display:flex;align-items:flex-end;gap:3px;height:26px">
+                      <sc-for list="{{ activityBars }}" as="b" hint-placeholder-count="14">
+                        <span style="{{ b.style }}"></span>
+                      </sc-for>
+                    </div>
+                    <div style="font-size:11px;color:var(--tx3,#8B8680);white-space:nowrap">14 дней</div>
+                    <div style="display:flex;gap:4px;padding:3px;border-radius:999px;background:var(--bg2,#1C1B19)">
+                      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+                        <button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </div>
+                <div style="max-height:380px;overflow-y:auto;padding:6px 18px 18px 18px">
+                  <sc-for list="{{ eventGroups }}" as="g" hint-placeholder-count="2">
+                    <div style="display:flex;gap:16px;padding-top:16px;animation:omFade 200ms ease-out">
+                      <div style="width:96px;flex:0 0 96px;padding-top:6px;text-align:right">
+                        <div style="font-size:13px;font-weight:600;line-height:1.3">{{ g.label }}</div>
+                        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680);margin-top:2px">{{ g.sub }}</div>
+                      </div>
+                      <div style="flex:1;min-width:0;padding-left:18px;border-left:1px solid var(--hair,rgba(255,255,255,.08));display:flex;flex-direction:column;gap:2px">
+                        <sc-for list="{{ g.items }}" as="e" hint-placeholder-count="2">
+                          <div onClick="{{ e.toggle }}" style="{{ e.rowStyle }}">
+                            <span style="{{ e.nodeStyle }}"></span>
+                            <div style="{{ e.iconStyle }}">{{ e.icon }}</div>
+                            <div style="flex:1;min-width:0">
+                              <div style="font-size:14px;font-weight:500;line-height:1.45">{{ e.title }}</div>
+                              <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+                                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ e.time }}</span>
+                                <span style="font-size:12px;color:var(--tx3,#8B8680)">{{ e.by }}</span>
+                                <sc-if value="{{ e.hasNote }}" hint-placeholder-val="{{ true }}">
+                                  <span style="{{ e.noteTagStyle }}">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-3.5L6 20z"></path></svg>
+                                    {{ e.noteCountLabel }}
+                                  </span>
+                                </sc-if>
+                              </div>
+                              <sc-if value="{{ e.open }}" hint-placeholder-val="{{ false }}">
+                                <sc-if value="{{ e.hasThread }}" hint-placeholder-val="{{ false }}">
+                                  <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;animation:omFade 160ms ease-out">
+                                    <sc-for list="{{ e.thread }}" as="n" hint-placeholder-count="2">
+                                      <div onClick="{{ n.stop }}">
+                                        <sc-if value="{{ n.editing }}" hint-placeholder-val="{{ false }}">
+                                          <div style="display:flex;flex-direction:column;gap:8px">
+                                            <textarea value="{{ n.draft }}" onChange="{{ n.setDraft }}" style="width:100%;height:70px;resize:none;padding:10px 12px;border-radius:10px;border:none;background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0);font-size:13px;line-height:1.6;outline:none" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))"></textarea>
+                                            <div style="display:flex;gap:6px">
+                                              <button onClick="{{ n.save }}" style="height:28px;padding:0 14px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:11px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Сохранить</button>
+                                              <button onClick="{{ n.cancel }}" style="height:28px;padding:0 12px;border-radius:999px;border:none;background:transparent;color:var(--tx3,#8B8680);font-size:11px;font-weight:600;cursor:pointer" style-hover="color:var(--tx1,#F5F3F0)">Отмена</button>
+                                            </div>
+                                          </div>
+                                        </sc-if>
+                                        <sc-if value="{{ n.editing }}" hint-placeholder-val="{{ false }}"></sc-if>
+                                        <div style="{{ n.viewStyle }}">
+                                          <div style="display:flex;align-items:center;gap:8px">
+                                            <span style="{{ n.avatarStyle }}">{{ n.initials }}</span>
+                                            <span style="font-size:12px;font-weight:600;color:var(--tx1,#F5F3F0)">{{ n.by }}</span>
+                                            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ n.time }}</span>
+                                          </div>
+                                          <div style="font-size:13px;line-height:1.65;color:var(--tx2,#BCB8B2);margin-top:5px">{{ n.text }}</div>
+                                          <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+                                            <button onClick="{{ n.edit }}" style="border:none;background:transparent;padding:0;font-size:11px;color:var(--tx3,#8B8680);cursor:pointer" style-hover="color:var(--tx1,#F5F3F0)">Изменить</button>
+                                            <button onClick="{{ n.remove }}" style="border:none;background:transparent;padding:0;font-size:11px;color:var(--tx3,#8B8680);cursor:pointer" style-hover="color:var(--stR,#D4837A)">Удалить</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </sc-for>
+                                  </div>
+                                </sc-if>
+                                <sc-if value="{{ e.showPlainNote }}" hint-placeholder-val="{{ true }}">
+                                  <div style="{{ e.noteBoxStyle }}">{{ e.note }}</div>
+                                </sc-if>
+                                <sc-if value="{{ e.adding }}" hint-placeholder-val="{{ false }}">
+                                  <div onClick="{{ e.stopAdd }}" style="display:flex;flex-direction:column;gap:8px;margin-top:10px;animation:omFade 160ms ease-out">
+                                    <textarea value="{{ e.newDraft }}" onChange="{{ e.setNewDraft }}" placeholder="Что важного узнали на этом касании?" style="width:100%;height:70px;resize:none;padding:10px 12px;border-radius:10px;border:none;background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0);font-size:13px;line-height:1.6;outline:none" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))"></textarea>
+                                    <div style="display:flex;gap:6px">
+                                      <button onClick="{{ e.saveNew }}" style="height:28px;padding:0 14px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:11px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Добавить</button>
+                                      <button onClick="{{ e.cancelNew }}" style="height:28px;padding:0 12px;border-radius:999px;border:none;background:transparent;color:var(--tx3,#8B8680);font-size:11px;font-weight:600;cursor:pointer" style-hover="color:var(--tx1,#F5F3F0)">Отмена</button>
+                                    </div>
+                                  </div>
+                                </sc-if>
+                                <sc-if value="{{ e.canAdd }}" hint-placeholder-val="{{ true }}">
+                                  <button onClick="{{ e.startAdd }}" style="margin-top:10px;height:30px;padding:0 12px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                                    Добавить заметку
+                                  </button>
+                                </sc-if>
+                            </div>
+                            <span style="{{ e.caretStyle }}">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 9.5l6 6 6-6"></path></svg>
+                            </span>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ noEvents }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:32px 8px;text-align:center;font-size:12px;color:var(--tx3,#8B8680)">Событий этого типа пока нет</div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:16px 28px;border-top:1px solid var(--hair,rgba(255,255,255,.08));display:flex;gap:10px;align-items:center">
+            <button onClick="{{ openModal }}" style="flex:1;height:44px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 150ms ease-out,box-shadow 150ms ease-out" style-hover="background:var(--pillH,#4AE8A8);box-shadow:0 8px 28px rgba(39,192,139,.28)" style-active="transform:scale(.99)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+              Добавить событие
+            </button>
+            <div style="font-size:11px;color:var(--tx3,#8B8680);max-width:200px;line-height:1.4">30 секунд на запись — и коллеги в курсе</div>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ isShowings }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;min-width:0;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:16px;animation:omFade 200ms ease-out">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px">
+              <div>
+                <div style="font-size:26px;font-weight:600;letter-spacing:-.02em">Показы</div>
+                <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">14 показов за неделю · 3 запланированы на сегодня</div>
+              </div>
+              <button onClick="{{ openModal }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Записать показ</button>
+            </div>
+            <div style="border-radius:18px;background:var(--panel,#131312);overflow:hidden">
+              <div style="display:grid;grid-template-columns:120px 1fr 180px 170px 130px;gap:12px;padding:12px 18px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08));font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3,#8B8680)">
+                <div>Дата</div><div>Объект</div><div>Клиент</div><div>Риелтор</div><div>Итог</div>
+              </div>
+              <sc-for list="{{ showings }}" as="r" hint-placeholder-count="6">
+                <div style="display:grid;grid-template-columns:120px 1fr 180px 170px 130px;gap:12px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))" style-hover="background:var(--bg2,#1C1B19)">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2,#BCB8B2)">{{ r.date }}</div>
+                  <div>
+                    <div style="font-size:14px;font-weight:500">{{ r.addr }}</div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680);margin-top:2px">{{ r.price }}</div>
+                  </div>
+                  <div style="font-size:13px">{{ r.client }}</div>
+                  <div style="font-size:13px;color:var(--tx2,#BCB8B2)">{{ r.realtor }}</div>
+                  <div><span style="{{ r.chipStyle }}"><span style="{{ r.markStyle }}"></span>{{ r.result }}</span></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isDeals }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;min-width:0;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:16px;animation:omFade 200ms ease-out">
+            <div>
+              <div style="font-size:26px;font-weight:600;letter-spacing:-.02em">Сделки</div>
+              <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">4 сделки в работе на 58 млн</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start">
+              <sc-for list="{{ dealCols }}" as="col" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 12px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <span style="{{ col.dotStyle }}"></span>
+                      <span style="font-size:13px;font-weight:600">{{ col.title }}</span>
+                    </div>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ col.sum }}</span>
+                  </div>
+                  <sc-for list="{{ col.cards }}" as="d" hint-placeholder-count="2">
+                    <div style="padding:14px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08));cursor:pointer" style-hover="background:var(--panel,#131312)">
+                      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                        <span style="font-size:14px;font-weight:500">{{ d.name }}</span>
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ d.sum }}</span>
+                      </div>
+                      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:5px">
+                        <span style="font-size:12px;color:var(--tx2,#BCB8B2)">{{ d.addr }}</span>
+                        <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ d.realtor }}</span>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isDash }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;min-width:0;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:16px;animation:omFade 200ms ease-out">
+            <div>
+              <div style="font-size:26px;font-weight:600;letter-spacing:-.02em">Дашборд</div>
+              <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">Сентябрь 2026 · агентство целиком</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+              <sc-for list="{{ dashMetrics }}" as="m" hint-placeholder-count="4">
+                <div style="border-radius:16px;padding:16px;background:var(--panel,#131312)">
+                  <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3,#8B8680)">{{ m.label }}</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:10px">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:500">{{ m.value }}</span>
+                    <span style="{{ m.deltaStyle }}">{{ m.delta }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:12px">
+              <div style="border-radius:18px;padding:18px;background:var(--panel,#131312)">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px">
+                  <div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Касания клиентов по дням</div>
+                    <div style="display:flex;align-items:baseline;gap:8px;margin-top:8px">
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:500">{{ touchTotal }}</span>
+                      <span style="font-size:12px;color:var(--tx2,#BCB8B2)">касаний за неделю</span>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:7px;min-width:150px">
+                    <sc-for list="{{ touchLegend }}" as="l" hint-placeholder-count="4">
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <span style="{{ l.markStyle }}"></span>
+                        <span style="font-size:11px;color:var(--tx2,#BCB8B2);flex:1">{{ l.label }}</span>
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ l.value }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="position:relative;margin-top:22px">
+                  <svg viewBox="0 0 660 190" preserveAspectRatio="none" style="width:100%;height:190px;display:block;overflow:visible">
+                    <defs>
+                      <linearGradient id="touchFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="var(--cta,#27C08B)" stop-opacity="0.28"></stop>
+                        <stop offset="100%" stop-color="var(--cta,#27C08B)" stop-opacity="0"></stop>
+                      </linearGradient>
+                    </defs>
+                    <sc-for list="{{ touchGrid }}" as="g" hint-placeholder-count="4">
+                      <line x1="0" y1="{{ g.y }}" x2="660" y2="{{ g.y }}" stroke="var(--hair,rgba(255,255,255,.08))" stroke-width="1"></line>
+                    </sc-for>
+                    <path d="{{ touchArea }}" fill="url(#touchFill)"></path>
+                    <path d="{{ touchLine }}" fill="none" stroke="var(--cta,#27C08B)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                    <sc-for list="{{ touchDots }}" as="d" hint-placeholder-count="7">
+                      <circle cx="{{ d.x }}" cy="{{ d.y }}" r="{{ d.r }}" fill="var(--panel,#131312)" stroke="var(--cta,#27C08B)" stroke-width="2" onClick="{{ d.pick }}" style="cursor:pointer"></circle>
+                    </sc-for>
+                  </svg>
+                  <div style="display:flex;margin-top:10px">
+                    <sc-for list="{{ touchAxis }}" as="a" hint-placeholder-count="7">
+                      <div onClick="{{ a.pick }}" style="flex:1;text-align:center;cursor:pointer">
+                        <div style="{{ a.valueStyle }}">{{ a.value }}</div>
+                        <div style="{{ a.labelStyle }}">{{ a.label }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--hair,rgba(255,255,255,.08))">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                    <span style="font-size:13px;font-weight:600">{{ touchDay.title }}</span>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2,#BCB8B2)">{{ touchDay.total }}</span>
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:10px">
+                    <sc-for list="{{ touchDay.rows }}" as="r" hint-placeholder-count="4">
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <span style="{{ r.markStyle }}"></span>
+                        <span style="font-size:12px;color:var(--tx2,#BCB8B2)">{{ r.label }}</span>
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ r.value }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+              <div style="border-radius:18px;padding:18px;background:var(--panel,#131312)">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Показы по риелторам</div>
+                <div style="display:flex;flex-direction:column;gap:14px;margin-top:20px">
+                  <sc-for list="{{ leaders }}" as="l" hint-placeholder-count="4">
+                    <div>
+                      <div style="display:flex;align-items:center;justify-content:space-between">
+                        <span style="font-size:13px">{{ l.name }}</span>
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2,#BCB8B2)">{{ l.shows }}</span>
+                      </div>
+                      <div style="height:6px;border-radius:999px;background:var(--bg2,#1C1B19);margin-top:8px;overflow:hidden">
+                        <div style="{{ l.barStyle }}"></div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isReports }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;min-width:0;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:16px;animation:omFade 200ms ease-out">
+            <div>
+              <div style="font-size:26px;font-weight:600;letter-spacing:-.02em">Отчёты</div>
+              <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">Выгрузка в XLSX или ссылкой для руководителя</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+              <sc-for list="{{ reports }}" as="r" hint-placeholder-count="4">
+                <div style="border-radius:18px;padding:18px;background:var(--panel,#131312);border:none;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="font-size:15px;font-weight:600">{{ r.title }}</div>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ r.period }}</span>
+                  </div>
+                  <div style="font-size:13px;line-height:1.6;color:var(--tx2,#BCB8B2)">{{ r.desc }}</div>
+                  <div style="display:flex;gap:8px;margin-top:2px">
+                    <button onClick="{{ r.download }}" style="height:32px;padding:0 14px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Скачать</button>
+                    <button onClick="{{ r.link }}" style="{{ reportLinkStyle }}" style-hover="background:var(--bd2,#4A4540)">Ссылка</button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;min-width:0;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:16px;animation:omFade 200ms ease-out">
+            <div>
+              <div style="font-size:26px;font-weight:600;letter-spacing:-.02em">Команда</div>
+              <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">6 человек · нагрузка распределяется по числу активных клиентов</div>
+            </div>
+            <div style="border-radius:18px;background:var(--panel,#131312);overflow:hidden">
+              <sc-for list="{{ team }}" as="t" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:1fr 110px 110px 200px;gap:16px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))" style-hover="background:var(--bg2,#1C1B19)">
+                  <div style="display:flex;align-items:center;gap:12px;min-width:0">
+                    <div style="{{ t.avatarStyle }}">{{ t.initials }}</div>
+                    <div style="min-width:0">
+                      <div style="font-size:14px;font-weight:500">{{ t.name }}</div>
+                      <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:2px">{{ t.role }}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:16px">{{ t.clients }}</div>
+                    <div style="font-size:11px;color:var(--tx3,#8B8680)">клиентов</div>
+                  </div>
+                  <div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:16px">{{ t.shows }}</div>
+                    <div style="font-size:11px;color:var(--tx3,#8B8680)">показов</div>
+                  </div>
+                  <div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--tx3,#8B8680)">
+                      <span>Нагрузка</span><span>{{ t.load }}</span>
+                    </div>
+                    <div style="height:6px;border-radius:999px;background:var(--bg2,#1C1B19);margin-top:6px;overflow:hidden">
+                      <div style="{{ t.barStyle }}"></div>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ filtersOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="width:288px;flex:0 0 288px;border-left:1px solid var(--hair,rgba(255,255,255,.08));display:flex;flex-direction:column;animation:omFade 200ms ease-out;background:var(--panel,#131312)">
+            <div style="padding:18px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+              <div style="font-size:18px;font-weight:600;letter-spacing:-.01em">Фильтры</div>
+              <button onClick="{{ toggleFilters }}" style="width:28px;height:28px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+              </button>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:18px">
+              <sc-for list="{{ filterGroups }}" as="g" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680);margin-bottom:2px">{{ g.title }}</div>
+                  <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+                    <label onClick="{{ it.toggle }}" style="display:flex;align-items:center;gap:10px;min-height:36px;padding:0 8px;border-radius:10px;cursor:pointer" style-hover="background:var(--bg2,#1C1B19)">
+                      <span style="{{ it.boxStyle }}">{{ it.check }}</span>
+                      <span style="font-size:13px;flex:1">{{ it.label }}</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ it.count }}</span>
+                    </label>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+            <div style="padding:16px;display:flex;gap:8px;border-top:1px solid var(--hair,rgba(255,255,255,.08))">
+              <button onClick="{{ applyFilters }}" style="flex:1;height:38px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Применить</button>
+              <button onClick="{{ resetFilters }}" style="flex:1;height:38px;border-radius:999px;border:1px solid var(--hair,rgba(255,255,255,.08));background:transparent;color:var(--tx2,#BCB8B2);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0)">Сбросить</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{ editOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeEdit }}" style="position:absolute;inset:0;background:rgba(6,6,5,.66);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;animation:omFade 200ms ease-out;z-index:35">
+          <div onClick="{{ stop }}" style="width:480px;border-radius:20px;background:var(--panel,#131312);box-shadow:0 40px 100px rgba(0,0,0,.6);animation:omSlideUp 280ms ease-out;overflow:hidden">
+            <div style="padding:18px 20px;display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:19px;font-weight:600;letter-spacing:-.01em">Изменить клиента</div>
+              <button onClick="{{ closeEdit }}" style="width:30px;height:30px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+              </button>
+            </div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:12px;color:var(--tx3,#8B8680)">Имя</div>
+                <input value="{{ eName }}" onChange="{{ eSetName }}" style="width:100%;height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;outline:none" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))">
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:12px;color:var(--tx3,#8B8680)">Телефон</div>
+                  <input value="{{ ePhone }}" onChange="{{ eSetPhone }}" style="width:100%;height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-family:'JetBrains Mono',monospace;font-size:13px;outline:none" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))">
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:12px;color:var(--tx3,#8B8680)">Бюджет</div>
+                  <input value="{{ eBudget }}" onChange="{{ eSetBudget }}" style="width:100%;height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;outline:none" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))">
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:12px;color:var(--tx3,#8B8680)">Email</div>
+                <input value="{{ eEmail }}" onChange="{{ eSetEmail }}" style="width:100%;height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;outline:none" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))">
+              </div>
+            </div>
+            <div style="padding:18px 20px;display:flex;gap:10px">
+              <button onClick="{{ saveEdit }}" style="flex:1;height:42px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Сохранить</button>
+              <button onClick="{{ closeEdit }}" style="flex:1;height:42px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Отменить</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ transferOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeTransfer }}" style="position:absolute;inset:0;background:rgba(6,6,5,.66);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;animation:omFade 200ms ease-out;z-index:35">
+          <div onClick="{{ stop }}" style="width:400px;border-radius:20px;background:var(--panel,#131312);box-shadow:0 40px 100px rgba(0,0,0,.6);animation:omSlideUp 280ms ease-out;padding:18px">
+            <div style="font-size:19px;font-weight:600;letter-spacing:-.01em">Передать коллеге</div>
+            <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:4px">Вся история останется у клиента</div>
+            <div style="display:flex;flex-direction:column;gap:2px;margin-top:14px">
+              <sc-for list="{{ transferList }}" as="t" hint-placeholder-count="4">
+                <button onClick="{{ t.pick }}" style="{{ t.rowStyle }}" style-hover="background:var(--bg2,#1C1B19)">
+                  <span style="{{ t.avatarStyle }}">{{ t.initials }}</span>
+                  <span style="flex:1">{{ t.name }}</span>
+                  <sc-if value="{{ t.current }}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size:11px;color:var(--cta,#27C08B)">ведёт сейчас</span>
+                  </sc-if>
+                </button>
+              </sc-for>
+            </div>
+            <button onClick="{{ closeTransfer }}" style="width:100%;height:40px;margin-top:14px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Отменить</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ confirmDelete }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ cancelDelete }}" style="position:absolute;inset:0;background:rgba(6,6,5,.66);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;animation:omFade 200ms ease-out;z-index:35">
+          <div onClick="{{ stop }}" style="width:380px;border-radius:20px;background:var(--panel,#131312);box-shadow:0 40px 100px rgba(0,0,0,.6);animation:omSlideUp 280ms ease-out;padding:20px">
+            <div style="font-size:19px;font-weight:600;letter-spacing:-.01em">Удалить клиента?</div>
+            <div style="font-size:13px;line-height:1.6;color:var(--tx2,#BCB8B2);margin-top:8px">{{ sel.name }} и вся история взаимодействий исчезнут из базы. Действие нельзя отменить.</div>
+            <div style="display:flex;gap:10px;margin-top:18px">
+              <button onClick="{{ doDelete }}" style="flex:1;height:42px;border-radius:999px;border:none;background:var(--stR,#D4837A);color:#1A1917;font-size:13px;font-weight:600;cursor:pointer" style-hover="filter:brightness(1.1)">Удалить</button>
+              <button onClick="{{ cancelDelete }}" style="flex:1;height:42px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Отменить</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ tourOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:55;pointer-events:none;animation:omFade 160ms ease-out">
+          <div style="{{ coach.ringStyle }}"></div>
+          <div style="{{ coach.tipStyle }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cta,#27C08B)">{{ coach.num }} / {{ coach.total }}</span>
+              <button onClick="{{ closeTour }}" style="width:22px;height:22px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx3,#8B8680);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="color:var(--tx1,#F5F3F0)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+              </button>
+            </div>
+            <div style="font-size:14px;font-weight:600;line-height:1.35;margin-top:8px">{{ coach.title }}</div>
+            <div style="font-size:12px;line-height:1.55;color:var(--tx2,#BCB8B2);margin-top:4px">{{ coach.text }}</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px">
+              <div style="display:flex;gap:5px">
+                <sc-for list="{{ tourDots }}" as="p" hint-placeholder-count="4">
+                  <span onClick="{{ p.pick }}" style="{{ p.style }}"></span>
+                </sc-for>
+              </div>
+              <div style="display:flex;gap:6px">
+                <sc-if value="{{ coach.canBack }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ prevTour }}" style="height:28px;padding:0 12px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:11px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Назад</button>
+                </sc-if>
+                <button onClick="{{ nextTour }}" style="height:28px;padding:0 14px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:11px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">{{ coach.nextLabel }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:50%;bottom:32px;padding:12px 18px;border-radius:999px;background:var(--panel,#131312);border:1px solid var(--ctaLine,rgba(39,192,139,.5));color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;box-shadow:0 16px 48px rgba(0,0,0,.5);animation:omToast 200ms ease-out;z-index:40">{{ toast }}</div>
+      </sc-if>
+
+      <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeModal }}" style="position:absolute;inset:0;background:rgba(6,6,5,.66);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;animation:omFade 200ms ease-out;z-index:30">
+          <div onClick="{{ stop }}" style="width:560px;max-height:820px;display:flex;flex-direction:column;background:var(--panel,#131312);border-radius:20px;box-shadow:0 40px 100px rgba(0,0,0,.6);animation:omSlideUp 300ms ease-out;overflow:hidden">
+            <div style="padding:18px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+              <div>
+                <div style="font-size:20px;font-weight:600;letter-spacing:-.01em">Добавить событие</div>
+                <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:2px">Клиент {{ sel.name }}</div>
+              </div>
+              <button onClick="{{ closeModal }}" style="width:32px;height:32px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+              </button>
+            </div>
+
+            <div style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:12px;color:var(--tx3,#8B8680)">Клиент</div>
+                  <div style="height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);font-size:13px;display:flex;align-items:center">{{ sel.name }}</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:12px;color:var(--tx3,#8B8680)">Дата</div>
+                  <div style="position:relative">
+                    <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--tx3,#8B8680);display:flex;pointer-events:none">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="3"></rect><path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M3.5 10h17"></path></svg>
+                    </span>
+                    <input value="{{ fDate }}" onChange="{{ setDate }}" placeholder="Выбери дату..." style="width:100%;height:40px;padding:0 14px 0 36px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-family:'JetBrains Mono',monospace;font-size:13px;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))">
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:12px;color:var(--tx3,#8B8680)">Тип события <span style="color:var(--stR,#FF6B6B)">*</span></div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <sc-for list="{{ typeChips }}" as="t" hint-placeholder-count="6">
+                    <button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+
+              <sc-if value="{{ needsAddr }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:12px;color:var(--tx3,#8B8680)">Адрес квартиры <span style="color:var(--stR,#FF6B6B)">*</span></div>
+                  <input value="{{ fAddr }}" onChange="{{ setAddr }}" placeholder="Начните вводить адрес..." style="{{ addrInputStyle }}">
+                  <sc-if value="{{ addrErr }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:11px;color:var(--stR,#FF6B6B)">Укажите адрес квартиры</div>
+                  </sc-if>
+                  <sc-if value="{{ addrSuggest }}" hint-placeholder-val="{{ false }}">
+                    <div style="border-radius:12px;background:var(--bg2,#1C1B19);overflow:hidden">
+                      <sc-for list="{{ suggestions }}" as="s" hint-placeholder-count="3">
+                        <div onClick="{{ s.pick }}" style="padding:10px 14px;font-size:13px;cursor:pointer" style-hover="background:var(--bg3,#26241F)">{{ s.label }}</div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px">
+                    <span style="font-size:11px;color:var(--tx3,#8B8680)">Недавние:</span>
+                    <sc-for list="{{ recentAddrs }}" as="r" hint-placeholder-count="2">
+                      <button onClick="{{ r.pick }}" style="height:28px;padding:0 12px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);font-size:11px;font-weight:500;cursor:pointer" style-hover="background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0)">{{ r.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:12px;color:var(--tx3,#8B8680)">Статус клиента <span style="color:var(--stR,#FF6B6B)">*</span></div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+                  <sc-for list="{{ statusOpts }}" as="s" hint-placeholder-count="4">
+                    <button onClick="{{ s.pick }}" style="{{ s.btnStyle }}"><span style="{{ s.dotStyle }}"></span>{{ s.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+
+              <sc-if value="{{ isCall }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:12px;color:var(--tx3,#8B8680)">Длительность звонка</div>
+                  <div style="display:flex;gap:8px;align-items:center">
+                    <input value="{{ fDur }}" onChange="{{ setDur }}" style="width:72px;height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-family:'JetBrains Mono',monospace;font-size:13px;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))">
+                    <div style="height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx3,#8B8680);font-size:13px;display:flex;align-items:center">минут</div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:12px;color:var(--tx3,#8B8680)">Заметка (опционально)</div>
+                <textarea value="{{ fNote }}" onChange="{{ setNote }}" placeholder="Добавьте информацию о клиенте, его интересах, предпочтениях..." style="width:100%;height:88px;resize:none;padding:12px 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;line-height:1.6;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))"></textarea>
+                <div style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ noteCount }}</div>
+              </div>
+            </div>
+
+            <div style="padding:18px 20px;display:flex;gap:10px;border-top:1px solid var(--hair,rgba(255,255,255,.08))">
+              <button onClick="{{ saveEvent }}" style="flex:1;height:44px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.99)">Сохранить</button>
+              <button onClick="{{ closeModal }}" style="flex:1;height:44px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg2,#1C1B19)">Отменить</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:12px">
+      <div style="font-size:20px;font-weight:600;line-height:1.3">Экраны 3–5 — Mobile</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">390 × 844</div>
+    </div>
+    <div style="display:flex;gap:32px;flex-wrap:wrap">
+
+      <div style="position:relative;width:390px;height:844px;border-radius:40px;overflow:hidden;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--bg,#0B0B0A);box-shadow:0 24px 80px rgba(0,0,0,.45);display:flex;flex-direction:column">
+        <div style="position:absolute;left:-90px;top:-140px;width:420px;height:320px;border-radius:50%;background:var(--glow,radial-gradient(circle,rgba(39,192,139,.20),transparent 68%));pointer-events:none"></div>
+        <div style="position:relative;height:48px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500">
+          <span>9:41</span>
+          <span style="width:24px;height:11px;border-radius:3px;border:1px solid var(--tx3,#8B8680);display:inline-block;padding:1px"><span style="display:block;width:70%;height:100%;background:var(--tx1,#F5F3F0);border-radius:2px"></span></span>
+        </div>
+        <div style="position:relative;height:56px;padding:0 12px;display:flex;align-items:center;justify-content:space-between">
+          <button onClick="{{ openMenuSheet }}" style="width:44px;height:44px;border:none;background:transparent;color:var(--tx1,#F5F3F0);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="opacity:.7" style-active="transform:scale(.94)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg>
+          </button>
+          <div style="font-size:18px;font-weight:600;letter-spacing:-.01em">{{ mTitle }}</div>
+          <button onClick="{{ openFilterSheet }}" style="{{ mFilterBtnStyle }}" style-active="transform:scale(.94)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16"></path><path d="M4 17h16"></path><circle cx="9" cy="7" r="2.4"></circle><circle cx="15" cy="17" r="2.4"></circle></svg>
+          </button>
+        </div>
+
+        <sc-if value="{{ mIsShowings }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;overflow-y:auto;padding:4px 12px 24px 12px;display:flex;flex-direction:column;gap:2px;animation:omFade 180ms ease-out">
+            <sc-for list="{{ showings }}" as="r" hint-placeholder-count="6">
+              <div style="padding:14px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                  <span style="font-size:15px;font-weight:500">{{ r.addr }}</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ r.price }}</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px">
+                  <span style="font-size:12px;color:var(--tx2,#BCB8B2)">{{ r.client }} · {{ r.date }}</span>
+                  <span style="{{ r.chipStyle }}"><span style="{{ r.markStyle }}"></span>{{ r.result }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ mIsDeals }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;overflow-y:auto;padding:4px 12px 24px 12px;display:flex;flex-direction:column;gap:20px;animation:omFade 180ms ease-out">
+            <sc-for list="{{ dealCols }}" as="col" hint-placeholder-count="3">
+              <div style="display:flex;flex-direction:column;gap:2px">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 10px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span style="{{ col.dotStyle }}"></span>
+                    <span style="font-size:14px;font-weight:600">{{ col.title }}</span>
+                  </div>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx3,#8B8680)">{{ col.sum }}</span>
+                </div>
+                <sc-for list="{{ col.cards }}" as="d" hint-placeholder-count="2">
+                  <div style="padding:13px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                      <span style="font-size:14px;font-weight:500">{{ d.name }}</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ d.sum }}</span>
+                    </div>
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:4px">
+                      <span style="font-size:12px;color:var(--tx2,#BCB8B2)">{{ d.addr }}</span>
+                      <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ d.realtor }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ mIsDash }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;overflow-y:auto;padding:4px 12px 24px 12px;display:flex;flex-direction:column;gap:16px;animation:omFade 180ms ease-out">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <sc-for list="{{ dashMetrics }}" as="m" hint-placeholder-count="4">
+                <div style="border-radius:14px;padding:14px;background:var(--panel,#131312)">
+                  <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3,#8B8680)">{{ m.label }}</div>
+                  <div style="display:flex;align-items:baseline;gap:6px;margin-top:8px">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:500">{{ m.value }}</span>
+                    <span style="{{ m.deltaStyle }}">{{ m.delta }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="border-radius:18px;padding:16px;background:var(--panel,#131312)">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Касания клиентов по дням</div>
+              <div style="display:flex;align-items:baseline;gap:8px;margin-top:8px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:500">{{ touchTotal }}</span>
+                <span style="font-size:12px;color:var(--tx2,#BCB8B2)">касаний за неделю</span>
+              </div>
+              <svg viewBox="0 0 660 190" preserveAspectRatio="none" style="width:100%;height:128px;display:block;overflow:visible;margin-top:16px">
+                <defs>
+                  <linearGradient id="mTouchFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--cta,#27C08B)" stop-opacity="0.28"></stop>
+                    <stop offset="100%" stop-color="var(--cta,#27C08B)" stop-opacity="0"></stop>
+                  </linearGradient>
+                </defs>
+                <sc-for list="{{ touchGrid }}" as="g" hint-placeholder-count="4">
+                  <line x1="0" y1="{{ g.y }}" x2="660" y2="{{ g.y }}" stroke="var(--hair,rgba(255,255,255,.08))" stroke-width="1"></line>
+                </sc-for>
+                <path d="{{ touchArea }}" fill="url(#mTouchFill)"></path>
+                <path d="{{ touchLine }}" fill="none" stroke="var(--cta,#27C08B)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></path>
+                <sc-for list="{{ touchDots }}" as="d" hint-placeholder-count="7">
+                  <circle cx="{{ d.x }}" cy="{{ d.y }}" r="{{ d.mr }}" fill="var(--panel,#131312)" stroke="var(--cta,#27C08B)" stroke-width="3" onClick="{{ d.pick }}" style="cursor:pointer"></circle>
+                </sc-for>
+              </svg>
+              <div style="display:flex;margin-top:10px">
+                <sc-for list="{{ touchAxis }}" as="a" hint-placeholder-count="7">
+                  <div onClick="{{ a.pick }}" style="flex:1;text-align:center;cursor:pointer">
+                    <div style="{{ a.valueStyle }}">{{ a.value }}</div>
+                    <div style="{{ a.labelStyle }}">{{ a.label }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680);padding:0 4px 12px 4px">Показы по риелторам</div>
+              <div style="display:flex;flex-direction:column;gap:14px;padding:0 4px">
+                <sc-for list="{{ leaders }}" as="l" hint-placeholder-count="4">
+                  <div>
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                      <span style="font-size:13px">{{ l.name }}</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2,#BCB8B2)">{{ l.shows }}</span>
+                    </div>
+                    <div style="height:6px;border-radius:999px;background:var(--bg2,#1C1B19);margin-top:8px;overflow:hidden">
+                      <div style="{{ l.barStyle }}"></div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ mIsReports }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;overflow-y:auto;padding:4px 12px 24px 12px;display:flex;flex-direction:column;gap:2px;animation:omFade 180ms ease-out">
+            <sc-for list="{{ reports }}" as="r" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:12px;padding:14px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:500;line-height:1.4">{{ r.title }}</div>
+                  <div style="font-size:11px;color:var(--tx3,#8B8680);margin-top:3px">{{ r.period }}</div>
+                </div>
+                <button onClick="{{ r.link }}" style="width:44px;height:44px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7L11.5 5.8"></path><path d="M14 11a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7l1.5-1.5"></path></svg>
+                </button>
+                <button onClick="{{ r.download }}" style="min-height:44px;padding:0 16px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Скачать</button>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ mIsTeam }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;overflow-y:auto;padding:4px 12px 24px 12px;display:flex;flex-direction:column;gap:2px;animation:omFade 180ms ease-out">
+            <sc-for list="{{ team }}" as="t" hint-placeholder-count="4">
+              <div style="padding:14px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08));display:flex;align-items:center;gap:12px">
+                <div style="{{ t.avatarStyle }}">{{ t.initials }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:500">{{ t.name }}</div>
+                  <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:2px">{{ t.clients }} клиентов · {{ t.shows }} показов</div>
+                  <div style="height:5px;border-radius:999px;background:var(--bg2,#1C1B19);margin-top:8px;overflow:hidden">
+                    <div style="{{ t.barStyle }}"></div>
+                  </div>
+                </div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx3,#8B8680)">{{ t.load }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ mIsClients }}" hint-placeholder-val="{{ true }}">
+        <div style="position:relative;padding:4px 12px 12px 12px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:8px;padding:0 2px">
+            <div style="flex:1;display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;border-radius:999px;background:var(--bg2,#1C1B19)">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--stA,#6FC28A)"></span>
+              <span style="font-size:12px;color:var(--tx1,#F5F3F0)">26 клиентов</span>
+            </div>
+            <div style="flex:1;display:flex;align-items:center;justify-content:space-between;height:34px;padding:0 12px;border-radius:999px;background:var(--bg2,#1C1B19)">
+              <span style="font-size:12px;color:var(--tx2,#BCB8B2)">Показов</span>
+              <span style="font-size:12px;font-weight:600">14</span>
+            </div>
+          </div>
+          <div style="position:relative">
+            <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--tx3,#8B8680);display:flex">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4.2-4.2"></path></svg>
+            </span>
+            <input value="{{ query }}" onChange="{{ setQuery }}" placeholder="Поиск..." style="width:100%;height:44px;padding:0 16px 0 38px;border-radius:999px;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:14px;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))">
+          </div>
+          <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px">
+            <sc-for list="{{ segChips }}" as="t" hint-placeholder-count="4">
+              <button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="position:relative;flex:1;overflow-y:auto;padding:0 12px 24px 12px">
+          <sc-for list="{{ clients }}" as="c" hint-placeholder-count="8">
+            <div onClick="{{ c.select }}" style="position:relative;min-height:68px;padding:12px;margin-bottom:8px;border-radius:16px;background:var(--panel,#131312);display:flex;align-items:center;gap:12px;cursor:pointer" style-hover="background:var(--bg2,#1C1B19)">
+              <sc-if value="{{ c.selected }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0;border-radius:16px;background:var(--bg3,#26241F);pointer-events:none"></div>
+              </sc-if>
+              <div style="{{ c.avatar36Style }}">{{ c.initials }}</div>
+              <div style="position:relative;flex:1;min-width:0">
+                <div style="font-size:15px;font-weight:600;line-height:1.4">{{ c.name }}</div>
+                <div style="display:flex;align-items:center;gap:6px;margin-top:5px">
+                  <span style="{{ c.miniBadgeStyle }}"><span style="{{ c.dotStyle }}"></span>{{ c.statusLabel }}</span>
+                  <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ c.last }}</span>
+                </div>
+              </div>
+              <div style="position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx1,#F5F3F0)">{{ c.budgetShort }}</span>
+                <div style="display:flex;gap:3px">
+                  <sc-for list="{{ c.spark }}" as="sp" hint-placeholder-count="6">
+                    <span style="{{ sp.style }}"></span>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(6,6,5,.6);display:flex;flex-direction:column;justify-content:flex-end;animation:omFade 180ms ease-out;z-index:20">
+            <div onClick="{{ stop }}" style="border-radius:24px 24px 40px 40px;background:var(--panel,#131312);padding:14px 14px 24px 14px;animation:omSlideUp 240ms ease-out;max-height:640px;display:flex;flex-direction:column">
+              <div style="width:36px;height:4px;border-radius:999px;background:var(--bg3,#26241F);margin:2px auto 14px auto"></div>
+              <div style="font-size:17px;font-weight:600;padding:0 4px 12px 4px">{{ sheetTitle }}</div>
+
+              <sc-if value="{{ isMenuSheet }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;overflow-y:auto">
+                  <sc-for list="{{ mNav }}" as="n" hint-placeholder-count="6">
+                    <div onClick="{{ n.pick }}" style="{{ n.style }}">
+                      <span style="{{ n.dotStyle }}"></span>
+                      <span style="flex:1">{{ n.label }}</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx3,#8B8680)">{{ n.count }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isFilterSheet }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:16px;overflow-y:auto;padding-bottom:8px">
+                  <sc-for list="{{ filterGroups }}" as="g" hint-placeholder-count="3">
+                    <div style="display:flex;flex-direction:column;gap:2px">
+                      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680);padding:0 4px 6px 4px">{{ g.title }}</div>
+                      <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+                        <label onClick="{{ it.toggle }}" style="display:flex;align-items:center;gap:12px;min-height:48px;padding:0 4px;cursor:pointer">
+                          <span style="{{ it.boxStyle }}">{{ it.check }}</span>
+                          <span style="font-size:14px;flex:1">{{ it.label }}</span>
+                          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx3,#8B8680)">{{ it.count }}</span>
+                        </label>
+                      </sc-for>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:8px;padding-top:12px">
+                  <button onClick="{{ applySheet }}" style="flex:1;min-height:48px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Применить</button>
+                  <button onClick="{{ resetFilters }}" style="flex:1;min-height:48px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Сбросить</button>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="position:relative;width:390px;height:844px;border-radius:40px;overflow:hidden;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--bg,#0B0B0A);box-shadow:0 24px 80px rgba(0,0,0,.45);display:flex;flex-direction:column">
+        <div style="position:absolute;left:-90px;top:-140px;width:420px;height:320px;border-radius:50%;background:var(--glow,radial-gradient(circle,rgba(39,192,139,.20),transparent 68%));pointer-events:none"></div>
+        <div style="position:relative;height:48px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500">
+          <span>9:41</span>
+          <span style="width:24px;height:11px;border-radius:3px;border:1px solid var(--tx3,#8B8680);display:inline-block;padding:1px"><span style="display:block;width:70%;height:100%;background:var(--tx1,#F5F3F0);border-radius:2px"></span></span>
+        </div>
+        <div style="position:relative;height:56px;padding:0 12px;display:flex;align-items:center;justify-content:space-between">
+          <button style="width:44px;height:44px;border:none;background:transparent;color:var(--tx1,#F5F3F0);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="opacity:.7">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5"></path><path d="M11 18l-6-6 6-6"></path></svg>
+          </button>
+          <div style="font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ sel.name }}</div>
+          <button style="width:44px;height:44px;border:none;background:transparent;color:var(--tx1,#F5F3F0);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="opacity:.7">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg>
+          </button>
+        </div>
+
+        <div style="position:relative;flex:1;overflow-y:auto;padding:8px 12px 16px 12px;display:flex;flex-direction:column;gap:12px">
+          <div style="border-radius:20px;padding:20px 16px;background:var(--panel,#131312);display:flex;flex-direction:column;align-items:center;gap:10px">
+            <div style="{{ sel.avatar48Style }}">{{ sel.initials }}</div>
+            <div style="font-size:20px;font-weight:600;letter-spacing:-.01em">{{ sel.name }}</div>
+            <span style="{{ sel.badgeStyle }}"><span style="{{ sel.dotStyle }}"></span>{{ sel.statusLabel }}</span>
+            <div style="font-size:12px;color:var(--tx3,#8B8680)">Создан {{ sel.created }} · {{ sel.owner }}</div>
+            <div style="display:flex;gap:8px;width:100%;margin-top:6px">
+              <button onClick="{{ copyPhone }}" style="flex:1;min-height:44px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.98)">Позвонить</button>
+              <button style="flex:1;min-height:44px;border-radius:999px;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">WhatsApp</button>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+              <div style="border-radius:14px;padding:12px;background:var(--panel,#131312)">
+                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3,#8B8680)">{{ s.label }}</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:18px;margin-top:6px">{{ s.value }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="border-radius:16px;padding:14px;background:var(--panel,#131312)">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Контакт</div>
+            <div style="display:flex;flex-direction:column;margin-top:8px">
+              <button onClick="{{ copyPhone }}" style="text-align:left;border:none;background:transparent;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08));font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cta,#27C08B);cursor:pointer">{{ sel.phone }}</button>
+              <button onClick="{{ copyMail }}" style="text-align:left;border:none;background:transparent;padding:10px 0;font-size:13px;color:var(--cta,#27C08B);cursor:pointer">{{ sel.email }}</button>
+            </div>
+          </div>
+
+          <div style="border-radius:16px;padding:14px;background:var(--panel,#131312)">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Бюджет и интерес</div>
+            <div style="display:flex;flex-direction:column;margin-top:8px;font-size:13px">
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))"><span style="color:var(--tx2,#BCB8B2)">Бюджет</span><span style="font-family:'JetBrains Mono',monospace">{{ sel.budget }}</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))"><span style="color:var(--tx2,#BCB8B2)">Районы</span><span style="text-align:right">{{ sel.districts }}</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))"><span style="color:var(--tx2,#BCB8B2)">Срочность</span><span>{{ sel.urgency }}</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:9px 0"><span style="color:var(--tx2,#BCB8B2)">Комнаты</span><span>{{ sel.rooms }}</span></div>
+            </div>
+          </div>
+
+          <div style="border-radius:16px;padding:14px;background:var(--panel,#131312)">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">История · последние 5</div>
+            <div style="max-height:320px;overflow-y:auto;margin-top:12px;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ mobileEvents }}" as="e" hint-placeholder-count="3">
+                <div style="display:flex;gap:10px;padding:10px;border-radius:14px;background:var(--bg2,#1C1B19)">
+                  <div style="{{ e.iconStyle }}">{{ e.icon }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                      <span style="font-size:13px;font-weight:500;line-height:1.4">{{ e.title }}</span>
+                      <span style="{{ e.kindChipStyle }}">{{ e.kindLabel }}</span>
+                    </div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680);margin-top:4px">{{ e.dateShort }} · {{ e.by }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:14px;text-align:center"><a href="#top" style="font-size:12px">Показать всё →</a></div>
+          </div>
+        </div>
+
+        <div style="padding:12px 12px 24px 12px;border-top:1px solid var(--hair,rgba(255,255,255,.08))">
+          <button onClick="{{ openModal }}" style="width:100%;min-height:48px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.99)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+            Добавить событие
+          </button>
+        </div>
+      </div>
+
+      <div style="width:390px;height:844px;border-radius:40px;overflow:hidden;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--bg,#0B0B0A);box-shadow:0 24px 80px rgba(0,0,0,.45);display:flex;flex-direction:column">
+        <div style="height:48px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500">
+          <span>9:41</span>
+          <span style="width:24px;height:11px;border-radius:3px;border:1px solid var(--tx3,#8B8680);display:inline-block;padding:1px"><span style="display:block;width:70%;height:100%;background:var(--tx1,#F5F3F0);border-radius:2px"></span></span>
+        </div>
+        <div style="height:56px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+          <button style="width:44px;height:44px;border:none;background:transparent;color:var(--tx1,#F5F3F0);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="opacity:.7">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5"></path><path d="M11 18l-6-6 6-6"></path></svg>
+          </button>
+          <div style="font-size:16px;font-weight:600">Добавить событие</div>
+          <div style="width:44px"></div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:12px;color:var(--tx3,#8B8680)">Клиент</div>
+            <div style="min-height:48px;padding:0 16px;border-radius:14px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);font-size:14px;display:flex;align-items:center">{{ sel.name }}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:12px;color:var(--tx3,#8B8680)">Дата</div>
+            <input value="{{ fDate }}" onChange="{{ setDate }}" placeholder="Выбери дату..." style="width:100%;min-height:48px;padding:0 16px;border-radius:14px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-family:'JetBrains Mono',monospace;font-size:14px;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:12px;color:var(--tx3,#8B8680)">Тип события <span style="color:var(--stR,#FF6B6B)">*</span></div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ typeChipsMobile }}" as="t" hint-placeholder-count="6">
+                <button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <sc-if value="{{ needsAddr }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:12px;color:var(--tx3,#8B8680)">Адрес квартиры <span style="color:var(--stR,#FF6B6B)">*</span></div>
+              <input value="{{ fAddr }}" onChange="{{ setAddr }}" placeholder="Начните вводить адрес..." style="width:100%;min-height:48px;padding:0 16px;border-radius:14px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:14px;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))">
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <sc-for list="{{ recentAddrs }}" as="r" hint-placeholder-count="2">
+                  <button onClick="{{ r.pick }}" style="min-height:36px;padding:0 14px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);font-size:12px;cursor:pointer" style-hover="background:var(--bg2,#1C1B19)">{{ r.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:12px;color:var(--tx3,#8B8680)">Статус клиента <span style="color:var(--stR,#FF6B6B)">*</span></div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ statusOptsMobile }}" as="s" hint-placeholder-count="4">
+                <button onClick="{{ s.pick }}" style="{{ s.btnStyle }}"><span style="{{ s.dotStyle }}"></span>{{ s.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:12px;color:var(--tx3,#8B8680)">Заметка (опционально)</div>
+            <textarea value="{{ fNote }}" onChange="{{ setNote }}" placeholder="Добавьте информацию о клиенте..." style="width:100%;height:96px;resize:none;padding:12px 16px;border-radius:14px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:14px;line-height:1.6;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))"></textarea>
+            <div style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ noteCount }}</div>
+          </div>
+        </div>
+        <div style="padding:12px 12px 24px 12px;border-top:1px solid var(--hair,rgba(255,255,255,.08));display:flex;flex-direction:column;gap:8px">
+          <button onClick="{{ saveEvent }}" style="width:100%;min-height:48px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Сохранить</button>
+          <button onClick="{{ resetForm }}" style="width:100%;min-height:48px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg2,#1C1B19)">Отменить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:20px;font-weight:600;line-height:1.3">Компоненты и состояния</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;max-width:1440px">
+
+      <div style="border-radius:18px;padding:20px;background:var(--panel,#131312);display:flex;flex-direction:column;gap:14px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Кнопки</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <button style="height:28px;padding:0 14px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Small</button>
+          <button style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Medium</button>
+          <button style="height:44px;padding:0 20px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Large</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <button style="height:36px;padding:0 16px;border-radius:999px;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Secondary</button>
+          <button style="height:36px;padding:0 16px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--tx2,#BCB8B2);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0)">Ghost</button>
+          <button disabled="true" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;opacity:.4;cursor:not-allowed">Disabled</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;color:var(--tx3,#8B8680)">Default</span><div style="height:36px;border-radius:999px;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">Сохранить</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;color:var(--tx3,#8B8680)">Hover</span><div style="height:36px;border-radius:999px;background:var(--pillH,#4AE8A8);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(39,192,139,.28)">Сохранить</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;color:var(--tx3,#8B8680)">Active</span><div style="height:36px;border-radius:999px;background:var(--pillH,#4AE8A8);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;transform:scale(.98)">Сохранить</div></div>
+        </div>
+      </div>
+
+      <div style="border-radius:18px;padding:20px;background:var(--panel,#131312);display:flex;flex-direction:column;gap:12px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Поля ввода</div>
+        <input placeholder="Default" style="width:100%;height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))">
+        <div style="width:100%;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18));background:var(--bg2,#1C1B19);font-size:13px;display:flex;align-items:center">Focus</div>
+        <div style="width:100%;height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);font-size:13px;display:flex;align-items:center">ул. Толстого д.25</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="width:100%;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stR,#FF6B6B);background:var(--bg2,#1C1B19);font-size:13px;display:flex;align-items:center">Error</div>
+          <div style="font-size:11px;color:var(--stR,#FF6B6B)">Укажите адрес квартиры</div>
+        </div>
+        <div style="width:100%;height:40px;padding:0 14px;border-radius:12px;border:none;background:var(--bg2,#1C1B19);color:var(--tx3,#8B8680);font-size:13px;display:flex;align-items:center;opacity:.5">Disabled</div>
+      </div>
+
+      <div style="border-radius:18px;padding:20px;background:var(--panel,#131312);display:flex;flex-direction:column;gap:16px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Статусы, аватары, таймлайн</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ badgeSamples }}" as="b" hint-placeholder-count="4">
+            <span style="{{ b.style }}"><span style="{{ b.dotStyle }}"></span>{{ b.label }}</span>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:12px">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--bg3,#26241F);color:var(--tx2,#BCB8B2);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">СГ</div>
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--bg3,#26241F);color:var(--tx2,#BCB8B2);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center">СГ</div>
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--bg3,#26241F);color:var(--tx2,#BCB8B2);font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center">СГ</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680);padding-bottom:6px">32 / 44 / 56</div>
+        </div>
+        <div style="padding-left:16px;border-left:1px solid var(--hair,rgba(255,255,255,.08));position:relative">
+          <span style="position:absolute;left:-5px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--panel,#131312);border:2px solid var(--cta,#27C08B)"></span>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">Вт, 14 сентября, 14:30</div>
+          <div style="font-size:15px;font-weight:500;margin-top:6px">Показ ул. Толстого д.25 (8.5M)</div>
+          <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:4px">Выполнена Василий Петров</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+]]>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark' | 'light'&quot;,&quot;section&quot;:&quot;Тема&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#27C08B&quot;,&quot;#4A9BFF&quot;,&quot;#C8A24A&quot;,&quot;#B06CE8&quot;],&quot;default&quot;:&quot;#27C08B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Тема&quot;}}">
+class Component extends DCLogic {
+  STATUS = {
+    active:  { label: 'Активен',    v: 'var(--stA,#4AFF1A)' },
+    waiting: { label: 'Жду звонка', v: 'var(--stW,#FFD700)' },
+    cold:    { label: 'Холодный',   v: 'var(--stC,#B0ADA7)' },
+    refused: { label: 'Отказал',    v: 'var(--stR,#FF6B6B)' }
+  };
+
+  DARK = {
+    '--bg':'#0B0B0A','--panel':'#131312','--bg2':'#1C1B19','--bg3':'#26241F',
+    '--hair':'rgba(255,255,255,.08)','--bd2':'#4A4540',
+    '--tx1':'#F5F3F0','--tx2':'#BCB8B2','--tx3':'#8B8680',
+    '--stA':'#6FC28A','--stW':'#D2A65B','--stC':'#A5A09A','--stR':'#D4837A',
+    '--cta':'#27C08B','--pill':'#27C08B','--pillH':'#4AE8A8','--pillTx':'#08211A',
+    '--act':'#152C25','--ctaLine':'rgba(39,192,139,.5)','--ctaSoft':'rgba(39,192,139,.18)',
+    '--glow':'radial-gradient(circle,rgba(39,192,139,.20),transparent 68%)',
+    '--kHome':'#6FC2A0','--kPhone':'#7FA8D4','--kMsg':'#D2B36B','--kMeet':'#B99AD4'
+  };
+  LIGHT = {
+    '--bg':'#F6F5F3','--panel':'#FFFFFF','--bg2':'#F0EFED','--bg3':'#E6E4E0',
+    '--hair':'rgba(26,25,23,.10)','--bd2':'#D9D6D1',
+    '--tx1':'#1A1917','--tx2':'#6B6965','--tx3':'#A09D98',
+    '--stA':'#3A6B4A','--stW':'#96702A','--stC':'#6B6965','--stR':'#9A4A44',
+    '--cta':'#0F6E56','--pill':'#0F6E56','--pillH':'#085041','--pillTx':'#FFFFFF',
+    '--act':'#E1F5EE','--ctaLine':'rgba(15,110,86,.45)','--ctaSoft':'rgba(15,110,86,.18)',
+    '--glow':'radial-gradient(circle,rgba(15,110,86,.10),transparent 70%)',
+    '--kHome':'#2F6B55','--kPhone':'#2B5A85','--kMsg':'#8A6A1F','--kMeet':'#6A4A8A'
+  };
+
+  TYPES = ['Показ квартиры','Звонок','WhatsApp сообщение','Встреча в офисе','Email','Другое'];
+  ADDRS = ['ул. Толстого д.25','ул. Лениных полей д.10','пр. Гагарина д.4','ул. Мичурина д.71'];
+  KINDS = { home:'Показ', phone:'Звонок', msg:'Сообщение', meet:'Встреча' };
+  KCOLOR = { home:'var(--kHome,#6FC2A0)', phone:'var(--kPhone,#7FA8D4)', msg:'var(--kMsg,#D2B36B)', meet:'var(--kMeet,#B99AD4)' };
+  THREADS = {
+    'Показ ул. Толстого д.25 (8.5M)': [
+      { id:'n1', by:'Василий Петров', time:'15:10', text:'Квартира понравилась, но смущает первый этаж. Просил посмотреть похожие выше третьего.' },
+      { id:'n2', by:'Марина Грязнова', time:'17:40', text:'Подобрала три варианта в этом же доме, отправлю завтра утром.' },
+      { id:'n3', by:'Василий Петров', time:'19:05', text:'Готов торговаться до 8.2 млн, если собственник оставит кухню.' }
+    ]
+  };
+
+  state = {
+    theme: null, selectedId: 'c1', query: '', nav: 'Клиенты', tab: 'Все',
+    seg: 'Все', filtersOpen: false, modalOpen: false, toast: '',
+    fDate: '14 сент, 14:30', fType: 'Показ квартиры', fAddr: '', fStatus: 'active',
+    fDur: '25', fNote: '', addrErr: false, openEvent: '0-0', tourStep: -1, touchDay: 4, sheet: '',
+    editNote: '', draft: '', removed: {}, addNote: '', newDraft: '', moreOpen: false,
+    editOpen: false, transferOpen: false, confirmDelete: false,
+    eName: '', ePhone: '', eEmail: '', eBudget: '',
+    filters: { 'Моих клиентов': true },
+    events: {
+      c1: [
+        { date:'Вт, 14 сентября, 14:30', kind:'home', title:'Показ ул. Толстого д.25 (8.5M)', sub:'', by:'Василий Петров', notes:[
+          { id:'n1', by:'Василий Петров', time:'15:10', text:'Квартира понравилась, но смущает первый этаж. Просил посмотреть похожие выше третьего.' },
+          { id:'n2', by:'Марина Грязнова', time:'17:40', text:'Подобрала три варианта в этом же доме, отправлю завтра утром.' },
+          { id:'n3', by:'Василий Петров', time:'19:05', text:'Готов торговаться до 8.2 млн, если собственник оставит кухню.' }
+        ] },
+        { date:'Пн, 13 сентября, 11:15', kind:'phone', title:'Звонок (25 мин)', sub:'Обсуждали юго-запад', by:'Марина Грязнова' },
+        { date:'Вс, 12 сентября, 16:45', kind:'home', title:'Показ ул. Лениных полей д.10 (12M)', sub:'', by:'Василий Петров' },
+        { date:'Сб, 11 сентября, 19:20', kind:'msg', title:'WhatsApp сообщение', sub:'Отправлена подборка из 4 объектов', by:'Марина Грязнова' },
+        { date:'Пт, 10 сентября, 09:00', kind:'phone', title:'Первый контакт (звонок)', sub:'Интересуется 2-комнатной', by:'Марина Грязнова' }
+      ],
+      c2: [
+        { date:'Пн, 13 сентября, 18:40', kind:'phone', title:'Звонок (7 мин)', sub:'Просила перезвонить в пятницу', by:'Дмитрий Кутузов' },
+        { date:'Чт, 9 сентября, 12:00', kind:'meet', title:'Встреча в офисе', sub:'Подписали договор на подбор', by:'Дмитрий Кутузов' }
+      ],
+      c3: [ { date:'Ср, 1 сентября, 10:30', kind:'phone', title:'Звонок (3 мин)', sub:'Отложил поиск до весны', by:'Василий Петров' } ],
+      c4: [
+        { date:'Вт, 14 сентября, 11:00', kind:'home', title:'Показ ул. Мичурина д.71 (19M)', sub:'Понравился вид, думает', by:'Марина Грязнова' },
+        { date:'Сб, 11 сентября, 15:10', kind:'msg', title:'WhatsApp сообщение', sub:'Уточнила про паркинг', by:'Марина Грязнова' }
+      ],
+      c5: [ { date:'Пт, 3 сентября, 17:25', kind:'phone', title:'Звонок (12 мин)', sub:'Купил через другое агентство', by:'Дмитрий Кутузов' } ],
+      c6: [ { date:'Пн, 13 сентября, 09:45', kind:'msg', title:'WhatsApp сообщение', sub:'Ждёт ответа по рассрочке', by:'Василий Петров' } ],
+      c7: [ { date:'Вт, 14 сентября, 16:00', kind:'meet', title:'Встреча в офисе', sub:'Смотрели планировки в ЖК Парковый', by:'Марина Грязнова' } ],
+      c8: [ { date:'Чт, 26 августа, 13:15', kind:'phone', title:'Звонок (5 мин)', sub:'Бюджет пока не определён', by:'Дмитрий Кутузов' } ]
+    }
+  };
+
+  CLIENTS = [
+    { id:'c1', name:'Сергей Грин', status:'active', phone:'+7 (912) 555-0172', email:'sergey@mail.ru', created:'10 сентября', last:'вчера', owner:'Марина Грязнова', budget:'10–15 млн', short:'15M', districts:'Юго-запад, центр', urgency:'В течение месяца', rooms:'2–3 комнаты', days:'12' },
+    { id:'c2', name:'Марина Ковалёва', status:'waiting', phone:'+7 (912) 447-1108', email:'m.kovaleva@mail.ru', created:'2 сентября', last:'2 дня назад', owner:'Дмитрий Кутузов', budget:'8–10 млн', short:'10M', districts:'Центр', urgency:'До конца года', rooms:'2 комнаты', days:'20' },
+    { id:'c3', name:'Артём Дубов', status:'cold', phone:'+7 (901) 220-9964', email:'dubov.a@mail.ru', created:'18 августа', last:'неделю назад', owner:'Василий Петров', budget:'6–8 млн', short:'8M', districts:'Северный', urgency:'Не срочно', rooms:'1–2 комнаты', days:'35' },
+    { id:'c4', name:'Ольга Панина', status:'active', phone:'+7 (922) 310-4471', email:'o.panina@mail.ru', created:'6 сентября', last:'сегодня', owner:'Марина Грязнова', budget:'17–20 млн', short:'20M', districts:'Юго-запад', urgency:'В течение двух недель', rooms:'3–4 комнаты', days:'16' },
+    { id:'c5', name:'Илья Ремизов', status:'refused', phone:'+7 (912) 776-3025', email:'remizov@mail.ru', created:'12 августа', last:'5 дней назад', owner:'Дмитрий Кутузов', budget:'9–11 млн', short:'11M', districts:'Заречье', urgency:'Отказ', rooms:'2 комнаты', days:'41' },
+    { id:'c6', name:'Тимур Асхабов', status:'waiting', phone:'+7 (963) 501-8890', email:'t.ashabov@mail.ru', created:'9 сентября', last:'вчера', owner:'Василий Петров', budget:'12–14 млн', short:'14M', districts:'Центр, набережная', urgency:'В течение месяца', rooms:'3 комнаты', days:'13' },
+    { id:'c7', name:'Ксения Гладко', status:'active', phone:'+7 (982) 114-6608', email:'ksenia.g@mail.ru', created:'4 сентября', last:'сегодня', owner:'Марина Грязнова', budget:'20–24 млн', short:'24M', districts:'Парковый', urgency:'В течение недели', rooms:'4 комнаты', days:'18' },
+    { id:'c8', name:'Павел Ершов', status:'cold', phone:'+7 (900) 902-1173', email:'p.ershov@mail.ru', created:'26 августа', last:'2 недели назад', owner:'Дмитрий Кутузов', budget:'не определён', short:'—', districts:'Любой', urgency:'Не срочно', rooms:'1–2 комнаты', days:'27' }
+  ];
+
+  icon(kind, size) {
+    const p = { home:'M3 10.5L12 3.5l9 7V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z',
+      phone:'M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9z',
+      msg:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
+      meet:'M3.5 5h17v15h-17zM8 3v4M16 3v4M3.5 10h17' }[kind] || '';
+    return React.createElement('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: 'none',
+      stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' },
+      React.createElement('path', { d: p }));
+  }
+
+  theme() { return this.state.theme || this.props.theme || 'dark'; }
+
+  flash(msg) {
+    clearTimeout(this._t);
+    this.setState({ toast: msg });
+    this._t = setTimeout(() => this.setState({ toast: '' }), 3000);
+  }
+
+  dot(status, size) {
+    return { width: size || 7, height: size || 7, borderRadius: '50%', flex: '0 0 auto', display: 'inline-block', background: this.STATUS[status].v };
+  }
+  badge(status) {
+    const c = this.STATUS[status].v;
+    return { display: 'inline-flex', alignItems: 'center', gap: 7, padding: 0, background: 'transparent', border: 'none',
+      color: c, fontSize: 13, fontWeight: 500, letterSpacing: '.01em', whiteSpace: 'nowrap' };
+  }
+  avatar(status, size, fs) {
+    return { width: size, height: size, flex: '0 0 auto', borderRadius: '50%', position: 'relative',
+      background: 'var(--bg2,#1C1B19)', border: 'none',
+      color: 'var(--tx1,#F5F3F0)', fontSize: fs, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center' };
+  }
+  initials(name) { return name.split(' ').map(w => w[0]).join('').slice(0, 2); }
+
+  pillTab(on, h) {
+    return { height: h || 26, padding: '0 12px', borderRadius: 999, border: 'none', cursor: 'pointer',
+      background: on ? 'var(--pill,#27C08B)' : 'transparent', color: on ? 'var(--pillTx,#08211A)' : 'var(--tx2,#BCB8B2)',
+      fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap' };
+  }
+
+  renderVals() {
+    const s = this.state, dark = this.theme() === 'dark';
+    const vars = Object.assign({}, dark ? this.DARK : this.LIGHT);
+    if (this.props.accent) { vars['--cta'] = this.props.accent; vars['--pill'] = this.props.accent; }
+
+    const q = s.query.trim().toLowerCase();
+    const SEGMAP = { 'Активные': 'active', 'Жду звонка': 'waiting', 'Холодные': 'cold' };
+    const segKey = SEGMAP[s.seg];
+    const list = this.CLIENTS.filter(c => (!q || c.name.toLowerCase().includes(q) || c.phone.replace(/\D/g, '').includes(q.replace(/\D/g, ''))) && (!segKey || c.status === segKey));
+    const clients = list.map(c => ({
+      name: c.name, last: c.last, budgetShort: c.short, initials: this.initials(c.name),
+      statusLabel: this.STATUS[c.status].label, selected: c.id === s.selectedId,
+      dotStyle: this.dot(c.status),
+      statusTextStyle: { fontSize: 12, color: this.STATUS[c.status].v, fontWeight: 500 },
+      avatarStyle: this.avatar(c.status, 36, 12),
+      avatar36Style: this.avatar(c.status, 40, 13),
+      miniBadgeStyle: { display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', padding: 0,
+        color: this.STATUS[c.status].v, fontSize: 12, fontWeight: 500, whiteSpace: 'nowrap' },
+      spark: (c.short === '—' ? [0, 1, 0, 0, 1, 0] : [1, 2, 0, 3, 1, 2]).map((n, i) => ({
+        style: { width: 3, height: 4 + n * 3, borderRadius: 2, display: 'inline-block',
+          background: n === 0 ? 'var(--bg3,#26241F)' : 'color-mix(in srgb, var(--cta,#27C08B) ' + (40 + n * 18) + '%, transparent)' } })),
+      select: () => this.setState({ selectedId: c.id })
+    }));
+
+    const c = this.CLIENTS.find(x => x.id === s.selectedId) || this.CLIENTS[0];
+    const all = s.events[c.id] || [];
+    const kindOf = { 'Показы': 'home', 'Звонки': 'phone', 'Сообщения': 'msg' };
+    const events = s.tab === 'Все' ? all : all.filter(e => e.kind === kindOf[s.tab]);
+
+    const groups = [];
+    events.forEach((e, i) => {
+      const parts = e.date.split(',').map(x => x.trim());
+      const time = /^\d{1,2}:\d{2}$/.test(parts[parts.length - 1]) ? parts.pop() : '';
+      const weekday = parts.length > 1 ? parts[0] : '';
+      const dateOnly = parts.length > 1 ? parts.slice(1).join(', ') : parts[0];
+      let g = groups.find(x => x.key === weekday + dateOnly);
+      if (!g) { groups.push(g = { key: weekday + dateOnly, weekday, dateOnly, items: [] }); }
+      g.items.push({ e, i, time });
+    });
+
+    const eventGroups = groups.map((g, gi) => {
+      const today = g.dateOnly.indexOf('14 сент') === 0;
+      const yest = g.dateOnly.indexOf('13 сент') === 0;
+      return {
+        label: today ? 'Сегодня' : yest ? 'Вчера' : g.dateOnly,
+        sub: today || yest ? g.dateOnly : g.weekday,
+        items: g.items.map(({ e, i, time }) => {
+          const col = this.KCOLOR[e.kind] || 'var(--cta,#27C08B)';
+          const id = gi + '-' + i;
+          const open = s.openEvent === id;
+          e.notes = e.notes || this.THREADS[e.title];
+          return {
+            title: e.title, by: e.by, time: time, kindLabel: this.KINDS[e.kind] || 'Событие',
+            byInitials: this.initials(e.by), open: open,
+            note: e.sub || 'Заметку не добавили — коллеги не узнают деталей этого касания',
+            hasNote: !!e.sub || !!(e.notes && e.notes.length),
+            noteCountLabel: e.notes ? (e.notes.filter(n => !s.removed[n.id]).length + ' заметки') : 'заметка',
+            hasThread: !!(e.notes && e.notes.filter(n => !s.removed[n.id]).length),
+            thread: (e.notes || []).filter(n => !s.removed[n.id]).map(n => {
+              const editing = s.editNote === n.id;
+              return { by: n.by, time: n.time, text: n.text, editing: editing,
+                draft: editing ? s.draft : n.text,
+                setDraft: ev => this.setState({ draft: ev.target.value }),
+                edit: ev => { ev.stopPropagation(); this.setState({ editNote: n.id, draft: n.text }); },
+                cancel: ev => { ev.stopPropagation(); this.setState({ editNote: '', draft: '' }); },
+                save: ev => { ev.stopPropagation(); n.text = s.draft; this.setState({ editNote: '', draft: '' }); this.flash('Заметка обновлена'); },
+                remove: ev => { ev.stopPropagation(); this.setState(st => ({ removed: Object.assign({}, st.removed, { [n.id]: true }) })); this.flash('Заметка удалена'); },
+                initials: this.initials(n.by),
+                avatarStyle: { width: 20, height: 20, flex: '0 0 auto', borderRadius: '50%', display: 'flex',
+                  alignItems: 'center', justifyContent: 'center', background: 'var(--bg3,#26241F)',
+                  color: 'var(--tx2,#BCB8B2)', fontSize: 9, fontWeight: 600 },
+                viewStyle: { display: s.editNote === n.id ? 'none' : 'block',
+                  padding: '10px 12px', borderRadius: 12, background: 'var(--bg2,#1C1B19)' },
+                stop: ev => ev.stopPropagation() };
+            }),
+            showPlainNote: !(e.notes && e.notes.filter(n => !s.removed[n.id]).length),
+            adding: s.addNote === id,
+            canAdd: s.addNote !== id,
+            newDraft: s.addNote === id ? s.newDraft : '',
+            setNewDraft: ev => this.setState({ newDraft: ev.target.value }),
+            startAdd: ev => { ev.stopPropagation(); this.setState({ addNote: id, newDraft: '', openEvent: id }); },
+            cancelNew: ev => { ev.stopPropagation(); this.setState({ addNote: '', newDraft: '' }); },
+            stopAdd: ev => ev.stopPropagation(),
+            saveNew: ev => {
+              ev.stopPropagation();
+              const text = s.newDraft.trim();
+              if (!text) { this.setState({ addNote: '', newDraft: '' }); return; }
+              e.notes = (e.notes || []).concat([{ id: 'nn' + Date.now(), by: 'Василий Петров', time: 'сейчас', text: text }]);
+              this.setState({ addNote: '', newDraft: '' });
+              this.flash('Заметка добавлена');
+            },
+            noteTagStyle: { display: 'inline-flex', alignItems: 'center', gap: 4, color: 'var(--tx3,#8B8680)',
+              fontSize: 11, fontWeight: 400 },
+            noteBoxStyle: { marginTop: 10, fontSize: 13, lineHeight: 1.65, animation: 'omFade 160ms ease-out',
+              paddingLeft: e.sub ? 12 : 0,
+              borderLeft: e.sub ? '2px solid var(--bd2,#4A4540)' : 'none',
+              color: e.sub ? 'var(--tx1,#F5F3F0)' : 'var(--tx3,#8B8680)',
+              fontStyle: e.sub ? 'normal' : 'italic' },
+            icon: this.icon(e.kind, 15),
+            toggle: () => this.setState(st => ({ openEvent: st.openEvent === id ? '' : id })),
+            rowStyle: { position: 'relative', display: 'flex', alignItems: 'flex-start', gap: 12, padding: '10px 12px', borderRadius: 12,
+              cursor: 'pointer', border: 'none',
+              background: open ? 'var(--bg2,#1C1B19)' : 'transparent',
+              transition: 'background 150ms ease-out' },
+            nodeStyle: { position: 'absolute', left: -22, top: 20, width: 7, height: 7, borderRadius: '50%',
+              background: col },
+            iconStyle: { width: 26, height: 26, flex: '0 0 auto', borderRadius: 8, marginTop: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'transparent', color: col },
+            kindChipStyle: { display: 'inline-flex', alignItems: 'center', height: 20, padding: '0 8px', borderRadius: 999,
+              background: 'color-mix(in srgb, ' + col + ' 12%, transparent)', color: col, fontSize: 10, fontWeight: 600, letterSpacing: '.04em', textTransform: 'uppercase' },
+            byAvatarStyle: { width: 20, height: 20, flex: '0 0 auto', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'var(--bg3,#26241F)', color: 'var(--tx2,#BCB8B2)', fontSize: 9, fontWeight: 600 },
+            caretStyle: { color: 'var(--tx3,#8B8680)', display: 'flex', alignItems: 'flex-start', paddingTop: 6, opacity: .7,
+              transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease-out' }
+          };
+        })
+      };
+    });
+
+    const TOUCH = [
+      { label: 'Пн', full: 'Понедельник, 7 сентября', home: 2, phone: 3, msg: 1, meet: 0 },
+      { label: 'Вт', full: 'Вторник, 8 сентября', home: 4, phone: 4, msg: 2, meet: 1 },
+      { label: 'Ср', full: 'Среда, 9 сентября', home: 3, phone: 2, msg: 2, meet: 1 },
+      { label: 'Чт', full: 'Четверг, 10 сентября', home: 1, phone: 2, msg: 1, meet: 0 },
+      { label: 'Пт', full: 'Пятница, 11 сентября', home: 4, phone: 5, msg: 2, meet: 1 },
+      { label: 'Сб', full: 'Суббота, 12 сентября', home: 5, phone: 2, msg: 2, meet: 0 },
+      { label: 'Вс', full: 'Воскресенье, 13 сентября', home: 1, phone: 1, msg: 1, meet: 0 }
+    ];
+    const TKEYS = ['home', 'phone', 'msg', 'meet'];
+    const TMAX = Math.max.apply(null, TOUCH.map(d => d.home + d.phone + d.msg + d.meet));
+    const TPTS = TOUCH.map((d, i) => {
+      const sum = d.home + d.phone + d.msg + d.meet;
+      return { x: Math.round((i + 0.5) * (660 / TOUCH.length)), y: Math.round(175 - (sum / TMAX) * 155) };
+    });
+    const actPattern = [1, 0, 2, 1, 0, 0, 3, 1, 2, 0, 1, 4, 2, 3];
+    const shift = this.CLIENTS.findIndex(x => x.id === c.id);
+    const activityBars = actPattern.map((v, i) => {
+      const n = actPattern[(i + shift) % actPattern.length];
+      return { style: { width: 4, borderRadius: 2, height: Math.max(3, n * 7),
+        background: n === 0 ? 'var(--bg3,#26241F)' : 'color-mix(in srgb, var(--cta,#27C08B) ' + (35 + n * 18) + '%, transparent)' } };
+    });
+    const dec = short => e => ({
+      date: e.date, dateShort: e.date.replace('сентября', 'сент').replace('августа', 'авг'),
+      title: e.title, sub: e.sub, by: e.by, kindLabel: this.KINDS[e.kind] || 'Событие',
+      icon: this.icon(e.kind, short ? 12 : 13),
+      chipStyle: { display: 'inline-flex', alignItems: 'center', gap: 5, height: 22, padding: '0 9px', borderRadius: 999,
+        background: 'var(--bg2,#1C1B19)', border: '1px solid var(--hair,rgba(255,255,255,.08))',
+        color: 'var(--tx2,#BCB8B2)', fontSize: 11, fontWeight: 500 }
+    });
+
+    const navItems = [['Клиенты', '26'], ['Показы', '14'], ['Сделки', '4'], ['Дашборд', ''], ['Отчёты', ''], ['Команда', '6']];
+    const nav = navItems.map(([label, count]) => {
+      const on = s.nav === label;
+      return { label, count, pick: () => this.setState({ nav: label }),
+        style: { display: 'flex', alignItems: 'center', gap: 10, height: 38, padding: '0 10px', borderRadius: 10, cursor: 'pointer',
+          background: on ? 'var(--bg2,#1C1B19)' : 'transparent', color: on ? 'var(--tx1,#F5F3F0)' : 'var(--tx2,#BCB8B2)',
+          fontSize: 13, fontWeight: on ? 600 : 400 },
+        dotStyle: { width: 6, height: 6, borderRadius: '50%', flex: '0 0 auto',
+          background: on ? 'var(--cta,#27C08B)' : 'var(--bd2,#4A4540)' } };
+    });
+
+    const btn = (status, active, mobile) => {
+      const col = this.STATUS[status].v;
+      return { minHeight: mobile ? 40 : 40, padding: mobile ? '0 14px' : '0 8px', borderRadius: 999, border: 'none',
+        background: active ? 'color-mix(in srgb, ' + col + ' 22%, var(--panel,#131312))' : 'var(--bg2,#1C1B19)',
+        color: active ? col : 'var(--tx2,#BCB8B2)', fontSize: 12, fontWeight: active ? 600 : 500,
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, cursor: 'pointer', whiteSpace: 'nowrap' };
+    };
+    const opts = mobile => Object.keys(this.STATUS).map(k => ({
+      label: this.STATUS[k].label, dotStyle: this.dot(k, 7), btnStyle: btn(k, s.fStatus === k, mobile),
+      pick: () => this.setState({ fStatus: k })
+    }));
+
+    const chip = (label, on, h) => ({ label, pick: () => this.setState({ fType: label }),
+      style: { minHeight: h, padding: '0 14px', borderRadius: 999, cursor: 'pointer', border: 'none',
+        background: on ? 'var(--pill,#27C08B)' : 'var(--bg2,#1C1B19)',
+        color: on ? 'var(--pillTx,#08211A)' : 'var(--tx2,#BCB8B2)', fontSize: 12, fontWeight: on ? 600 : 500 } });
+
+    const themeBtn = on => ({ height: 30, padding: '0 16px', borderRadius: 999, border: 'none', cursor: 'pointer',
+      background: on ? 'var(--pill,#27C08B)' : 'transparent', color: on ? 'var(--pillTx,#08211A)' : 'var(--tx2,#BCB8B2)',
+      fontSize: 12, fontWeight: 600 });
+
+    const suggestions = s.fAddr.length > 1
+      ? this.ADDRS.filter(a => a.toLowerCase().includes(s.fAddr.toLowerCase()) && a.toLowerCase() !== s.fAddr.toLowerCase()).slice(0, 4) : [];
+
+    const counts = { 'Активные': 3, 'Жду звонка': 2, 'Холодные': 2, 'Отказали': 1 };
+    const mkItems = arr => arr.map(l => {
+      const on = !!s.filters[l];
+      return { label: l, count: counts[l] !== undefined ? counts[l] : '', check: on ? '✓' : '',
+        boxStyle: { width: 18, height: 18, flex: '0 0 auto', borderRadius: 6,
+          border: '1px solid ' + (on ? 'var(--cta,#27C08B)' : 'var(--bd2,#4A4540)'),
+          background: on ? 'var(--pill,#27C08B)' : 'transparent', color: 'var(--pillTx,#08211A)', fontSize: 11, fontWeight: 700,
+          display: 'flex', alignItems: 'center', justifyContent: 'center' },
+        toggle: () => this.setState(st => ({ filters: Object.assign({}, st.filters, { [l]: !st.filters[l] }) })) };
+    });
+
+    return {
+      themeVars: vars,
+      lightBtnStyle: themeBtn(!dark), darkBtnStyle: themeBtn(dark),
+      setLight: () => this.setState({ theme: 'light' }),
+      setDark: () => this.setState({ theme: 'dark' }),
+
+      nav,
+      clients, noResults: clients.length === 0,
+      query: s.query, setQuery: e => this.setState({ query: e.target.value }),
+
+      sel: {
+        name: c.name, phone: c.phone, email: c.email, created: c.created, owner: c.owner,
+        budget: c.budget, districts: c.districts, urgency: c.urgency, rooms: c.rooms,
+        initials: this.initials(c.name), statusLabel: this.STATUS[c.status].label,
+        dotStyle: this.dot(c.status), badgeStyle: this.badge(c.status),
+        bigAvatarStyle: this.avatar(c.status, 56, 17), avatar48Style: this.avatar(c.status, 64, 20)
+      },
+      stats: [
+        { label: 'Показов', value: String(all.filter(e => e.kind === 'home').length), unit: 'всего' },
+        { label: 'Звонков', value: String(all.filter(e => e.kind === 'phone').length), unit: 'всего' },
+        { label: 'В работе', value: c.days, unit: 'дней' },
+        { label: 'Бюджет', value: c.short, unit: 'до' }
+      ],
+      tabs: ['Все', 'Показы', 'Звонки', 'Сообщения'].map(l => ({ label: l, style: this.pillTab(s.tab === l), pick: () => this.setState({ tab: l }) })),
+      eventGroups, activityBars,
+      histCount: all.length + ' событий',
+      noEvents: events.length === 0,
+
+      isClients: s.nav === 'Клиенты',
+      isShowings: s.nav === 'Показы',
+      isDeals: s.nav === 'Сделки',
+      isDash: s.nav === 'Дашборд',
+      isReports: s.nav === 'Отчёты',
+      isTeam: s.nav === 'Команда',
+
+      showings: [
+        { date: 'Сегодня 14:30', addr: 'ул. Толстого д.25', price: '8.5 млн', client: 'Сергей Грин', realtor: 'Василий Петров', result: 'Запланирован' },
+        { date: 'Сегодня 11:00', addr: 'ул. Мичурина д.71', price: '19 млн', client: 'Ольга Панина', realtor: 'Марина Грязнова', result: 'Думает' },
+        { date: 'Сегодня 09:30', addr: 'пр. Гагарина д.4', price: '11.2 млн', client: 'Тимур Асхабов', realtor: 'Василий Петров', result: 'Запланирован' },
+        { date: '13 сент 16:00', addr: 'ЖК Парковый, к.3', price: '23 млн', client: 'Ксения Гладко', realtor: 'Марина Грязнова', result: 'Понравилось' },
+        { date: '12 сент 16:45', addr: 'ул. Лениных полей д.10', price: '12 млн', client: 'Сергей Грин', realtor: 'Василий Петров', result: 'Отказ' },
+        { date: '11 сент 12:20', addr: 'ул. Заречная д.8', price: '9.4 млн', client: 'Марина Ковалёва', realtor: 'Дмитрий Кутузов', result: 'Думает' }
+      ].map(r => {
+        const col = r.result === 'Понравилось' ? 'var(--kHome,#6FC2A0)' : r.result === 'Отказ' ? 'var(--stR,#D4837A)'
+          : r.result === 'Думает' ? 'var(--kMsg,#D2B36B)' : 'var(--kPhone,#7FA8D4)';
+        return Object.assign({}, r, { chipStyle: { display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap',
+          color: col, fontSize: 13, fontWeight: 500, letterSpacing: '.01em' },
+          markStyle: { width: 3, height: 14, borderRadius: 1, flex: '0 0 auto', background: col } });
+      }),
+
+      dealCols: [
+        { title: 'Подбор', sum: '34 млн', col: 'var(--kMsg,#D2B36B)', cards: [
+          { name: 'Сергей Грин', addr: 'ул. Толстого д.25', sum: '8.5 млн', realtor: 'В. Петров' },
+          { name: 'Тимур Асхабов', addr: 'пр. Гагарина д.4', sum: '11.2 млн', realtor: 'В. Петров' },
+          { name: 'Марина Ковалёва', addr: 'ул. Заречная д.8', sum: '9.4 млн', realtor: 'Д. Кутузов' }
+        ] },
+        { title: 'Оформление', sum: '19 млн', col: 'var(--kPhone,#7FA8D4)', cards: [
+          { name: 'Ольга Панина', addr: 'ул. Мичурина д.71', sum: '19 млн', realtor: 'М. Грязнова' }
+        ] },
+        { title: 'Закрыты', sum: '23 млн', col: 'var(--kHome,#6FC2A0)', cards: [
+          { name: 'Ксения Гладко', addr: 'ЖК Парковый, к.3', sum: '23 млн', realtor: 'М. Грязнова' }
+        ] }
+      ].map(col => Object.assign({}, col, { dotStyle: { width: 8, height: 8, borderRadius: '50%', background: col.col } })),
+
+      dashMetrics: [
+        { label: 'Клиентов', value: '26', delta: '+4' },
+        { label: 'Показов', value: '14', delta: '+3' },
+        { label: 'Сделок', value: '4', delta: '+1' },
+        { label: 'Без касания 7 дней', value: '5', delta: '−2' }
+      ].map(m => Object.assign({}, m, { deltaStyle: { fontSize: 12, fontWeight: 600,
+        color: m.delta.indexOf('−') === 0 ? 'var(--kHome,#6FC2A0)' : 'var(--cta,#27C08B)' } })),
+
+      touchTotal: String(TOUCH.reduce((a, d) => a + d.home + d.phone + d.msg + d.meet, 0)),
+      touchLegend: TKEYS.map(k => ({ label: this.KINDS[k], value: String(TOUCH.reduce((a, d) => a + d[k], 0)),
+        markStyle: { width: 8, height: 8, borderRadius: 2, flex: '0 0 auto', background: this.KCOLOR[k] } })),
+      touchGrid: [0, 1, 2, 3].map(i => ({ y: 10 + i * 55 })),
+      touchArea: TPTS.length ? 'M' + TPTS[0].x + ',175 ' + TPTS.map(p => 'L' + p.x + ',' + p.y).join(' ') + ' L' + TPTS[TPTS.length - 1].x + ',175 Z' : '',
+      touchLine: TPTS.map((p, i) => (i ? 'L' : 'M') + p.x + ',' + p.y).join(' '),
+      touchDots: TPTS.map((p, i) => ({ x: p.x, y: p.y, r: s.touchDay === i ? 6 : 4, mr: s.touchDay === i ? 8 : 5, pick: () => this.setState({ touchDay: i }) })),
+      touchAxis: TOUCH.map((d, i) => {
+        const on = s.touchDay === i;
+        return { label: d.label, value: String(d.home + d.phone + d.msg + d.meet),
+          pick: () => this.setState({ touchDay: i }),
+          valueStyle: { fontFamily: "'JetBrains Mono',monospace", fontSize: 13,
+            color: on ? 'var(--cta,#27C08B)' : 'var(--tx2,#BCB8B2)', fontWeight: on ? 600 : 400 },
+          labelStyle: { fontSize: 11, marginTop: 2, color: on ? 'var(--tx1,#F5F3F0)' : 'var(--tx3,#8B8680)' } };
+      }),
+      touchDay: (() => {
+        const d = TOUCH[s.touchDay] || TOUCH[0];
+        const sum = d.home + d.phone + d.msg + d.meet;
+        return { title: d.full, total: sum + ' касаний',
+          rows: TKEYS.map(k => ({ label: this.KINDS[k], value: String(d[k]),
+            markStyle: { width: 8, height: 8, borderRadius: 2, flex: '0 0 auto', background: this.KCOLOR[k] } })) };
+      })(),
+
+      leaders: [['Марина Грязнова', 6], ['Василий Петров', 5], ['Дмитрий Кутузов', 2], ['Анна Соболь', 1]].map(([name, n]) => ({
+        name, shows: n + ' показов',
+        barStyle: { height: '100%', width: (n / 6 * 100) + '%', borderRadius: 999, background: 'var(--cta,#27C08B)' }
+      })),
+
+      reports: [
+        { title: 'Активность риелторов', period: 'сентябрь', desc: 'Кто сколько касался клиентов: звонки, показы, сообщения, встречи.' },
+        { title: 'Воронка по клиентам', period: 'сентябрь', desc: 'Переходы между статусами и где клиенты чаще всего остывают.' },
+        { title: 'Показы и итоги', period: 'неделя', desc: 'Каждый показ с результатом и комментарием риелтора.' },
+        { title: 'Клиенты без касания', period: 'сейчас', desc: 'С кем не связывались больше 7 дней — список на обзвон.' }
+      ].map(r => Object.assign({}, r, { download: () => this.flash('Отчёт «' + r.title + '» готовится'), link: () => this.flash('Ссылка скопирована') })),
+      reportLinkStyle: { height: 32, padding: '0 14px', borderRadius: 999, border: 'none', background: 'var(--bg3,#26241F)',
+        color: 'var(--tx1,#F5F3F0)', fontSize: 12, fontWeight: 600, cursor: 'pointer' },
+
+      team: [
+        { name: 'Марина Грязнова', role: 'Старший риелтор', clients: '9', shows: '6', pct: 90 },
+        { name: 'Василий Петров', role: 'Риелтор', clients: '8', shows: '5', pct: 80 },
+        { name: 'Дмитрий Кутузов', role: 'Риелтор', clients: '5', shows: '2', pct: 50 },
+        { name: 'Анна Соболь', role: 'Стажёр', clients: '4', shows: '1', pct: 40 }
+      ].map(t => Object.assign({}, t, {
+        initials: this.initials(t.name), load: t.pct + '%',
+        avatarStyle: { width: 36, height: 36, flex: '0 0 auto', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'var(--bg2,#1C1B19)', border: '1px solid var(--hair,rgba(255,255,255,.08))', color: 'var(--tx2,#BCB8B2)', fontSize: 12, fontWeight: 600 },
+        barStyle: { height: '100%', width: t.pct + '%', borderRadius: 999,
+          background: t.pct > 85 ? 'var(--kMsg,#D2B36B)' : 'var(--cta,#27C08B)' }
+      })),
+      segChips: ['Все', 'Активные', 'Жду звонка', 'Холодные'].map(l => ({ label: l, style: this.pillTab(s.seg === l, 32), pick: () => this.setState({ seg: l }) })),
+      selEvents: events.map(dec(false)),
+      mobileEvents: all.slice(0, 5).map(dec(true)),
+
+      openWhatsapp: () => this.flash('Открываем WhatsApp с ' + c.phone),
+      moreOpen: s.moreOpen,
+      toggleMore: () => this.setState(st => ({ moreOpen: !st.moreOpen })),
+      moreBtnStyle: { width: 36, height: 36, borderRadius: 999, border: 'none', cursor: 'pointer',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: s.moreOpen ? 'var(--bg3,#26241F)' : 'var(--bg2,#1C1B19)',
+        color: s.moreOpen ? 'var(--tx1,#F5F3F0)' : 'var(--tx2,#BCB8B2)' },
+      moreItems: [
+        { label: 'Изменить клиента', kind: 'edit', act: () => this.setState({ moreOpen: false, editOpen: true, eName: c.name, ePhone: c.phone, eEmail: c.email, eBudget: c.budget }) },
+        { label: 'Передать коллеге', kind: 'user', act: () => this.setState({ moreOpen: false, transferOpen: true }) },
+        { label: 'Скопировать телефон', kind: 'copy', act: () => { this.setState({ moreOpen: false }); this.flash('Скопировано: ' + c.phone); } },
+        { label: 'Удалить клиента', kind: 'trash', danger: true, act: () => this.setState({ moreOpen: false, confirmDelete: true }) }
+      ].map(m => ({
+        label: m.label,
+        icon: (() => {
+          const p = { edit: 'M4 20h4l10-10-4-4L4 16z', user: 'M16 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9.5 10a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M18 8h4M20 6v4',
+            copy: 'M9 9h10v10H9zM5 15V5h10', trash: 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13' }[m.kind];
+          return React.createElement('svg', { width: 15, height: 15, viewBox: '0 0 24 24', fill: 'none',
+            stroke: 'currentColor', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' },
+            React.createElement('path', { d: p }));
+        })(),
+        style: { width: '100%', minHeight: 36, padding: '0 10px', borderRadius: 10, border: 'none', background: 'transparent',
+          color: m.danger ? 'var(--stR,#D4837A)' : 'var(--tx1,#F5F3F0)', fontSize: 13, cursor: 'pointer',
+          display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left' },
+        pick: m.act
+      })),
+
+      editOpen: s.editOpen,
+      closeEdit: () => this.setState({ editOpen: false }),
+      eName: s.eName, eSetName: e => this.setState({ eName: e.target.value }),
+      ePhone: s.ePhone, eSetPhone: e => this.setState({ ePhone: e.target.value }),
+      eEmail: s.eEmail, eSetEmail: e => this.setState({ eEmail: e.target.value }),
+      eBudget: s.eBudget, eSetBudget: e => this.setState({ eBudget: e.target.value }),
+      saveEdit: () => {
+        c.name = s.eName || c.name; c.phone = s.ePhone || c.phone;
+        c.email = s.eEmail || c.email; c.budget = s.eBudget || c.budget;
+        this.setState({ editOpen: false });
+        this.flash('Данные клиента обновлены');
+      },
+
+      transferOpen: s.transferOpen,
+      closeTransfer: () => this.setState({ transferOpen: false }),
+      transferList: ['Марина Грязнова', 'Василий Петров', 'Дмитрий Кутузов', 'Анна Соболь'].map(name => ({
+        name, initials: this.initials(name), current: name === c.owner,
+        rowStyle: { display: 'flex', alignItems: 'center', gap: 10, width: '100%', minHeight: 44, padding: '0 12px',
+          borderRadius: 12, border: 'none', cursor: name === c.owner ? 'default' : 'pointer',
+          background: name === c.owner ? 'var(--bg2,#1C1B19)' : 'transparent',
+          color: 'var(--tx1,#F5F3F0)', fontSize: 13, textAlign: 'left' },
+        avatarStyle: { width: 26, height: 26, flex: '0 0 auto', borderRadius: '50%', display: 'flex',
+          alignItems: 'center', justifyContent: 'center', background: 'var(--bg3,#26241F)',
+          color: 'var(--tx2,#BCB8B2)', fontSize: 10, fontWeight: 600 },
+        pick: () => { if (name === c.owner) { return; } c.owner = name; this.setState({ transferOpen: false }); this.flash('Клиент передан ' + name); }
+      })),
+
+      confirmDelete: s.confirmDelete,
+      cancelDelete: () => this.setState({ confirmDelete: false }),
+      doDelete: () => {
+        const idx = this.CLIENTS.findIndex(x => x.id === c.id);
+        this.CLIENTS.splice(idx, 1);
+        const next = this.CLIENTS[Math.min(idx, this.CLIENTS.length - 1)];
+        this.setState({ confirmDelete: false, selectedId: next ? next.id : '' });
+        this.flash('Клиент «' + c.name + '» удалён');
+      },
+
+      copyPhone: () => this.flash('Скопировано в буфер обмена'),
+      copyMail: () => this.flash('Скопировано в буфер обмена'),
+
+      filtersOpen: s.filtersOpen,
+      toggleFilters: () => this.setState(st => ({ filtersOpen: !st.filtersOpen })),
+      filtersBtnStyle: { width: 34, height: 34, borderRadius: 10, cursor: 'pointer', border: 'none',
+        background: s.filtersOpen ? 'var(--bg3,#26241F)' : 'transparent',
+        color: s.filtersOpen ? 'var(--cta,#27C08B)' : 'var(--tx3,#8B8680)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 150ms ease-out' },
+      filterGroups: [
+        { title: 'Статус', items: mkItems(['Активные', 'Жду звонка', 'Холодные', 'Отказали']) },
+        { title: 'Риелтор', items: mkItems(['Моих клиентов', 'Василий Петров', 'Марина Грязнова', 'Дмитрий Кутузов']) },
+        { title: 'Срок контакта', items: mkItems(['За последний день', 'За неделю', 'За месяц', 'Более месяца назад']) }
+      ],
+      applyFilters: () => { this.setState({ filtersOpen: false }); this.flash('Фильтры применены'); },
+      resetFilters: () => this.setState({ filters: {} }),
+
+      tourOpen: s.tourStep >= 0,
+      tour: (() => {
+        const dRow = () => ({ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 11px', borderRadius: 12, background: 'var(--panel,#131312)' });
+        const dIcon = col => ({ width: 28, height: 28, flex: '0 0 auto', borderRadius: 9, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'color-mix(in srgb, ' + col + ' 18%, var(--panel,#131312))', color: col });
+        const dTag = col => ({ display: 'inline-flex', alignItems: 'center', height: 24, padding: '0 10px', borderRadius: 999,
+          background: 'color-mix(in srgb, ' + col + ' 20%, var(--panel,#131312))', color: col, fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap' });
+        const steps = [
+          { title: 'Все касания клиента — в одной ленте',
+            text: 'Звонок, показ, сообщение и встреча попадают в историю клиента. Открываете карточку и сразу видите, что с ним уже происходило.',
+            demo: [
+              { kind: 'home', title: 'Показ ул. Толстого д.25', meta: 'Сегодня, 14:30', tag: 'Показ' },
+              { kind: 'phone', title: 'Звонок (25 мин)', meta: 'Вчера, 11:15', tag: 'Звонок' },
+              { kind: 'msg', title: 'Отправлена подборка из 4 объектов', meta: '11 сент, 19:20', tag: 'Сообщение' }
+            ] },
+          { title: 'Видно, кто из коллег это сделал',
+            text: 'У каждого события стоит имя риелтора. Никто не выясняет по чату, кто последним общался с клиентом.',
+            demo: [
+              { kind: 'home', title: 'Показ ул. Мичурина д.71', meta: 'Выполнила Марина Грязнова', tag: '' },
+              { kind: 'phone', title: 'Звонок (7 мин)', meta: 'Выполнил Дмитрий Кутузов', tag: '' },
+              { kind: 'meet', title: 'Встреча в офисе', meta: 'Выполнил Василий Петров', tag: '' }
+            ] },
+          { title: 'Запись события — 30 секунд',
+            text: 'Кнопка «Добавить событие» внизу карточки. Тип, дата, статус клиента и заметка — для показа подсказывается адрес, для звонка длительность.',
+            demo: [
+              { kind: 'home', title: 'Тип события', meta: 'Показ квартиры · адрес из недавних', tag: 'Шаг 1' },
+              { kind: 'phone', title: 'Статус клиента', meta: 'Активен · жду звонка · холодный · отказал', tag: 'Шаг 2' },
+              { kind: 'msg', title: 'Заметка', meta: 'До 500 символов, видна всей команде', tag: 'Шаг 3' }
+            ] },
+          { title: 'Ни одного повторного звонка',
+            text: 'Перед звонком видно последнее касание и его автора. Клиенту не звонят дважды об одном и том же, а «остывшие» находятся через фильтр по сроку контакта.',
+            demo: [
+              { kind: 'phone', title: 'Последнее касание: вчера', meta: 'Звонила Марина Грязнова', tag: 'Не звонить' },
+              { kind: 'msg', title: 'Без касания 12 дней', meta: 'Фильтр «Более месяца назад» и обзвон', tag: 'В работу' },
+              { kind: 'meet', title: 'Отчёт по активности', meta: 'Руководитель видит всю команду', tag: 'Отчёты' }
+            ] }
+        ];
+        const i = Math.max(0, s.tourStep);
+        const st = steps[i];
+        return { num: String(i + 1), total: String(steps.length), title: st.title, text: st.text,
+          canBack: i > 0, nextLabel: i === steps.length - 1 ? 'Понятно' : 'Далее',
+          demo: st.demo.map(d => {
+            const col = this.KCOLOR[d.kind];
+            return { title: d.title, meta: d.meta, tag: d.tag, icon: this.icon(d.kind, 15),
+              rowStyle: dRow(), iconStyle: dIcon(col), tagStyle: dTag(col) };
+          }) };
+      })(),
+      tourDots: [0, 1, 2, 3].map(i => ({
+        pick: () => this.setState({ tourStep: i }),
+        style: { width: i === Math.max(0, s.tourStep) ? 22 : 7, height: 7, borderRadius: 999, cursor: 'pointer',
+          background: i === Math.max(0, s.tourStep) ? 'var(--cta,#27C08B)' : 'var(--bg3,#26241F)',
+          transition: 'width 200ms ease-out, background 200ms ease-out' }
+      })),
+      coach: (() => {
+        const steps = [
+          { title: 'Начните с клиента', text: 'Клик по строке — справа откроется карточка и вся история касаний.',
+            ring: [224, 170, 272, 64, 14], tip: [524, 176] },
+          { title: 'Звонок из карточки', text: 'Телефон и WhatsApp под рукой. Номер копируется одним нажатием.',
+            ring: [1138, 82, 274, 40, 999], tip: [1144, 134] },
+          { title: 'Запишите касание', text: 'После звонка или показа — тип, статус и заметка. Тридцать секунд.',
+            ring: [534, 838, 668, 44, 999], tip: [548, 656] },
+          { title: 'Кто остыл', text: 'В фильтрах — срок последнего контакта. Так находят клиентов на обзвон.',
+            ring: [1173, 13, 34, 34, 10], tip: [1040, 62] }
+        ];
+        const i = Math.max(0, Math.min(3, s.tourStep));
+        const st = steps[i];
+        return { num: String(i + 1), total: String(steps.length), title: st.title, text: st.text,
+          canBack: i > 0, nextLabel: i === steps.length - 1 ? 'Готово' : 'Далее',
+          ringStyle: { position: 'absolute', left: st.ring[0], top: st.ring[1], width: st.ring[2], height: st.ring[3],
+            borderRadius: st.ring[4], border: '2px solid var(--cta,#27C08B)', boxShadow: '0 0 0 9999px rgba(6,6,5,.6)',
+            pointerEvents: 'none', transition: 'all 220ms ease-out' },
+          tipStyle: { position: 'absolute', left: st.tip[0], top: st.tip[1], width: 268, padding: 14, borderRadius: 14,
+            background: 'var(--panel,#131312)', boxShadow: '0 20px 50px rgba(0,0,0,.55)', pointerEvents: 'auto',
+            animation: 'omSlideUp 220ms ease-out' } };
+      })(),
+      openTour: () => this.setState({ tourStep: 0, nav: 'Клиенты', filtersOpen: false }),
+      closeTour: () => this.setState({ tourStep: -1 }),
+      prevTour: () => this.setState(st => ({ tourStep: Math.max(0, st.tourStep - 1) })),
+      nextTour: () => this.setState(st => (st.tourStep >= 3 ? { tourStep: -1 } : { tourStep: st.tourStep + 1 })),
+
+      mTitle: s.nav,
+      mIsClients: s.nav === 'Клиенты',
+      mIsShowings: s.nav === 'Показы',
+      mIsDeals: s.nav === 'Сделки',
+      mIsDash: s.nav === 'Дашборд',
+      mIsReports: s.nav === 'Отчёты',
+      mIsTeam: s.nav === 'Команда',
+      mTouchBars: TOUCH.map((d, i) => {
+        const sum = d.home + d.phone + d.msg + d.meet;
+        const on = s.touchDay === i;
+        return { label: d.label, pick: () => this.setState({ touchDay: i }),
+          style: { width: '100%', maxWidth: 30, height: (sum / TMAX * 100) + '%', borderRadius: 6,
+            background: on ? 'var(--cta,#27C08B)' : 'var(--bg3,#26241F)', transition: 'background 160ms ease-out' },
+          labelStyle: { fontSize: 11, color: on ? 'var(--tx1,#F5F3F0)' : 'var(--tx3,#8B8680)', fontWeight: on ? 600 : 400 } };
+      }),
+      sheetOpen: !!s.sheet,
+      isMenuSheet: s.sheet === 'menu',
+      isFilterSheet: s.sheet === 'filters',
+      sheetTitle: s.sheet === 'menu' ? 'Меню' : 'Фильтры',
+      openMenuSheet: () => this.setState({ sheet: 'menu' }),
+      openFilterSheet: () => this.setState({ sheet: 'filters' }),
+      closeSheet: () => this.setState({ sheet: '' }),
+      applySheet: () => { this.setState({ sheet: '' }); this.flash('Фильтры применены'); },
+      mFilterBtnStyle: { width: 44, height: 44, borderRadius: 999, border: 'none', cursor: 'pointer',
+        display: s.nav === 'Клиенты' ? 'flex' : 'none', alignItems: 'center', justifyContent: 'center',
+        background: s.sheet === 'filters' ? 'var(--bg2,#1C1B19)' : 'transparent',
+        color: s.sheet === 'filters' ? 'var(--cta,#27C08B)' : 'var(--tx1,#F5F3F0)' },
+      mNav: navItems.map(([label, count]) => {
+        const on = s.nav === label;
+        return { label, count, pick: () => this.setState({ nav: label, sheet: '' }),
+          style: { display: 'flex', alignItems: 'center', gap: 12, minHeight: 48, padding: '0 4px', cursor: 'pointer',
+            color: on ? 'var(--tx1,#F5F3F0)' : 'var(--tx2,#BCB8B2)', fontSize: 15, fontWeight: on ? 600 : 400 },
+          dotStyle: { width: 6, height: 6, borderRadius: '50%', flex: '0 0 auto',
+            background: on ? 'var(--cta,#27C08B)' : 'var(--bg3,#26241F)' } };
+      }),
+
+      modalOpen: s.modalOpen,
+      openModal: () => this.setState({ modalOpen: true, addrErr: false }),
+      closeModal: () => this.setState({ modalOpen: false }),
+      stop: e => e.stopPropagation(),
+
+      typeChips: this.TYPES.map(t => chip(t, s.fType === t, 34)),
+      typeChipsMobile: this.TYPES.map(t => chip(t, s.fType === t, 40)),
+      fDate: s.fDate, setDate: e => this.setState({ fDate: e.target.value }),
+      fAddr: s.fAddr, setAddr: e => this.setState({ fAddr: e.target.value, addrErr: false }),
+      fDur: s.fDur, setDur: e => this.setState({ fDur: e.target.value }),
+      fNote: s.fNote, setNote: e => this.setState({ fNote: e.target.value.slice(0, 500) }),
+      noteCount: s.fNote.length + '/500',
+      needsAddr: s.fType === 'Показ квартиры',
+      isCall: s.fType === 'Звонок',
+      addrErr: s.addrErr,
+      addrInputStyle: { width: '100%', height: 40, padding: '0 14px', borderRadius: 12,
+        border: s.addrErr ? '1px solid var(--stR,#FF6B6B)' : 'none',
+        background: 'var(--bg2,#1C1B19)', color: 'var(--tx1,#F5F3F0)', fontSize: 13, outline: 'none' },
+      addrSuggest: suggestions.length > 0,
+      suggestions: suggestions.map(a => ({ label: a, pick: () => this.setState({ fAddr: a }) })),
+      recentAddrs: this.ADDRS.slice(0, 2).map(a => ({ label: a, pick: () => this.setState({ fAddr: a, addrErr: false }) })),
+
+      statusOpts: opts(false), statusOptsMobile: opts(true),
+      badgeSamples: Object.keys(this.STATUS).map(k => ({ label: this.STATUS[k].label, style: this.badge(k), dotStyle: this.dot(k, 7) })),
+
+      resetForm: () => this.setState({ fAddr: '', fNote: '', addrErr: false }),
+      saveEvent: () => {
+        if (s.fType === 'Показ квартиры' && !s.fAddr.trim()) { this.setState({ addrErr: true }); return; }
+        const kind = s.fType === 'Звонок' ? 'phone' : s.fType === 'Показ квартиры' ? 'home'
+          : s.fType === 'Встреча в офисе' ? 'meet' : 'msg';
+        const title = s.fType === 'Показ квартиры' ? 'Показ ' + s.fAddr
+          : s.fType === 'Звонок' ? 'Звонок (' + s.fDur + ' мин)' : s.fType;
+        const ev = { date: s.fDate, kind, title, sub: s.fNote, by: 'Василий Петров' };
+        this.setState(st => {
+          const next = Object.assign({}, st.events);
+          next[c.id] = [ev].concat(next[c.id] || []);
+          return { events: next, modalOpen: false, fAddr: '', fNote: '' };
+        });
+        this.flash('Событие добавлено');
+      },
+      toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
