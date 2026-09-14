@@ -161,6 +161,13 @@
 
 /* Широкая обложка: один экран компьютера вместо трёх телефонов.
    Включается полем coverWide: true в src/data/projects.js */
+.coverWide {
+  /* Экран стоит по центру: одинаковый отступ сверху и снизу,
+     а не «выглядывает» из-за нижнего края, как телефоны */
+  padding: 40px 30px;
+  align-items: center;
+}
+
 .coverWide .coverShot {
   width: 86%;
   max-width: none;
