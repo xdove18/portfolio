@@ -32,6 +32,16 @@ const ICONS = {
       <path d="M7 21V7a4 4 0 0 1 4-4h2a5 5 0 0 1 0 10h-3" />
     </>
   ),
+  /* Miro: четыре штриха, каждый следующий выше и с наклонной
+     «шапкой» вправо — как в фирменном знаке */
+  miro: (
+    <>
+      <path d="M4.5 20v-7l3-4" />
+      <path d="M9.5 20V9l3.5-5" />
+      <path d="M14.5 20V7l3.5-4" />
+      <path d="M19.5 20V4" />
+    </>
+  ),
   illustrator: <IconLetters text="Ai" />,
   photoshop: <IconLetters text="Ps" />,
   aftereffects: <IconLetters text="Ae" />,

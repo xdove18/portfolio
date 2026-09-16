@@ -12,9 +12,8 @@
 export const stack = [
   { name: "Figma", desc: "Продуктовый дизайн, UX/UI", icon: "figma" },
   { name: "Protopie", desc: "Интерактивное прототипирование", icon: "protopie" },
-  { name: "Principle", desc: "Анимации и микровзаимодействия", icon: "principle" },
+  { name: "Miro", desc: "Исследования, CJM, воркшопы", icon: "miro" },
   { name: "Illustrator", desc: "Векторная графика", icon: "illustrator" },
-  { name: "Photoshop", desc: "Растровая обработка", icon: "photoshop" },
   { name: "After Effects", desc: "Motion graphics", icon: "aftereffects" },
   { name: "Lyssna", desc: "User research, интервью", icon: "lyssna" },
   { name: "Claude", desc: "AI-помощник в дизайне", icon: "claude" },
