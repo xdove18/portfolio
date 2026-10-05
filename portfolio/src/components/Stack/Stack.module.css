@@ -20,7 +20,7 @@
    Отдельные правила под каждый экран не нужны. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 20px;
 }
 
@@ -82,7 +82,7 @@
   .grid {
     /* На телефоне плитки уже — иначе одна колонка появлялась бы
        слишком рано и список получался бы очень длинным */
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
     gap: 12px;
   }
 

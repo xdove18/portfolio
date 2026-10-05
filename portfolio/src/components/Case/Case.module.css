@@ -265,7 +265,7 @@
 /* ---------- ДВЕ КАРТОЧКИ РЯДОМ ---------- */
 .twoCol {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 20px;
 }
 
@@ -381,7 +381,7 @@
    ============================================================ */
 .compare {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 18px;
   margin-top: 22px;
 }
@@ -543,7 +543,7 @@
 
 .prosCons {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
   gap: 26px;
 }
 
@@ -825,7 +825,7 @@
   list-style: none;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
   grid-auto-rows: 1fr;
   gap: 6px;
 }
@@ -998,7 +998,7 @@
    шаблоне. Если места мало — переносятся сами. */
 .canvasBoard {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
   gap: 10px;
   padding: 14px;
   background: var(--bg);
@@ -1316,7 +1316,7 @@
 /* Две схемы стоят рядом, на узком экране — друг под другом */
 .diagrams {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 24px;
   margin-top: 22px;
 }
@@ -1456,7 +1456,7 @@
    одна колонка. */
 .demoGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
   gap: 30px 24px;
   align-items: start;
 }
@@ -1549,7 +1549,7 @@
    на следующую строку. */
 .screenRow {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(170px, 100%), 1fr));
   gap: 20px;
   align-items: start;
 }
@@ -1577,9 +1577,15 @@
 
 /* ---------- ШИРОКИЕ КОМПОЗИЦИИ ----------
    Для картинок, где на одном изображении сразу несколько
-   телефонов: им нужны колонки пошире. */
+   телефонов или широкий экран компьютера: им нужны колонки
+   пошире.
+
+   min(420px, 100%) вместо просто 420px обязателен. Иначе на
+   телефоне колонка остаётся шириной 420 точек, хотя экран
+   уже — и страница начинает ездить вбок. Такая запись
+   означает «420 точек, но не шире самого экрана». */
 .screenRowWide {
-  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr));
 }
 
 /* Подсказку «нажми на меня» теперь показывает сам курсор —
@@ -1679,7 +1685,7 @@
    ============================================================ */
 .results {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: 20px;
 }
 

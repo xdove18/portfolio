@@ -4,6 +4,7 @@ import { asset } from "../../utils/asset";
 import useScrollVelocity from "../../hooks/useScrollVelocity";
 import DraggableFlower from "./DraggableFlower";
 import Flower from "../Flower/Flower";
+import HeroCases from "./HeroCases";
 import s from "./Hero.module.css";
 
 /* ============================================================
@@ -95,6 +96,8 @@ export default function Hero() {
   return (
     <section className={s.hero} id="top">
       <div className={s.inner}>
+        {/* Левая колонка: заголовок и описание */}
+        <div className={s.textCol}>
         {/* Строка над заголовком: имя · город · возраст */}
         <p className={s.eyebrow}>
           {site.name} · {site.city} · {site.age}
@@ -124,6 +127,10 @@ export default function Hero() {
             Скачать резюме
           </a>
         )}
+        </div>
+
+        {/* Правая колонка: кейсы, которые сменяют друг друга */}
+        <HeroCases />
       </div>
 
       {/* Цветы лежат отдельным слоем поверх фона.

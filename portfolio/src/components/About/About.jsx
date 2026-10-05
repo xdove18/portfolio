@@ -1,7 +1,7 @@
 ﻿import { site } from "../../data/site";
 import { asset } from "../../utils/asset";
-import Flower from "../Flower/Flower";
 import StrengthIcon from "./StrengthIcons";
+import RichText from "../Case/RichText";
 import Letter from "./Letter";
 import s from "./About.module.css";
 
@@ -12,19 +12,6 @@ import s from "./About.module.css";
    образование и опыт работы.
    ============================================================ */
 
-/* Мелкие цветки вокруг фото.
-   top/left — положение в процентах от рамки.
-   Меняйте числа, чтобы переставить цветок. */
-const FRAME_FLOWERS = [
-  { color: "var(--flower-red)",    size: 46, top: -4,  left: -6 },
-  { color: "var(--flower-yellow)", size: 32, top: 8,   left: 96 },
-  { color: "var(--flower-purple)", size: 28, top: 34,  left: -8 },
-  { color: "var(--flower-pink)",   size: 40, top: 62,  left: 98 },
-  { color: "var(--flower-orange)", size: 26, top: 88,  left: -5 },
-  { color: "var(--flower-red)",    size: 30, top: 100, left: 74 },
-  { color: "var(--flower-yellow)", size: 22, top: 96,  left: 24 },
-  { color: "var(--flower-purple)", size: 24, top: -6,  left: 52 },
-];
 
 export default function About() {
   return (
@@ -41,24 +28,6 @@ export default function About() {
                 loading="lazy"   /* картинка грузится, только когда нужна */
               />
 
-              {/* Рамка из цветков. Каждый вращается со своей скоростью,
-                  чтобы рамка не выглядела механической. */}
-              {FRAME_FLOWERS.map((flower, i) => (
-                <div
-                  key={i}
-                  className={s.frameFlower}
-                  style={{
-                    top: `${flower.top}%`,
-                    left: `${flower.left}%`,
-                    animationDuration: `${10 + i * 2}s`,
-                    // Разное направление вращения у соседних цветков
-                    animationDirection: i % 2 === 0 ? "normal" : "reverse",
-                  }}
-                  aria-hidden="true"
-                >
-                  <Flower color={flower.color} size={flower.size} />
-                </div>
-              ))}
             </div>
           </div>
 
@@ -66,21 +35,6 @@ export default function About() {
           <div className={s.textCol}>
             <h2 className={s.title}>{site.about.title}</h2>
             <p className={s.lead}>{site.about.text}</p>
-
-            {/* Сильные стороны */}
-            <div className={s.strengths}>
-              {site.about.strengths.map((item, i) => (
-                <div className={s.strength} key={i}>
-                  <span className={s.strengthIcon}>
-                    <StrengthIcon name={item.icon} />
-                  </span>
-                  <div className={s.strengthBody}>
-                    <p className={s.strengthTitle}>{item.title}</p>
-                    <p className={s.strengthText}>{item.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
 
             {/* Опыт работы — выше образования: для работодателя
                 это главное, что он ищет на странице */}
@@ -110,12 +64,41 @@ export default function About() {
 
                       {/* Описание показываем, только если оно есть */}
                       {job.text && (
-                        <span className={s.jobText}>{job.text}</span>
+                        <span className={s.jobText}>
+                          <RichText>{job.text}</RichText>
+                        </span>
+                      )}
+
+                      {/* Список дел. Выделения **жирным** и ==цветом==
+                          работают так же, как в текстах кейсов. */}
+                      {job.points?.length > 0 && (
+                        <ul className={s.jobPoints}>
+                          {job.points.map((point, k) => (
+                            <li key={k}>
+                              <RichText>{point}</RichText>
+                            </li>
+                          ))}
+                        </ul>
                       )}
                     </span>
                   </li>
                 ))}
               </ul>
+            </div>
+
+            {/* Сильные стороны */}
+            <div className={s.strengths}>
+              {site.about.strengths.map((item, i) => (
+                <div className={s.strength} key={i}>
+                  <span className={s.strengthIcon}>
+                    <StrengthIcon name={item.icon} />
+                  </span>
+                  <div className={s.strengthBody}>
+                    <p className={s.strengthTitle}>{item.title}</p>
+                    <p className={s.strengthText}>{item.text}</p>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Образование */}
