@@ -1,4 +1,5 @@
 ﻿import { useEffect, useState } from "react";
+import { fixHangingWords } from "../utils/typography";
 import { Link, useParams } from "react-router-dom";
 import { getProject } from "../data/projects";
 import { site } from "../data/site";
@@ -110,7 +111,7 @@ export default function ProjectDetail() {
           {/* ================= ЛЕВАЯ КОЛОНКА ================= */}
           <aside className={s.sidebar}>
             <Link to="/" className={s.back}>
-              ← ко всем проектам
+              {fixHangingWords("← ко всем проектам")}
             </Link>
 
             <span
@@ -206,12 +207,12 @@ export default function ProjectDetail() {
 
               <div className={s.twoCol}>
                 <div className={s.card}>
-                  <h3 className={s.cardTitle}>Проблема бизнеса</h3>
+                  <h3 className={s.cardTitle}>{fixHangingWords("Проблема бизнеса")}</h3>
                   <p className={s.cardText}><RichText>{project.problem.business}</RichText></p>
                 </div>
 
                 <div className={s.card}>
-                  <h3 className={s.cardTitle}>Задача продуктового дизайнера</h3>
+                  <h3 className={s.cardTitle}>{fixHangingWords("Задача продуктового дизайнера")}</h3>
                   <p className={s.cardText}><RichText>{project.problem.designer}</RichText></p>
                 </div>
               </div>
@@ -219,7 +220,7 @@ export default function ProjectDetail() {
               {/* Вопросы, заданные бизнесу перед началом работы */}
               {project.problem.questionsToBusiness && (
                 <>
-                  <h3 className={s.subTitle}>вопросы, заданные перед стартом</h3>
+                  <h3 className={s.subTitle}>{fixHangingWords("вопросы, заданные перед стартом")}</h3>
                   <ul className={s.bullets}>
                     {project.problem.questionsToBusiness.map((item, i) => (
                       <li key={i}><RichText>{item}</RichText></li>
@@ -240,13 +241,13 @@ export default function ProjectDetail() {
             <section className={s.block} id="audience">
               <h2 className={s.blockTitle}>Аудитория</h2>
 
-              <h3 className={s.subTitle}>глубинные интервью</h3>
+              <h3 className={s.subTitle}>{fixHangingWords("глубинные интервью")}</h3>
               <p className={s.text}><RichText>{project.research.method}</RichText></p>
 
               {/* Кто пользуется продуктом */}
               {project.research.audience && (
                 <>
-                  <h3 className={s.subTitle}>кто эти люди</h3>
+                  <h3 className={s.subTitle}>{fixHangingWords("кто эти люди")}</h3>
                   <p className={s.text}><RichText>{project.research.audience}</RichText></p>
                 </>
               )}
@@ -262,7 +263,7 @@ export default function ProjectDetail() {
                 className={s.panelSoft}
                 style={{ borderLeftColor: project.color }}
               >
-                <h3 className={s.subTitle}>вопросы для интервью</h3>
+                <h3 className={s.subTitle}>{fixHangingWords("вопросы для интервью")}</h3>
                 <ul className={s.bullets}>
                   {project.research.questions.map((item, i) => (
                     <li key={i}>{item}</li>
@@ -272,7 +273,7 @@ export default function ProjectDetail() {
                 {project.research.wanted && (
                   <>
                     <h3 className={s.subTitle}>
-                      что хотели видеть пользователи
+                      {fixHangingWords("что хотели видеть пользователи")}
                     </h3>
                     <ul className={s.bullets}>
                       {project.research.wanted.map((item, i) => (
@@ -314,7 +315,7 @@ export default function ProjectDetail() {
                 />
               )}
 
-              <h3 className={s.subTitle}>построение гипотез</h3>
+              <h3 className={s.subTitle}>{fixHangingWords("построение гипотез")}</h3>
               <Hypotheses
                 items={project.hypotheses}
                 color={project.color}
@@ -330,7 +331,7 @@ export default function ProjectDetail() {
               {/* Путь пользователя. Показываем в том виде,
                   который описан у проекта:
                   схемы → сравнение «было-стало» → лента шагов */}
-              <h3 className={s.subTitle}>путь пользователя</h3>
+              <h3 className={s.subTitle}>{fixHangingWords("путь пользователя")}</h3>
 
               {project.flowDiagrams ? (
                 <>
@@ -369,7 +370,7 @@ export default function ProjectDetail() {
               <DemoVideo demo={project.demoVideo} />
 
               {/* Экраны приложения */}
-              <h3 className={s.subTitle}>экраны приложения</h3>
+              <h3 className={s.subTitle}>{fixHangingWords("экраны приложения")}</h3>
               {project.screensNote && (
                 <p className={s.text}><RichText>{project.screensNote}</RichText></p>
               )}
@@ -414,7 +415,7 @@ export default function ProjectDetail() {
               {/* Сильные стороны работы */}
               {project.strengths && (
                 <div className={s.ideas}>
-                  <h3 className={s.subTitle}>сильные стороны работы</h3>
+                  <h3 className={s.subTitle}>{fixHangingWords("сильные стороны работы")}</h3>
                   <ul className={s.ideasList}>
                     {project.strengths.map((item, i) => (
                       <li key={i}>
@@ -427,7 +428,7 @@ export default function ProjectDetail() {
               )}
 
               <div className={s.ideas}>
-                <h3 className={s.subTitle}>идеи для развития</h3>
+                <h3 className={s.subTitle}>{fixHangingWords("идеи для развития")}</h3>
                 <ul className={s.ideasList}>
                   {project.ideas.map((idea, i) => (
                     <li key={i}>

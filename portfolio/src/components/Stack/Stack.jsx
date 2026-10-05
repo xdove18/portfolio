@@ -1,4 +1,5 @@
 import { stack } from "../../data/stack";
+import { fixHangingWords } from "../../utils/typography";
 import StackIcon from "./StackIcons";
 import s from "./Stack.module.css";
 
@@ -13,7 +14,7 @@ export default function Stack() {
   return (
     <section className={`section ${s.stack}`} id="stack">
       <div className="container">
-        <h2 className={s.title}>Стек технологий</h2>
+        <h2 className={s.title}>{fixHangingWords("Стек технологий")}</h2>
 
         <div className={s.grid}>
           {stack.map((item) => (

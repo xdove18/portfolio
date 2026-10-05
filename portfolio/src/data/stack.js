@@ -1,3 +1,5 @@
+import { fixHangingWordsDeep } from "../utils/typography";
+
 /* ============================================================
    СТЕК ТЕХНОЛОГИЙ
    ============================================================
@@ -9,7 +11,7 @@
            нарисуется кружок с первой буквой — сайт не сломается.
    ============================================================ */
 
-export const stack = [
+const список = [
   { name: "Figma", desc: "Продуктовый дизайн, UX/UI", icon: "figma" },
   { name: "Protopie", desc: "Интерактивное прототипирование", icon: "protopie" },
   { name: "Miro", desc: "Исследования, CJM, воркшопы", icon: "miro" },
@@ -18,3 +20,7 @@ export const stack = [
   { name: "Lyssna", desc: "User research, интервью", icon: "lyssna" },
   { name: "Claude", desc: "AI-помощник в дизайне", icon: "claude" },
 ];
+
+/* Тексты прогоняются через типографику: короткие предлоги
+   не повисают в конце строки. */
+export const stack = fixHangingWordsDeep(список);

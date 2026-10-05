@@ -60,7 +60,7 @@
 /* ---------- ТЕКСТ ---------- */
 .title {
   font-size: var(--fs-h2);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .lead {
@@ -73,16 +73,16 @@
 /* ---------- СИЛЬНЫЕ СТОРОНЫ ---------- */
 .strengths {
   display: grid;
-  gap: 16px;
-  margin-block: 36px;
+  gap: 12px;
+  margin-block: 24px;
 }
 
 .strength {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   align-items: flex-start;
   min-width: 0;   /* разрешаем карточке сжиматься на узком экране */
-  padding: 18px 20px;
+  padding: 14px 16px;
   background: var(--bg);
   border-radius: var(--radius-sm);
 }
@@ -120,8 +120,8 @@
 
 /* ---------- ОБРАЗОВАНИЕ И ОПЫТ ---------- */
 .block {
-  padding-top: 28px;
-  margin-top: 28px;
+  padding-top: 20px;
+  margin-top: 20px;
   border-top: 1px solid var(--line);
 }
 
@@ -131,7 +131,7 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .eduPlace {
@@ -153,7 +153,7 @@
 
 .experience {
   display: grid;
-  gap: 20px;
+  gap: 16px;
 }
 
 /* Годы слева фиксированной колонкой, описание справа */
@@ -187,7 +187,20 @@
   display: block;
   font-size: var(--fs-small);
   color: var(--text-muted);
-  margin-top: 2px;
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+/* Название места работы со ссылкой на сайт компании */
+.jobLink {
+  text-decoration: underline;
+  text-decoration-color: var(--text-muted);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--t-fast) var(--ease);
+}
+
+.jobLink:hover {
+  text-decoration-color: var(--text-strong);
 }
 
 /* ============================================================

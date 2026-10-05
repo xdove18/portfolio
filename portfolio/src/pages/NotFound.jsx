@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { fixHangingWords } from "../utils/typography";
 import Flower from "../components/Flower/Flower";
 import s from "./NotFound.module.css";
 
@@ -57,7 +58,7 @@ export default function NotFound() {
 
       <p className={s.code}>404</p>
 
-      <h1 className={s.title}>Такой страницы нет</h1>
+      <h1 className={s.title}>{fixHangingWords("Такой страницы нет")}</h1>
 
       <p className={s.text}>
         Похоже, ссылка устарела или в адресе опечатка.

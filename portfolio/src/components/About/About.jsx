@@ -82,6 +82,42 @@ export default function About() {
               ))}
             </div>
 
+            {/* Опыт работы — выше образования: для работодателя
+                это главное, что он ищет на странице */}
+            <div className={s.block}>
+              <h3 className={s.blockTitle}>Опыт</h3>
+              <ul className={s.experience}>
+                {site.about.experience.map((job, i) => (
+                  <li className={s.job} key={i}>
+                    <span className={s.jobYears}>{job.years}</span>
+                    <span className={s.jobBody}>
+                      {/* Если у места работы указан сайт,
+                          название становится ссылкой на него */}
+                      {job.url ? (
+                        <a
+                          className={`${s.jobTitle} ${s.jobLink}`}
+                          href={job.url}
+                          target="_blank"
+                          /* noreferrer — чтобы чужой сайт не получил
+                             доступ к вкладке, из которой его открыли */
+                          rel="noreferrer"
+                        >
+                          {job.title}
+                        </a>
+                      ) : (
+                        <span className={s.jobTitle}>{job.title}</span>
+                      )}
+
+                      {/* Описание показываем, только если оно есть */}
+                      {job.text && (
+                        <span className={s.jobText}>{job.text}</span>
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             {/* Образование */}
             <div className={s.block}>
               <h3 className={s.blockTitle}>Образование</h3>
@@ -93,25 +129,6 @@ export default function About() {
                 </span>
               </p>
               <p className={s.eduSpec}>{site.about.education.speciality}</p>
-            </div>
-
-            {/* Опыт работы */}
-            <div className={s.block}>
-              <h3 className={s.blockTitle}>Опыт</h3>
-              <ul className={s.experience}>
-                {site.about.experience.map((job, i) => (
-                  <li className={s.job} key={i}>
-                    <span className={s.jobYears}>{job.years}</span>
-                    <span className={s.jobBody}>
-                      <span className={s.jobTitle}>{job.title}</span>
-                      {/* Описание показываем, только если оно есть */}
-                      {job.text && (
-                        <span className={s.jobText}>{job.text}</span>
-                      )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
             </div>
 
             {/* Благодарственное письмо. Настраивается

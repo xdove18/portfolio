@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { fixHangingWords } from "../../utils/typography";
 import { asset } from "../../utils/asset";
 import { isSlowNetwork } from "../../utils/network";
 import RichText from "./RichText";
@@ -217,7 +218,7 @@ function DemoRow({ clips }) {
       {/* Для одного видео заголовком служит его собственное
           название, для нескольких — общая подпись над рядом */}
       {many ? (
-        <h3 className={s.subTitle}>как это работает</h3>
+        <h3 className={s.subTitle}>{fixHangingWords("как это работает")}</h3>
       ) : (
         clips[0].title && <h3 className={s.subTitle}>{clips[0].title}</h3>
       )}
@@ -225,8 +226,12 @@ function DemoRow({ clips }) {
       {many && (
         <p className={s.demoHint}>
           {autoStart
-            ? "Видео идут по очереди: закончится одно — начнётся следующее."
-            : "Нажмите на первое видео — дальше они пойдут по очереди."}
+            ? fixHangingWords(
+                "Видео идут по очереди: закончится одно — начнётся следующее."
+              )
+            : fixHangingWords(
+                "Нажмите на первое видео — дальше они пойдут по очереди."
+              )}
         </p>
       )}
 

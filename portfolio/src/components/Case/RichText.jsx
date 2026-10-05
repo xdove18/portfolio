@@ -1,3 +1,4 @@
+import { fixHangingWords } from "../../utils/typography";
 import s from "./Case.module.css";
 
 /* ============================================================
@@ -17,6 +18,10 @@ import s from "./Case.module.css";
 
    Обычный текст без звёздочек продолжает работать как раньше,
    ничего переписывать не нужно.
+
+   Заодно здесь расставляются неразрывные пробелы, чтобы
+   короткие предлоги не повисали в конце строки — см.
+   src/utils/typography.js.
    ============================================================ */
 
 export default function RichText({ children }) {
@@ -34,7 +39,7 @@ function parse(text) {
     if (part.startsWith("**") && part.endsWith("**")) {
       return (
         <strong className={s.accentStrong} key={i}>
-          {part.slice(2, -2)}
+          {fixHangingWords(part.slice(2, -2))}
         </strong>
       );
     }
@@ -42,11 +47,11 @@ function parse(text) {
     if (part.startsWith("==") && part.endsWith("==")) {
       return (
         <mark className={s.accentMark} key={i}>
-          {part.slice(2, -2)}
+          {fixHangingWords(part.slice(2, -2))}
         </mark>
       );
     }
 
-    return part;
+    return fixHangingWords(part);
   });
 }

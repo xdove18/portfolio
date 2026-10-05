@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { fixHangingWords } from "../../utils/typography";
 import { CloseIcon } from "../icons/Icons";
 import ZoomableFigure from "./ZoomableFigure";
 import RichText from "./RichText";
@@ -54,7 +55,7 @@ export default function ValueCanvas({ canvas, accent, accentDeep }) {
         style={{ background: accent }}
         onClick={() => setОткрыто(true)}
       >
-        Ценностное предложение по Остервальдеру
+        {fixHangingWords("Ценностное предложение по Остервальдеру")}
         {/* Стрелка вниз — знак, что блок раскрывается */}
         <svg
           width="16"
@@ -78,7 +79,7 @@ export default function ValueCanvas({ canvas, accent, accentDeep }) {
       {/* Заголовок раскрытого блока и кнопка, чтобы свернуть */}
       <div className={s.canvasHead}>
         <h3 className={s.canvasTitle}>
-          Ценностное предложение по Остервальдеру
+          {fixHangingWords("Ценностное предложение по Остервальдеру")}
         </h3>
 
         <button
@@ -166,7 +167,7 @@ export default function ValueCanvas({ canvas, accent, accentDeep }) {
       {/* ---------- ОТКУДА ВЗЯЛИСЬ ГИПОТЕЗЫ ---------- */}
       {canvas.links && canvas.links.length > 0 && (
         <div className={s.canvasLinks}>
-          <h4 className={s.canvasLinksTitle}>Из чего выросли гипотезы</h4>
+          <h4 className={s.canvasLinksTitle}>{fixHangingWords("Из чего выросли гипотезы")}</h4>
 
           <ul className={s.canvasLinkList}>
             {canvas.links.map((link, i) => (

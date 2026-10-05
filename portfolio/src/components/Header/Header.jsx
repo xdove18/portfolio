@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fixHangingWords } from "../../utils/typography";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { site, navLinks } from "../../data/site";
 import { LogoMark, TelegramIcon, BurgerIcon } from "../icons/Icons";
@@ -119,7 +120,7 @@ export default function Header() {
             target="_blank"
             rel="noreferrer"
           >
-            <span>написать мне</span>
+            <span>{fixHangingWords("написать мне")}</span>
             <span className={s.ctaIcon}>
               <TelegramIcon size={16} color="#fff" />
             </span>
