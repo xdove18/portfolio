@@ -107,14 +107,29 @@ export default function Hero() {
   // На телефоне цветы не таскаются — только вращаются
   const [isMobile, setIsMobile] = useState(false);
 
+  /* Узкий экран — это когда колонки встали друг под друга.
+     Граница здесь 900px, та же, что в HeroWheel.module.css:
+     с неё кейсы превращаются в ленту, подпись съезжает на
+     середину экрана, и цветам нужны запасные места. */
+  const [узкий, setУзкий] = useState(false);
+
   useEffect(() => {
-    const media = window.matchMedia("(max-width: 768px)");
-    const update = () => setIsMobile(media.matches);
+    const телефон = window.matchMedia("(max-width: 768px)");
+    const колонка = window.matchMedia("(max-width: 900px)");
 
-    update();                                 // проверяем сразу при загрузке
-    media.addEventListener("change", update); // и следим за поворотом экрана
+    const update = () => {
+      setIsMobile(телефон.matches);
+      setУзкий(колонка.matches);
+    };
 
-    return () => media.removeEventListener("change", update);
+    update();                                   // проверяем сразу при загрузке
+    телефон.addEventListener("change", update); // и следим за поворотом экрана
+    колонка.addEventListener("change", update);
+
+    return () => {
+      телефон.removeEventListener("change", update);
+      колонка.removeEventListener("change", update);
+    };
   }, []);
 
   return (
@@ -176,8 +191,8 @@ export default function Hero() {
               color={flower.color}
               size={flower.size}
               /* ?? означает «если не задано — возьми второе» */
-              x={isMobile ? flower.mx ?? flower.x : flower.x}
-              y={isMobile ? flower.my ?? flower.y : flower.y}
+              x={узкий ? flower.mx ?? flower.x : flower.x}
+              y={узкий ? flower.my ?? flower.y : flower.y}
               reverse={flower.reverse}
               floatDelay={flower.floatDelay}
               velocity={velocity}

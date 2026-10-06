@@ -55,47 +55,155 @@
   will-change: transform, opacity;
 }
 
-/* ---------- ПОДЛОЖКА С ЭКРАНАМИ ----------
-   Та же цветная плашка со скриншотами, что на странице кейса:
-   цвет берётся из самого проекта. */
+/* ---------- ПЛОЩАДКА ОДНОГО КЕЙСА ----------
+   Прозрачная: экраны лежат прямо на фоне страницы,
+   без цветной плашки. */
 .panel {
   pointer-events: auto;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 14px;
-  width: 420px;
-  padding: 30px 24px 0;
+  width: 100%;
+  max-width: 420px;
+  padding: 0;
   border: 0;
-  border-radius: 22px;
-  overflow: hidden;
+  background: none;
   cursor: pointer;
-
-  filter: drop-shadow(0 26px 30px rgba(30, 25, 20, 0.18));
-  transition: filter var(--t-fast) var(--ease);
+  transition: transform var(--t-fast) var(--ease);
 }
 
 .panel:hover {
-  filter: drop-shadow(0 30px 40px rgba(30, 25, 20, 0.26));
+  transform: translateY(-5px);
 }
 
-/* Тень задаётся фильтром, а не box-shadow: так она повторяет
+/* ---------- ТЕЛЕФОНЫ ----------
+   Макеты телефонов лежат на прозрачном фоне, поэтому тень
+   задаётся фильтром, а не box-shadow: так она повторяет
    силуэт самого телефона, а не прямоугольник картинки. */
-.shot {
-  width: 30%;
-  max-width: 150px;
-  filter: drop-shadow(0 -4px 22px rgba(0, 0, 0, 0.22));
-}
-
-/* Широкая обложка: один экран компьютера вместо трёх
-   телефонов. Включается полем coverWide в projects.js */
-.panelWide {
+.deck {
+  display: flex;
   align-items: center;
-  padding: 28px 24px;
+  justify-content: center;
+  width: 100%;
 }
 
-.panelWide .shot {
-  width: 86%;
-  max-width: none;
+.phone {
+  width: 32%;
+  filter: drop-shadow(0 18px 26px rgba(30, 25, 20, 0.22));
+}
+
+/* Сдвиги заданы в процентах от самой картинки, а не в
+   пикселях: раскладка остаётся такой же и на телефоне,
+   где всё меньше. */
+
+/* ВЕЕР: средний телефон крупнее и выше, боковые спрятаны
+   за ним и чуть развёрнуты */
+.fan .phone:nth-child(1) {
+  transform: translateY(9%) rotate(-7deg);
+  margin-right: -6%;
+  z-index: 1;
+}
+
+.fan .phone:nth-child(2) {
+  width: 36%;
+  z-index: 3;
+}
+
+.fan .phone:nth-child(3) {
+  transform: translateY(9%) rotate(7deg);
+  margin-left: -6%;
+  z-index: 1;
+}
+
+/* ЛЕСЕНКА: три экрана уступами, по диагонали сверху вниз */
+.stairs {
+  gap: 3%;
+}
+
+.stairs .phone:nth-child(1) {
+  transform: translateY(-15%);
+}
+
+.stairs .phone:nth-child(2) {
+  transform: translateY(2%);
+}
+
+.stairs .phone:nth-child(3) {
+  transform: translateY(19%);
+}
+
+/* ВНАХЛЁСТ: телефоны лежат друг на друге под углом,
+   средний сверху */
+.stack .phone {
+  width: 35%;
+}
+
+.stack .phone:nth-child(1) {
+  transform: rotate(-10deg) translateY(6%);
+  margin-right: -11%;
+  z-index: 1;
+}
+
+.stack .phone:nth-child(2) {
+  z-index: 3;
+}
+
+.stack .phone:nth-child(3) {
+  transform: rotate(10deg) translateY(6%);
+  margin-left: -11%;
+  z-index: 2;
+}
+
+/* ---------- НОУТБУК ----------
+   Широкий экран кейса лежит внутри корпуса: тёмная рамка
+   сверху и светлое основание снизу. */
+.laptop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  filter: drop-shadow(0 26px 32px rgba(30, 25, 20, 0.22));
+}
+
+.laptopBody {
+  width: 100%;
+
+  /* Пропорция экрана ноутбука. Картинка внутри обрезается
+     по ней, чтобы корпус не растягивался под каждый скрин. */
+  aspect-ratio: 420 / 264;
+
+  background: #161618;
+  border-radius: 16px 16px 4px 4px;
+  padding: 9px;
+  box-sizing: border-box;
+}
+
+.laptopShot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 6px;
+  background: #ece9e3;
+}
+
+/* Основание шире корпуса — как у настоящего ноутбука */
+.laptopBase {
+  width: 116%;
+  height: 13px;
+  background: linear-gradient(#e6e3de, #bfbcb6);
+  border-radius: 2px 2px 12px 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.laptopNotch {
+  width: 19%;
+  height: 5px;
+  background: #aeaba5;
+  border-radius: 0 0 6px 6px;
 }
 
 /* ============================================================
@@ -303,8 +411,8 @@
    ============================================================ */
 @media (max-width: 900px) {
   .wrap {
-    margin-top: 40px;
-    gap: 22px;
+    margin-top: 36px;
+    gap: 18px;
   }
 
   .stage {
@@ -317,17 +425,19 @@
     align-self: stretch;
 
     display: flex;
-    gap: 16px;
+    gap: 14px;
 
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--pad-side);
 
     /* Полоса прокрутки под лентой не нужна — понятно и так */
     scrollbar-width: none;
 
-    /* Отступы по краям, чтобы крайние кейсы не липли
-       к границам экрана */
-    padding: 0 var(--pad-side);
+    /* По краям лента доходит до самых границ экрана: так
+       соседний кейс выглядывает сбоку и видно, что ленту
+       можно листать. Сверху и снизу место под тени. */
+    padding: 14px var(--pad-side) 20px;
     margin-inline: calc(-1 * var(--pad-side));
   }
 
@@ -337,20 +447,22 @@
 
   .scene {
     position: static;
-    flex: 0 0 min(300px, 78%);
+    flex: 0 0 86%;
+    max-width: 360px;
     scroll-snap-align: center;
     pointer-events: auto;
     will-change: auto;
   }
 
-  .panel {
-    width: 100%;
-    padding: 22px 16px 0;
-    border-radius: 18px;
+  .panel,
+  .laptop {
+    max-width: none;
   }
 
-  .panelWide {
-    padding: 20px 16px;
+  /* Наведения мышью на телефоне нет — и подпрыгивать
+     при касании не нужно */
+  .panel:hover {
+    transform: none;
   }
 
   /* Колесо и ползунок на телефоне только мешали бы */
@@ -366,7 +478,7 @@
   .captions {
     /* На узком экране подпись переносится на две строки,
        поэтому места нужно больше, чем на компьютере */
-    height: 118px;
+    height: 112px;
   }
 }
 
