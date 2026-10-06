@@ -1,27 +1,46 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "../../data/site";
+import { fixHangingWords } from "../../utils/typography";
 import { asset } from "../../utils/asset";
 import useScrollVelocity from "../../hooks/useScrollVelocity";
 import DraggableFlower from "./DraggableFlower";
 import Flower from "../Flower/Flower";
+import HeroWheel from "./HeroWheel";
 import s from "./Hero.module.css";
 
 /* ============================================================
    ГЛАВНЫЙ ЭКРАН (HERO)
    ============================================================
-   Крупный заголовок, описание и живые цветы вокруг.
+   Слева крупный заголовок и описание, справа — колесо кейсов,
+   вокруг живые цветы.
+
+   Секция намеренно высокая (несколько экранов), а её
+   содержимое «прилипает» к окну и не уезжает, пока человек
+   листает: за это время мимо проезжают все четыре кейса.
+   Потом страница идёт дальше, к разделу «обо мне».
+
+   Высота задана в Hero.module.css, свойством height у .hero.
    ============================================================ */
 
 /* Расположение цветов.
    x и y — в процентах от блока: x=0 слева, x=100 справа.
+
+   Места подобраны так, чтобы цветы не налезали на колесо
+   кейсов справа и на подпись под ним: они держатся левой
+   части, низа и двух верхних углов.
+
+   mx и my — запасные места для телефона. Там колонки стоят
+   друг под другом, подпись кейса съезжает на середину экрана,
+   и цветы уходят ещё ниже, чтобы её не перекрывать.
+   Если запасного места нет, берутся обычные x и y.
    reverse — крутить в обратную сторону.
    floatDelay — сдвиг покачивания, чтобы цветы качались вразнобой. */
 const FLOWERS = [
-  { color: "var(--flower-red)",    size: 190, x: 2,  y: 74, reverse: false, floatDelay: "0s" },
-  { color: "var(--flower-yellow)", size: 150, x: 44, y: 92, reverse: true,  floatDelay: "-1.2s" },
-  { color: "var(--flower-pink)",   size: 175, x: 82, y: 88, reverse: false, floatDelay: "-2.4s" },
-  { color: "var(--flower-purple)", size: 90,  x: 94, y: 30, reverse: true,  floatDelay: "-0.6s" },
-  { color: "var(--flower-orange)", size: 70,  x: 66, y: 16, reverse: false, floatDelay: "-1.8s" },
+  { color: "var(--flower-red)",    size: 190, x: 1,  y: 70, mx: 1,  my: 100, reverse: false, floatDelay: "0s" },
+  { color: "var(--flower-yellow)", size: 150, x: 26, y: 97, mx: 42, my: 106, reverse: true,  floatDelay: "-1.2s" },
+  { color: "var(--flower-pink)",   size: 175, x: 62, y: 99, mx: 80, my: 100, reverse: false, floatDelay: "-2.4s" },
+  { color: "var(--flower-purple)", size: 90,  x: 96, y: 13, reverse: true,  floatDelay: "-0.6s" },
+  { color: "var(--flower-orange)", size: 70,  x: 40, y: 10, reverse: false, floatDelay: "-1.8s" },
 ];
 
 /* ---------- ЦВЕТОК ЗА БУКВОЙ ЗАГОЛОВКА ----------
@@ -79,6 +98,12 @@ export default function Hero() {
      не перерисовывается на каждое движение колёсика. */
   const velocity = useScrollVelocity();
 
+  /* Подсказка «листайте — 4 кейса» стоит в левой колонке,
+     а растворяет её колесо кейсов, когда человек начал
+     листать. Поэтому сам элемент создаётся здесь, а передаём
+     его колесу — чтобы ему было что гасить. */
+  const подсказкаРеф = useRef(null);
+
   // На телефоне цветы не таскаются — только вращаются
   const [isMobile, setIsMobile] = useState(false);
 
@@ -94,7 +119,11 @@ export default function Hero() {
 
   return (
     <section className={s.hero} id="top">
-      <div className={s.inner}>
+      {/* Этот слой прилипает к окну, пока секция проезжает мимо */}
+      <div className={s.sticky}>
+        <div className={s.inner}>
+          {/* Левая колонка: заголовок и описание */}
+          <div className={s.textCol}>
         {/* Строка над заголовком: имя · город · возраст */}
         <p className={s.eyebrow}>
           {site.name} · {site.city} · {site.age}
@@ -124,19 +153,38 @@ export default function Hero() {
             Скачать резюме
           </a>
         )}
-      </div>
 
-      {/* Цветы лежат отдельным слоем поверх фона.
-          aria-hidden — украшение, программы чтения его пропускают. */}
-      <div className={s.flowers} aria-hidden="true">
-        {FLOWERS.map((flower, i) => (
-          <DraggableFlower
-            key={i}
-            {...flower}
-            velocity={velocity}
-            draggable={!isMobile}
-          />
-        ))}
+        {/* Подсказка: дальше листают, и мимо едут кейсы */}
+        <p className={s.scrollHint} ref={подсказкаРеф}>
+          <span className={s.hintMouse} aria-hidden="true">
+            <span className={s.hintWheel} />
+          </span>
+          {fixHangingWords("листайте — 4 кейса")}
+        </p>
+          </div>
+
+          {/* Правая колонка: кейсы, которые едут по дуге */}
+          <HeroWheel подсказкаРеф={подсказкаРеф} />
+        </div>
+
+        {/* Цветы лежат отдельным слоем поверх фона.
+            aria-hidden — украшение, программы чтения его пропускают. */}
+        <div className={s.flowers} aria-hidden="true">
+          {FLOWERS.map((flower, i) => (
+            <DraggableFlower
+              key={i}
+              color={flower.color}
+              size={flower.size}
+              /* ?? означает «если не задано — возьми второе» */
+              x={isMobile ? flower.mx ?? flower.x : flower.x}
+              y={isMobile ? flower.my ?? flower.y : flower.y}
+              reverse={flower.reverse}
+              floatDelay={flower.floatDelay}
+              velocity={velocity}
+              draggable={!isMobile}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

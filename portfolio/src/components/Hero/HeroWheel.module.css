@@ -1,0 +1,389 @@
+/* ============================================================
+   СТИЛИ КОЛЕСА КЕЙСОВ
+   ============================================================ */
+
+.wrap {
+  position: relative;
+  z-index: 3;             /* выше цветков на фоне */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+}
+
+/* ---------- СЦЕНА ----------
+   Площадка, внутри которой едут кейсы. Размер постоянный:
+   кейсы крупнее или мельче не делают сцену выше, иначе
+   первый экран дёргался бы при каждой смене. */
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 420px;
+}
+
+/* ---------- ПУНКТИРНОЕ КОЛЕСО ----------
+   След, по которому едут кейсы. Центр колеса — справа за
+   краем экрана, поэтому видна только левая дуга. */
+.ring {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 620px);
+  width: 1240px;
+  height: 1240px;
+  border-radius: 50%;
+  border: 1px dashed rgba(26, 26, 26, 0.1);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ---------- ОДИН КЕЙС ----------
+   Лежит ровно по центру сцены, а по дуге его двигает код.
+   pointer-events: none — чтобы невидимые соседние кейсы
+   не перехватывали нажатие у того, который сейчас в центре. */
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  /* Подсказка браузеру: этот элемент будет двигаться
+     постоянно, пусть готовит для него отдельный слой */
+  will-change: transform, opacity;
+}
+
+/* ---------- ПОДЛОЖКА С ЭКРАНАМИ ----------
+   Та же цветная плашка со скриншотами, что на странице кейса:
+   цвет берётся из самого проекта. */
+.panel {
+  pointer-events: auto;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  width: 420px;
+  padding: 30px 24px 0;
+  border: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  cursor: pointer;
+
+  filter: drop-shadow(0 26px 30px rgba(30, 25, 20, 0.18));
+  transition: filter var(--t-fast) var(--ease);
+}
+
+.panel:hover {
+  filter: drop-shadow(0 30px 40px rgba(30, 25, 20, 0.26));
+}
+
+/* Тень задаётся фильтром, а не box-shadow: так она повторяет
+   силуэт самого телефона, а не прямоугольник картинки. */
+.shot {
+  width: 30%;
+  max-width: 150px;
+  filter: drop-shadow(0 -4px 22px rgba(0, 0, 0, 0.22));
+}
+
+/* Широкая обложка: один экран компьютера вместо трёх
+   телефонов. Включается полем coverWide в projects.js */
+.panelWide {
+  align-items: center;
+  padding: 28px 24px;
+}
+
+.panelWide .shot {
+  width: 86%;
+  max-width: none;
+}
+
+/* ============================================================
+   ПОЛЗУНОК 01–04 СПРАВА ОТ СЦЕНЫ
+   ============================================================ */
+.slider {
+  position: absolute;
+  right: -52px;
+  top: 50%;
+  width: 44px;
+  height: 300px;
+  margin-top: -150px;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  cursor: grab;
+
+  /* Без этого браузер на планшете уводил бы палец
+     в прокрутку страницы вместо перетаскивания */
+  touch-action: none;
+}
+
+.slider:active {
+  cursor: grabbing;
+}
+
+.sliderTrack,
+.sliderFill {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  border-radius: 2px;
+}
+
+.sliderTrack {
+  bottom: 0;
+  background: rgba(26, 26, 26, 0.12);
+}
+
+.sliderFill {
+  height: 0;
+  background: var(--text-strong);
+}
+
+.tick {
+  position: absolute;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tickDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cfcbc4;
+  transition: background var(--t-fast) var(--ease);
+}
+
+.tickNum {
+  position: absolute;
+  left: 32px;
+  font-size: var(--fs-tiny);
+  color: #a29e97;
+  transition: color var(--t-fast) var(--ease);
+}
+
+/* Пройденные точки закрашены */
+.tickPassed .tickDot {
+  background: var(--text-strong);
+}
+
+/* У кейса, который сейчас в центре, виден и номер */
+.tickNow .tickNum {
+  color: var(--text-strong);
+}
+
+.tick:focus-visible {
+  outline: 2px solid var(--text-strong);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+.sliderKnob {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border-radius: 50%;
+  background: var(--text-strong);
+
+  /* Светлое кольцо вокруг ручки — она не сливается
+     с точками, через которые проезжает */
+  box-shadow: 0 0 0 5px var(--bg), 0 6px 14px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+/* ============================================================
+   ПОДПИСЬ КЕЙСА И ПОЛОСКИ ПРОГРЕССА
+   ============================================================ */
+.below {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Все подписи лежат друг на друге в одном месте: видна та,
+   чей кейс сейчас в центре. Высота задана числом, чтобы
+   блок под сценой не прыгал при смене кейса. */
+.captions {
+  position: relative;
+  height: 104px;
+}
+
+.caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.capNum {
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.capTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+
+.capText {
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.capArrow {
+  color: var(--text-strong);
+  font-weight: 700;
+}
+
+.caption:hover .capArrow {
+  /* Стрелка чуть уезжает вправо — подсказка, что это ссылка */
+  display: inline-block;
+  transform: translateX(4px);
+}
+
+.caption:focus-visible {
+  outline: 2px solid var(--text-strong);
+  outline-offset: 6px;
+  border-radius: 8px;
+}
+
+.bars {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.bar {
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(26, 26, 26, 0.12);
+  overflow: hidden;
+}
+
+.barFill {
+  width: 0;
+  height: 100%;
+  background: var(--text-strong);
+}
+
+/* ============================================================
+   ТЕЛЕФОН И ПЛАНШЕТ
+   ============================================================
+   Колеса здесь нет: четыре кейса лежат лентой, которую
+   листают пальцем вбок. Лента сама останавливается ровно
+   на кейсе — за это отвечает scroll-snap.
+   ============================================================ */
+@media (max-width: 900px) {
+  .wrap {
+    margin-top: 40px;
+    gap: 22px;
+  }
+
+  .stage {
+    max-width: none;
+    height: auto;
+
+    /* Лента должна быть ровно по ширине колонки. Без этого
+       она растягивается по сумме всех кейсов — страницу
+       начинает возить вбок. */
+    align-self: stretch;
+
+    display: flex;
+    gap: 16px;
+
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+
+    /* Полоса прокрутки под лентой не нужна — понятно и так */
+    scrollbar-width: none;
+
+    /* Отступы по краям, чтобы крайние кейсы не липли
+       к границам экрана */
+    padding: 0 var(--pad-side);
+    margin-inline: calc(-1 * var(--pad-side));
+  }
+
+  .stage::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scene {
+    position: static;
+    flex: 0 0 min(300px, 78%);
+    scroll-snap-align: center;
+    pointer-events: auto;
+    will-change: auto;
+  }
+
+  .panel {
+    width: 100%;
+    padding: 22px 16px 0;
+    border-radius: 18px;
+  }
+
+  .panelWide {
+    padding: 20px 16px;
+  }
+
+  /* Колесо и ползунок на телефоне только мешали бы */
+  .ring,
+  .slider {
+    display: none;
+  }
+
+  .below {
+    max-width: none;
+  }
+
+  .captions {
+    /* На узком экране подпись переносится на две строки,
+       поэтому места нужно больше, чем на компьютере */
+    height: 118px;
+  }
+}
+
+/* ============================================================
+   ЧЕЛОВЕК ОТКЛЮЧИЛ АНИМАЦИИ В СИСТЕМЕ
+   ============================================================
+   Колесо остаётся — иначе кейсы было бы не посмотреть, —
+   но вращение пунктирного следа выключаем.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .ring {
+    display: none;
+  }
+
+  .panel,
+  .tickDot,
+  .tickNum {
+    transition: none;
+  }
+}
