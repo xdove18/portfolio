@@ -19,8 +19,8 @@
 .stage {
   position: relative;
   width: 100%;
-  max-width: 500px;
-  height: 420px;
+  max-width: 540px;
+  height: 450px;
 }
 
 /* ---------- ПУНКТИРНОЕ КОЛЕСО ----------
@@ -64,7 +64,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 420px;
+  max-width: 540px;
   padding: 0;
   border: 0;
   background: none;
@@ -162,7 +162,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 420px;
+  max-width: 540px;
   filter: drop-shadow(0 26px 32px rgba(30, 25, 20, 0.22));
 }
 
@@ -211,9 +211,13 @@
    ============================================================ */
 .slider {
   position: absolute;
-  right: -52px;
+
+  /* Ползунок стоит вплотную к сцене. Раньше он отходил
+     дальше вправо и вместе с номерами 01–04 не помещался
+     на экранах уже 1340px — цифры срезало краем окна. */
+  right: -26px;
   top: 50%;
-  width: 44px;
+  width: 36px;
   height: 300px;
   margin-top: -150px;
   z-index: 30;
@@ -271,22 +275,16 @@
   transition: background var(--t-fast) var(--ease);
 }
 
-.tickNum {
-  position: absolute;
-  left: 32px;
-  font-size: var(--fs-tiny);
-  color: #a29e97;
-  transition: color var(--t-fast) var(--ease);
-}
 
 /* Пройденные точки закрашены */
 .tickPassed .tickDot {
   background: var(--text-strong);
 }
 
-/* У кейса, который сейчас в центре, виден и номер */
-.tickNow .tickNum {
-  color: var(--text-strong);
+/* Точка кейса, который сейчас в центре, крупнее остальных */
+.tickNow .tickDot {
+  width: 11px;
+  height: 11px;
 }
 
 .tick:focus-visible {
@@ -311,6 +309,15 @@
   pointer-events: none;
 }
 
+/* На экранах уже 1100px справа от сцены уже нет места:
+   ползунок начинал выходить за край окна. Там его прячем —
+   положение всё равно видно по полоскам под подписью. */
+@media (max-width: 1100px) {
+  .slider {
+    display: none;
+  }
+}
+
 /* ============================================================
    ПОДПИСЬ КЕЙСА И ПОЛОСКИ ПРОГРЕССА
    ============================================================ */
@@ -318,7 +325,7 @@
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 420px;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -494,8 +501,7 @@
   }
 
   .panel,
-  .tickDot,
-  .tickNum {
+  .tickDot {
     transition: none;
   }
 }

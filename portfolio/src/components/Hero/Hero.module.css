@@ -46,15 +46,31 @@
   margin: 0 auto;
   padding-inline: var(--pad-side);
 
-  /* Две колонки: слева заголовок, справа колесо кейсов */
+  /* Две колонки: слева заголовок, справа колесо кейсов.
+
+     Правая колонка заметно шире прежней: на мелких экранах
+     кейсов не разобрать, что на них нарисовано. Заголовок
+     ради этого немного уступил в размере — числа подобраны
+     так, чтобы слово «Продуктовый» помещалось в свою колонку
+     на любой ширине от 900px и выше. */
   display: grid;
-  grid-template-columns: 1fr minmax(0, 500px);
-  column-gap: 72px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 540px);
+  column-gap: 56px;
   align-items: center;
 }
 
 .textCol {
   min-width: 0;
+}
+
+/* Экран ноутбука: места меньше, колонка кейсов и промежуток
+   между колонками сужаются — иначе заголовок перестаёт
+   помещаться и колесо выезжает за край. */
+@media (max-width: 1100px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+    column-gap: 40px;
+  }
 }
 
 /* На планшете и телефоне колонки встают друг под друга:
@@ -91,7 +107,7 @@
 .title {
   /* Чуть меньше общего --fs-hero: рядом теперь стоит колесо
      кейсов, и заголовку нужно уместиться в свою колонку. */
-  font-size: clamp(2.5rem, 6.4vw, 5.25rem);
+  font-size: clamp(2.25rem, 5vw, 4.75rem);
   font-weight: 800;
   letter-spacing: -0.045em;
   line-height: 0.92;
@@ -185,7 +201,7 @@
      записанный в описании в site.js, действительно работал. */
   white-space: pre-line;
 
-  max-width: 520px;
+  max-width: 460px;
   font-size: 1.0625rem;
   color: var(--text-muted);
   line-height: 1.55;

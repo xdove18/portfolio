@@ -424,7 +424,6 @@ export default function HeroWheel({ подсказкаРеф }) {
               aria-label={`Показать кейс «${кейс.title}»`}
             >
               <span className={s.tickDot} />
-              <span className={s.tickNum}>{String(i + 1).padStart(2, "0")}</span>
             </button>
           ))}
 
