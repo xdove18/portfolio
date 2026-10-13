@@ -1,0 +1,56 @@
+/* ============================================================
+   СТИЛИ ПЕРЕКЛЮЧАТЕЛЯ ТЕМЫ
+   ============================================================ */
+
+.toggle {
+  position: relative;
+  flex: none;
+
+  width: 34px;
+  height: 34px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--text-muted);
+  cursor: pointer;
+
+  transition: border-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
+}
+
+.toggle:hover {
+  border-color: var(--accent);
+  color: var(--text-strong);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--text-strong);
+  outline-offset: 2px;
+}
+
+/* Значки лежат друг на друге в одной точке */
+.icon {
+  position: absolute;
+  display: flex;
+  transition: transform var(--t-mid) var(--ease),
+    opacity var(--t-mid) var(--ease);
+}
+
+/* Спрятанный значок уезжает вверх и растворяется */
+.iconOff {
+  opacity: 0;
+  transform: translateY(-16px) rotate(-90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon {
+    transition: none;
+  }
+}

@@ -4,6 +4,7 @@ import { asset } from "../../utils/asset";
 import { fixHangingWords } from "../../utils/typography";
 import { TelegramIcon } from "../icons/Icons";
 import Flower from "../Flower/Flower";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import s from "./Rail.module.css";
 
 /* ============================================================
@@ -60,10 +61,8 @@ export default function Rail() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   }
 
-  /* Строка «Самара · 24 года · middle». Пустые значения
-     выпадают сами — если в site.js стереть грейд, останется
-     только город и возраст. */
-  const визитка = [site.city, `${site.age} года`, site.grade]
+  // Строка «Самара · 24 года»
+  const визитка = [site.city, `${site.age} года`]
     .filter(Boolean)
     .join(" · ");
 
@@ -82,6 +81,16 @@ export default function Rail() {
           <p className={s.name}>{site.name}</p>
           <p className={s.role}>{site.role}</p>
           <p className={s.meta}>{fixHangingWords(визитка)}</p>
+
+          {/* Направления работы — то, что рекрутер ищет
+              глазами в первую очередь */}
+          {site.domains?.length > 0 && (
+            <ul className={s.domains}>
+              {site.domains.map((чем) => (
+                <li key={чем}>{чем}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 
@@ -116,6 +125,19 @@ export default function Rail() {
           <TelegramIcon size={16} />
         </a>
 
+        {/* Резюме. Кнопки нет, если в site.js не указан файл */}
+        {site.resumeUrl && (
+          <a
+            className={s.cv}
+            href={asset(site.resumeUrl)}
+            /* download подсказывает браузеру сохранить файл,
+               а не открывать его во вкладке */
+            download={`${site.name} — резюме.pdf`}
+          >
+            CV
+          </a>
+        )}
+
         {/* Ссылки показываются, только если заполнены в site.js */}
         <div className={s.links}>
           {site.behance && (
@@ -123,7 +145,9 @@ export default function Rail() {
               Behance
             </a>
           )}
-          {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+          {site.email && <a href={`mailto:${site.email}`}>Почта</a>}
+
+          <ThemeToggle />
         </div>
       </div>
     </aside>

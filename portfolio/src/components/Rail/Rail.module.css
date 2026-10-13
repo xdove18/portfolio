@@ -37,16 +37,6 @@
   object-position: center 18%;   /* кадр по лицу, а не по центру */
   border-radius: 18px;
   background: var(--bg-soft);
-
-  /* Фотография приглушена до серого и оживает при наведении.
-     Так колонка остаётся спокойной, а портрет всё равно
-     «отзывается» на человека. */
-  filter: grayscale(1) contrast(1.02);
-  transition: filter 600ms var(--ease);
-}
-
-.rail:hover .photo {
-  filter: grayscale(0) contrast(1);
 }
 
 .id {
@@ -73,6 +63,28 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-faint);
+}
+
+/* ---------- НАПРАВЛЕНИЯ ----------
+   Мелкие плашки под городом: B2B, B2C и так далее. */
+.domains {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.domains li {
+  padding: 4px 9px;
+
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 6px;
 }
 
 /* ---------- МЕНЮ ---------- */
@@ -155,13 +167,46 @@
   transform: translateY(-2px);
 }
 
+/* Вторая, спокойная кнопка: контур вместо заливки, чтобы
+   не спорила с основной «Написать в Telegram» */
+.cv {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+  padding: 0 22px;
+
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-strong);
+
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+
+  transition: border-color var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+}
+
+.cv:hover {
+  border-color: var(--text-strong);
+  background: var(--bg-soft);
+}
+
 .links {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 18px;
 
   font-size: var(--fs-tiny);
   color: var(--text-muted);
+}
+
+/* Переключатель темы прижат к правому краю строки */
+.links > button {
+  margin-left: auto;
 }
 
 .links a {
@@ -247,11 +292,6 @@
 /* Человек отключил анимации в системе — фотография сразу
    в цвете, без перехода */
 @media (prefers-reduced-motion: reduce) {
-  .photo {
-    filter: none;
-    transition: none;
-  }
-
   .mark {
     transition: none;
   }

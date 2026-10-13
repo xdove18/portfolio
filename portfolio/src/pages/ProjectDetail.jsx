@@ -3,7 +3,6 @@ import { fixHangingWords } from "../utils/typography";
 import { Link, useParams } from "react-router-dom";
 import { getProject } from "../data/projects";
 import { site } from "../data/site";
-import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import Competitors from "../components/Case/Competitors";
 import ScreenGallery from "../components/Case/ScreenGallery";
@@ -104,8 +103,10 @@ export default function ProjectDetail() {
 
   return (
     <>
-      <Header />
-
+      {/* Шапки на странице кейса нет: наверху левой колонки
+          стоит ссылка «ко всем проектам», а остальные разделы
+          сайта доступны из футера. Так ничего не перекрывает
+          обложку и не отвлекает от чтения. */}
       <main className={s.page}>
         <div className={s.layout}>
           {/* ================= ЛЕВАЯ КОЛОНКА ================= */}

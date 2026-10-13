@@ -6,7 +6,7 @@
   position: relative;
   overflow: hidden;                 /* лепестки не вылезают наружу */
   background: var(--black);
-  color: var(--bg-white);
+  color: var(--on-dark);
   border-radius: 40px 40px 0 0;     /* скруглены только верхние углы */
   margin-top: 40px;
   padding-block: 100px 40px;
@@ -21,7 +21,7 @@
   font-size: var(--fs-tiny);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--on-dark-muted);
   margin-bottom: 12px;
 }
 
@@ -32,7 +32,7 @@
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 1;
-  color: var(--bg-white);
+  color: var(--on-dark);
   transition: color var(--t-fast) var(--ease);
   /* Ник шире экрана на телефоне — даём ему сжиматься */
   word-break: break-word;
@@ -51,7 +51,7 @@
   padding: 15px 30px;
   min-height: 48px;
   background: var(--accent);
-  color: var(--text-strong);
+  color: var(--on-accent);
   font-size: var(--fs-small);
   font-weight: 700;
   border-radius: var(--radius-pill);
@@ -110,7 +110,7 @@
 .brandRole {
   display: block;
   font-size: var(--fs-tiny);
-  color: var(--text-muted);
+  color: var(--on-dark-muted);
 }
 
 .links {
@@ -131,7 +131,7 @@
 
 .copy {
   font-size: var(--fs-tiny);
-  color: var(--text-muted);
+  color: var(--on-dark-muted);
   text-align: right;
 }
 
