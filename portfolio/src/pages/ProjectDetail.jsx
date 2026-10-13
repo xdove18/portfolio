@@ -113,10 +113,7 @@ export default function ProjectDetail() {
               {fixHangingWords("← ко всем проектам")}
             </Link>
 
-            <span
-              className={s.niche}
-              style={{ background: project.colorDeep || project.color }}
-            >
+            <span className={s.niche}>
               {project.niche}
             </span>
 
@@ -154,13 +151,10 @@ export default function ProjectDetail() {
                       ?.scrollIntoView({ behavior: "smooth" });
                   }}
                 >
+                  {/* Цвет активной точки задан в стилях — тем же
+                      салатовым, что и маркер меню на главной */}
                   <span
                     className={s.tocDot}
-                    style={
-                      activeSection === section.id
-                        ? { background: project.color }
-                        : undefined
-                    }
                   />
                   {section.label}
                 </a>
@@ -262,10 +256,7 @@ export default function ProjectDetail() {
                 ))}
               </ul>
 
-              <div
-                className={s.panelSoft}
-                style={{ borderLeftColor: project.color }}
-              >
+              <div className={s.panelSoft}>
                 <h3 className={s.subTitle}>
                   {fixHangingWords(
                     project.research.questionsTitle || "вопросы для интервью"
@@ -389,7 +380,7 @@ export default function ProjectDetail() {
               <div className={s.results}>
                 {(project.results || []).map((item, i) => (
                   <div className={s.resultCard} key={i}>
-                    <p className={s.resultValue} style={{ color: project.color }}>
+                    <p className={s.resultValue}>
                       {item.value}
                     </p>
                     <p className={s.resultLabel}>{item.label}</p>

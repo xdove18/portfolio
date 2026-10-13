@@ -48,15 +48,17 @@
 }
 
 /* Плашка ниши: заливка цветом проекта, белый текст */
+/* Ниша — тихая подпись, как корешок кейса на главной.
+   Цветной таблетки больше нет: на бело-сером сайте она
+   перетягивала внимание на себя раньше названия. */
 .niche {
-  display: inline-block;
-  padding: 6px 14px;
+  display: block;
   font-size: var(--fs-tiny);
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #fff;
-  border-radius: var(--radius-pill);
+  color: var(--text-faint);
+  margin-bottom: 14px;
 }
 
 .sidebarTitle {
@@ -116,22 +118,25 @@
 
 .tocLinkActive {
   color: var(--text-strong);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /* Точка слева от пункта. У активного она вытягивается в чёрточку */
+/* Маркер активного пункта: салатовая точка вместо серой
+   полоски. Меню на главной устроено так же. */
 .tocDot {
-  width: 8px;
-  height: 8px;
-  background: var(--line);
-  border-radius: var(--radius-pill);
+  width: 7px;
+  height: 7px;
+  background: var(--line-strong);
+  border-radius: 50%;
   flex-shrink: 0;
-  transition: width var(--t-fast) var(--ease),
-    background var(--t-fast) var(--ease);
+  transition: background var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease);
 }
 
 .tocLinkActive .tocDot {
-  width: 20px;
+  background: var(--accent);
+  transform: scale(1.4);
 }
 
 /* ============================================================
@@ -297,13 +302,15 @@
    Раньше здесь был цветной фон, на котором серый текст почти
    не читался. Теперь фон белый, текст тёмный, а цвет проекта
    остался только полоской слева — контраст стал нормальным. */
+/* Боковая врезка: серая подложка и тонкая рамка вместо
+   цветной полосы слева и тени. Так она отделена от основного
+   текста, но не выглядит наклейкой. */
 .panelSoft {
-  padding: 28px 30px;
+  padding: 26px 28px;
   margin-top: 32px;
-  background: var(--bg-white);
-  border-radius: var(--radius);
-  border-left: 5px solid;
-  box-shadow: var(--shadow-sm);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
 }
 
 /* Внутри панели заголовки и текст делаем заметно темнее */
@@ -329,22 +336,24 @@
 
 /* Обёртка позволяет широкой таблице прокручиваться вбок
    внутри себя, не растягивая всю страницу */
+/* Таблица без коробки: только линии строк. Рамка и тень
+   делали из неё отдельный предмет на странице, а она часть
+   текста. */
 .tableScroll {
   overflow-x: auto;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
+  border-top: 1px solid var(--line);
 }
 
 .table {
   width: 100%;
   min-width: 460px;
   border-collapse: collapse;
-  background: var(--bg-white);
+  background: none;
   font-size: var(--fs-small);
 }
 
 .table th {
-  padding: 14px 18px;
+  padding: 12px 18px 12px 0;
   text-align: left;
   font-size: var(--fs-tiny);
   font-weight: 700;
@@ -356,7 +365,7 @@
 }
 
 .table td {
-  padding: 14px 18px;
+  padding: 14px 18px 14px 0;
   border-top: 1px solid var(--line);
   color: var(--text);
   line-height: 1.5;
@@ -1695,19 +1704,23 @@
   gap: 20px;
 }
 
+/* Цифры результата стоят на тонкой линии, без коробок
+   и теней: так они читаются как сводка, а не как три
+   плашки, и не спорят с таблицами ниже. */
 .resultCard {
-  padding: 30px 26px;
-  background: var(--bg-white);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
-  text-align: center;
+  padding: 22px 0 4px;
+  border-top: 2px solid var(--text-strong);
 }
 
 .resultValue {
   font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.1;
+
+  /* Цвет проекта здесь больше не используется: на строгой
+     странице одна цифра одним цветом читается спокойнее */
+  color: var(--text-strong);
 }
 
 .resultLabel {
