@@ -1,0 +1,146 @@
+/* ============================================================
+   СТИЛИ БЛОКА «О СЕБЕ»
+   ============================================================ */
+
+.bio {
+  padding: 96px 0 24px;
+}
+
+.title {
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 28px;
+}
+
+.lead {
+  font-size: clamp(1.25rem, 1.9vw, 1.625rem);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  max-width: 44ch;
+
+  padding-bottom: 44px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- СТРОКИ ОПЫТА ----------
+   Слева годы, справа место и дела. Годы в отдельном столбце,
+   чтобы взгляд шёл по ним сверху вниз, как по шкале. */
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 32px;
+
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.years {
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+
+  /* Чуть ниже первой строки заголовка — так годы встают
+     вровень с текстом, а не с его верхним краем */
+  padding-top: 4px;
+}
+
+.job {
+  min-width: 0;
+}
+
+.jobTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+}
+
+.jobTitle a {
+  color: inherit;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 1px;
+  transition: border-color var(--t-fast) var(--ease);
+}
+
+.jobTitle a:hover {
+  border-color: var(--accent);
+}
+
+.jobText {
+  margin-top: 8px;
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* ---------- СПИСОК ДЕЛ ---------- */
+.points {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.points li {
+  position: relative;
+  padding-left: 18px;
+
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* Точка-маркер вместо стандартной: мельче и салатовая */
+.points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tools {
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   ПЛАНШЕТ И ТЕЛЕФОН
+   ============================================================ */
+@media (max-width: 1000px) {
+  .bio {
+    padding: 64px 0 16px;
+  }
+
+  .lead {
+    max-width: none;
+    padding-bottom: 32px;
+  }
+
+  .row {
+    /* Годы встают над названием: в узкой колонке отдельный
+       столбец съедал бы половину ширины */
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 22px 0;
+  }
+
+  .years {
+    padding-top: 0;
+  }
+}

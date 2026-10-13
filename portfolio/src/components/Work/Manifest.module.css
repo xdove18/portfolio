@@ -1,0 +1,62 @@
+/* ============================================================
+   СТИЛИ ГЛАВНОЙ ФРАЗЫ
+   ============================================================ */
+
+.manifest {
+  padding: 56px 0 40px;
+}
+
+.text {
+  font-size: clamp(1.875rem, 3.4vw, 3.125rem);
+  font-weight: 600;
+
+  /* 1.26, а не плотнее: салатовая подложка выделенных слов
+     выше строки и при тесном междустрочье наезжала на хвосты
+     букв предыдущей строки. */
+  line-height: 1.26;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+
+  max-width: 20ch;
+}
+
+/* Подложка выделения в крупном тексте тоньше, чем в кейсах:
+   иначе между выделенным словом и запятой за ним появляется
+   заметный провал. */
+.text :global(mark) {
+  padding: 0.04em 0.14em;
+  margin-inline: -0.1em;
+}
+
+.note {
+  margin-top: 24px;
+  max-width: 52ch;
+
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.rule {
+  height: 1px;
+  margin-top: 40px;
+  background: var(--line);
+}
+
+@media (max-width: 1000px) {
+  .manifest {
+    padding: 8px 0 32px;
+  }
+
+  .text {
+    max-width: none;
+  }
+
+  .note {
+    margin-top: 18px;
+  }
+
+  .rule {
+    margin-top: 28px;
+  }
+}

@@ -173,14 +173,12 @@ export default function ProjectDetail() {
           <div className={s.content}>
             {/* ---------- ОБЗОР ---------- */}
             <section id="overview">
+              {/* Обложка на нейтральной серой плашке — такой же,
+                  как в стопке кейсов на главной. Цвет проекта
+                  остаётся только в мелких деталях: плашке ниши,
+                  цифрах результата, маркерах. */}
               <div
                 className={`${s.cover} ${project.coverWide ? s.coverWide : ""}`}
-                style={{
-                  // Тот же градиент, что и на карточке проекта
-                  background: `linear-gradient(150deg, ${project.color} 0%, ${
-                    project.colorDeep || project.color
-                  } 100%)`,
-                }}
               >
                 {/* Обложка не кликается, поэтому метку data-cursor
                     здесь не ставим — надпись «нажми на меня»

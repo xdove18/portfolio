@@ -1,0 +1,252 @@
+/* ============================================================
+   СТИЛИ СТОПКИ КЕЙСОВ
+   ============================================================ */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ---------- ОДНА КАРТОЧКА ----------
+   position: sticky — карточка доезжает до своего места сверху
+   и останавливается там, а следующая наезжает на неё.
+
+   Чем дальше карточка в стопке, тем ниже её остановка:
+   56px — высота корешка, из них и складывается «лесенка»
+   из корешков вверху экрана. */
+.card {
+  position: sticky;
+  top: calc(32px + var(--i) * 56px);
+
+  /* Фон обязателен и непрозрачен: именно им карточка
+     закрывает то, что лежит под ней */
+  background: var(--bg-white);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+
+  /* Мягкая тень сверху — подсказка, что карточка лежит
+     поверх другой, а не врезана в страницу */
+  box-shadow: 0 -2px 0 rgba(255, 255, 255, 0.9),
+    0 -14px 28px rgba(13, 13, 15, 0.05);
+
+  transition: border-color var(--t-fast) var(--ease);
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+}
+
+.link {
+  display: block;
+  color: inherit;
+}
+
+/* ---------- КОРЕШОК ----------
+   Полоса сверху карточки. Когда сверху ложится следующая
+   карточка, видно остаётся только её. */
+.spine {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  height: 56px;
+  padding: 0 24px;
+  box-sizing: border-box;
+
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-white);
+}
+
+.num {
+  font-size: var(--fs-tiny);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+
+  /* Моноширинный — номера стоят ровным столбиком,
+     когда корешки собираются в лесенку */
+  font-family: var(--font-mono);
+}
+
+.spineTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+
+  /* Длинное название не ломает корешок */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.niche {
+  margin-left: auto;
+  flex: none;
+
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ---------- ОБЛОЖКА ----------
+   Серая плашка, на которой лежат экраны кейса. Цветных
+   подложек здесь нет намеренно: на бело-сером фоне работы
+   видно лучше, чем на градиенте. */
+.cover {
+  display: flex;
+
+  /* По центру, а не по нижнему краю: в стопке у карточки
+     часто видна только верхняя полоса обложки, и при нижнем
+     выравнивании на её месте оставалась пустая серая полоса. */
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  aspect-ratio: 16 / 10;
+  padding: 40px;
+  box-sizing: border-box;
+
+  background: var(--bg-grey);
+  overflow: hidden;
+}
+
+/* Тень по силуэту телефона, а не по прямоугольнику картинки */
+.shot {
+  width: 26%;
+  max-width: 215px;
+  filter: drop-shadow(0 14px 28px rgba(13, 13, 15, 0.18));
+
+  transition: transform var(--t-mid) var(--ease);
+}
+
+/* Широкая обложка: один экран компьютера вместо телефонов */
+.coverWide {
+  align-items: center;
+  padding: 44px;
+}
+
+.coverWide .shot {
+  width: 100%;
+  max-width: none;
+  border-radius: 8px;
+}
+
+/* При наведении экраны чуть приподнимаются — карточка
+   отзывается, но не прыгает */
+.card:hover .shot {
+  transform: translateY(-8px);
+}
+
+.card:hover .coverWide .shot {
+  transform: translateY(-4px);
+}
+
+/* ---------- ПОДПИСЬ ---------- */
+.body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+
+  padding: 22px 24px 24px;
+}
+
+.text {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 54ch;
+}
+
+.go {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--text-strong);
+
+  /* Салатовая подчёркивающая полоса вырастает при наведении */
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 3px;
+  padding-bottom: 3px;
+
+  transition: background-size var(--t-mid) var(--ease);
+}
+
+.card:hover .go {
+  background-size: 100% 3px;
+}
+
+.go svg {
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.card:hover .go svg {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   ПЛАНШЕТ И ТЕЛЕФОН
+   ============================================================ */
+@media (max-width: 1000px) {
+  .card {
+    /* Лесенка мельче: экран ниже, и высокие корешки съедали бы
+       слишком много места */
+    top: calc(16px + var(--i) * 48px);
+  }
+
+  .spine {
+    height: 48px;
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .cover {
+    aspect-ratio: 4 / 3;
+    padding: 24px;
+    gap: 12px;
+  }
+
+  .coverWide {
+    padding: 24px;
+  }
+
+  .body {
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px 16px 20px;
+  }
+
+  .text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Ниша в корешке не помещается рядом с названием */
+  .niche {
+    display: none;
+  }
+
+  .cover {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* Человек отключил анимации в системе */
+@media (prefers-reduced-motion: reduce) {
+  .shot,
+  .go,
+  .go svg {
+    transition: none;
+  }
+}
