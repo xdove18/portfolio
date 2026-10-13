@@ -40,6 +40,13 @@
   --on-dark-muted: rgba(255, 255, 255, 0.62);
   --on-accent: #0d0d0f;
 
+  /* Подтверждённая и опровергнутая гипотеза. Отдельными
+     переменными — чтобы в тёмной теме не светить пастелью. */
+  --ok-bg: #e6f2e6;
+  --ok-text: #2f5c38;
+  --no-bg: #fbe3e3;
+  --no-text: #7a3535;
+
   /* Цвета цветков — используются в hero, рамке фото и лепестках футера */
   --flower-red: #f5352a;
   --flower-yellow: #f0c53f;
@@ -116,6 +123,11 @@
      страницы, иначе сливаются с ней */
   --black: #000000;
 
+  --ok-bg: rgba(90, 190, 110, 0.14);
+  --ok-text: #8ddba0;
+  --no-bg: rgba(230, 110, 110, 0.14);
+  --no-text: #f0a0a0;
+
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
@@ -141,6 +153,11 @@
     --shadow-color: rgba(0, 0, 0, 0.5);
 
     --black: #000000;
+
+  --ok-bg: rgba(90, 190, 110, 0.14);
+  --ok-text: #8ddba0;
+  --no-bg: rgba(230, 110, 110, 0.14);
+  --no-text: #f0a0a0;
 
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);

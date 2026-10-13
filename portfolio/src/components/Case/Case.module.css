@@ -773,13 +773,13 @@
    Цветом не ограничиваемся: рядом стоит значок ✓ или ✗,
    чтобы смысл был понятен и при дальтонизме. */
 .hypothesisConfirmed {
-  background: #e6f2e6;
-  color: #2f5c38;
+  background: var(--ok-bg);
+  color: var(--ok-text);
 }
 
 .hypothesisRejected {
-  background: #fbe3e3;
-  color: #7a3535;
+  background: var(--no-bg);
+  color: var(--no-text);
 }
 
 .hypothesisStatus {

@@ -6,11 +6,9 @@ import { site } from "../data/site";
 import Footer from "../components/Footer/Footer";
 import Competitors from "../components/Case/Competitors";
 import ScreenGallery from "../components/Case/ScreenGallery";
-import UserFlow from "../components/Case/UserFlow";
 import Hypotheses from "../components/Case/Hypotheses";
 import FlowCompare from "../components/Case/FlowCompare";
 import FlowDiagram from "../components/Case/FlowDiagram";
-import ValueCanvas from "../components/Case/ValueCanvas";
 import { TablesFor } from "../components/Case/CaseTable";
 import { thumb } from "../components/Case/imagePath";
 import RichText from "../components/Case/RichText";
@@ -240,7 +238,13 @@ export default function ProjectDetail() {
             <section className={s.block} id="audience">
               <h2 className={s.blockTitle}>Аудитория</h2>
 
-              <h3 className={s.subTitle}>{fixHangingWords("глубинные интервью")}</h3>
+              {/* Заголовок берётся из проекта. По умолчанию
+                  «глубинные интервью», но в кейсе, где интервью
+                  не было, он будет другим: подпись не должна
+                  обещать то, чего в работе не было. */}
+              <h3 className={s.subTitle}>
+                {fixHangingWords(project.research.methodTitle || "глубинные интервью")}
+              </h3>
               <p className={s.text}><RichText>{project.research.method}</RichText></p>
 
               {/* Кто пользуется продуктом */}
@@ -262,7 +266,11 @@ export default function ProjectDetail() {
                 className={s.panelSoft}
                 style={{ borderLeftColor: project.color }}
               >
-                <h3 className={s.subTitle}>{fixHangingWords("вопросы для интервью")}</h3>
+                <h3 className={s.subTitle}>
+                  {fixHangingWords(
+                    project.research.questionsTitle || "вопросы для интервью"
+                  )}
+                </h3>
                 <ul className={s.bullets}>
                   {project.research.questions.map((item, i) => (
                     <li key={i}>{item}</li>
@@ -301,24 +309,22 @@ export default function ProjectDetail() {
             <section className={s.block} id="solution">
               <h2 className={s.blockTitle}>Решение</h2>
 
-              {/* Гипотезы. Если их много, появятся стрелки
-                  для перелистывания — см. Hypotheses.jsx */}
-              {/* Шаблон ценностного предложения.
-                  Стоит перед гипотезами: сначала видно, из чего
-                  они выросли, потом сами гипотезы. */}
-              {project.valueCanvas && (
-                <ValueCanvas
-                  canvas={project.valueCanvas}
-                  accent={project.color}
-                  accentDeep={project.colorDeep}
-                />
+              {/* Гипотезы. Блок появляется, только если они
+                  описаны у проекта: в кейсе, где их проверяли
+                  таблицей, второй раз пересказывать незачем.
+                  Если гипотез много, появятся стрелки для
+                  перелистывания — см. Hypotheses.jsx */}
+              {project.hypotheses?.length > 0 && (
+                <>
+                  <h3 className={s.subTitle}>
+                    {fixHangingWords("построение гипотез")}
+                  </h3>
+                  <Hypotheses
+                    items={project.hypotheses}
+                    color={project.color}
+                  />
+                </>
               )}
-
-              <h3 className={s.subTitle}>{fixHangingWords("построение гипотез")}</h3>
-              <Hypotheses
-                items={project.hypotheses}
-                color={project.color}
-              />
 
               {/* Приоритизация и прочие таблицы этого раздела */}
               <TablesFor
@@ -327,10 +333,16 @@ export default function ProjectDetail() {
                 accent={project.color}
               />
 
-              {/* Путь пользователя. Показываем в том виде,
-                  который описан у проекта:
-                  схемы → сравнение «было-стало» → лента шагов */}
-              <h3 className={s.subTitle}>{fixHangingWords("путь пользователя")}</h3>
+              {/* Путь пользователя. Блок появляется только там,
+                  где в нём есть что показать: схемы или
+                  сравнение «было-стало». Простую ленту шагов
+                  из кейсов убрали — она пересказывала порядок
+                  экранов, который и так виден ниже. */}
+              {(project.flowDiagrams || project.flowCompare) && (
+                <h3 className={s.subTitle}>
+                  {fixHangingWords("путь пользователя")}
+                </h3>
+              )}
 
               {project.flowDiagrams ? (
                 <>
@@ -356,13 +368,7 @@ export default function ProjectDetail() {
                   accent={project.color}
                   accentDeep={project.colorDeep}
                 />
-              ) : (
-                <UserFlow
-                  steps={project.userFlow}
-                  color={project.color}
-                  colorDeep={project.colorDeep}
-                />
-              )}
+              ) : null}
 
               {/* Демо-видео: показываем сценарий вживую,
                   до того как разбирать отдельные экраны */}
