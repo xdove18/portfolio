@@ -353,7 +353,10 @@
 }
 
 .table th {
-  padding: 12px 18px 12px 0;
+  /* Отступ слева обязателен: в подсвеченной строке в нём
+     лежат полоска и заливка. Без него они наезжали на текст,
+     и строка выглядела съехавшей относительно остальных. */
+  padding: 12px 18px;
   text-align: left;
   font-size: var(--fs-tiny);
   font-weight: 700;
@@ -365,7 +368,7 @@
 }
 
 .table td {
-  padding: 14px 18px 14px 0;
+  padding: 14px 18px;
   border-top: 1px solid var(--line);
   color: var(--text);
   line-height: 1.5;

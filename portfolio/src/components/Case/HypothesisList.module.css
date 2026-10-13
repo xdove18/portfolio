@@ -1,0 +1,123 @@
+/* ============================================================
+   СТИЛИ СПИСКА ГИПОТЕЗ
+   ============================================================ */
+
+.list {
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+/* Одна гипотеза: слева номер и вердикт, справа разбор.
+   Та же раскладка, что у опыта в блоке «о себе» на главной —
+   поэтому страница кейса и главная читаются как одно целое. */
+.item {
+  display: grid;
+  grid-template-columns: 196px minmax(0, 1fr);
+  gap: 32px;
+
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- ЛЕВАЯ КОЛОНКА ---------- */
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+}
+
+.verdict {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+
+  font-size: var(--fs-tiny);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sign {
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+/* Три вердикта — три состояния. Цвета берутся из переменных,
+   поэтому в тёмной теме они не светят пастелью. */
+.confirmed {
+  color: var(--ok-text);
+}
+
+.partly {
+  color: var(--text-muted);
+}
+
+.rejected {
+  color: var(--no-text);
+}
+
+/* ---------- ПРАВАЯ КОЛОНКА ---------- */
+.body {
+  min-width: 0;
+}
+
+.text {
+  font-size: 1.125rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+  max-width: 54ch;
+}
+
+.part {
+  margin-top: 16px;
+}
+
+.partLabel {
+  display: block;
+  margin-bottom: 4px;
+
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.partText {
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+/* ============================================================
+   ТЕЛЕФОН
+   ============================================================
+   Номер и вердикт встают над текстом одной строкой: держать
+   под них отдельную колонку на узком экране слишком дорого.
+   ============================================================ */
+@media (max-width: 760px) {
+  .item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 22px 0;
+  }
+
+  .side {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .text {
+    font-size: 1.0625rem;
+  }
+}

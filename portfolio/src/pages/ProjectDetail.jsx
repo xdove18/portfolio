@@ -6,7 +6,7 @@ import { site } from "../data/site";
 import Footer from "../components/Footer/Footer";
 import Competitors from "../components/Case/Competitors";
 import ScreenGallery from "../components/Case/ScreenGallery";
-import Hypotheses from "../components/Case/Hypotheses";
+import HypothesisList from "../components/Case/HypothesisList";
 import FlowCompare from "../components/Case/FlowCompare";
 import FlowDiagram from "../components/Case/FlowDiagram";
 import { TablesFor } from "../components/Case/CaseTable";
@@ -310,10 +310,15 @@ export default function ProjectDetail() {
                   <h3 className={s.subTitle}>
                     {fixHangingWords("построение гипотез")}
                   </h3>
-                  <Hypotheses
-                    items={project.hypotheses}
-                    color={project.color}
-                  />
+                  <HypothesisList items={project.hypotheses} />
+
+                  {/* Честная пометка: чем проверялись гипотезы
+                      и где вывод, а где измерение */}
+                  {project.hypothesesNote && (
+                    <p className={s.resultsNote}>
+                      <RichText>{project.hypothesesNote}</RichText>
+                    </p>
+                  )}
                 </>
               )}
 
