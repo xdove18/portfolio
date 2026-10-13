@@ -412,21 +412,6 @@ export default function ProjectDetail() {
                 </>
               )}
 
-              {/* Сильные стороны работы */}
-              {project.strengths && (
-                <div className={s.ideas}>
-                  <h3 className={s.subTitle}>{fixHangingWords("сильные стороны работы")}</h3>
-                  <ul className={s.ideasList}>
-                    {project.strengths.map((item, i) => (
-                      <li key={i}>
-                        <CheckIcon size={16} color={project.color} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
               <div className={s.ideas}>
                 <h3 className={s.subTitle}>{fixHangingWords("идеи для развития")}</h3>
                 <ul className={s.ideasList}>
