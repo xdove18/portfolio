@@ -5,6 +5,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Metrika from "./components/Metrika";
 import SparkleCursor from "./components/Cursor/SparkleCursor";
 import BackToTop from "./components/BackToTop/BackToTop";
+import CookieBanner from "./components/CookieBanner/CookieBanner";
 
 /* ============================================================
    КОРЕНЬ ПРИЛОЖЕНИЯ
@@ -35,6 +36,10 @@ export default function App() {
       {/* Кнопка «наверх» в правом нижнем углу. Появляется,
           когда пролистана половина страницы. */}
       <BackToTop />
+
+      {/* Баннер про куки. Пока человек не ответил, аналитика
+          не загружается вообще — этого требует закон. */}
+      <CookieBanner />
 
       {/* Suspense показывает заглушку, пока страница подгружается */}
       <Suspense fallback={<PageLoader />}>
