@@ -52,6 +52,7 @@ const PATHS = {
   msg: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
   search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4.2-4.2',
   filter: 'M4 7h16M4 17h16',
+  help: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9.5 9.5a2.5 2.5 0 0 1 4.6 1.3c0 1.7-2.1 2-2.1 3.4M12 17.2h.01',
   bell: 'M18 8.5a6 6 0 1 0-12 0c0 5-2 6.5-2 6.5h16s-2-1.5-2-6.5zM10.5 19a2 2 0 0 0 3 0'
 };
 const Icon = ({ kind, size, color, w }) => (
@@ -147,6 +148,77 @@ const Modal = ({ o, title, sub, children, cta }) => (
   </div>
 );
 
+
+const Composer = ({ o, type, addr, addrCaret, note, noteCaret, status }) => {
+  const showing = type === 'Показ квартиры';
+  return (
+  <div style={{ position: 'absolute', left: 28, right: 28, bottom: 18, opacity: o,
+    transform: 'translateY(' + (1 - o) * 12 + 'px)', borderRadius: 16, background: C.bg2, padding: 16 }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <span style={{ fontSize: 14, fontWeight: 600, color: C.tx1 }}>Новое касание</span>
+        <span style={{ height: 30, width: 150, padding: '0 12px', borderRadius: 999, background: C.panel,
+          fontFamily: MONO, fontSize: 12, color: C.tx1, display: 'flex', alignItems: 'center' }}>14 сент, 14:30</span>
+      </div>
+      <span style={{ width: 28, height: 28, borderRadius: 999, color: C.tx3, fontSize: 15,
+        display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 14 }}>
+      <span style={{ fontSize: 12, fontWeight: 600, color: C.tx1 }}>{showing ? 'Как прошёл показ' : 'Заметка'}</span>
+      {showing ? <span style={{ fontSize: 12, color: C.stR }}>*</span> : null}
+      <span style={{ fontSize: 11, color: C.tx3 }}>
+        {showing ? 'обязательно — по ней коллеги поймут, что предлагать дальше' : 'по желанию'}
+      </span>
+    </div>
+    <div style={{ height: 74, marginTop: 8, padding: '12px 14px', borderRadius: 12, background: C.panel,
+      fontSize: 13, lineHeight: 1.6, color: note ? C.tx1 : C.tx3 }}>
+      {note || (showing ? 'Что понравилось, что смутило, какой следующий шаг...' : 'Что обсудили с клиентом...')}
+      {noteCaret ? <span style={{ width: 2, height: 17, marginLeft: 2, background: C.cta, display: 'inline-block',
+        verticalAlign: 'text-bottom' }}></span> : null}
+    </div>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 12 }}>
+      {['Показ квартиры', 'Звонок', 'WhatsApp сообщение', 'Встреча в офисе', 'Email', 'Другое'].map(t => (
+        <span key={t} style={{ height: 34, padding: '0 14px', borderRadius: 999, fontSize: 12,
+          fontWeight: t === type ? 600 : 500, display: 'flex', alignItems: 'center',
+          background: t === type ? C.cta : C.panel, color: t === type ? C.pillTx : C.tx2 }}>{t}</span>
+      ))}
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 12 }}>
+      <span style={{ flex: '1 1 220px', height: 34, padding: '0 14px', borderRadius: 999, background: C.panel,
+        fontSize: 13, color: addr ? C.tx1 : C.tx3, display: 'flex', alignItems: 'center' }}>
+        {addr || (type === 'Звонок' ? 'Длительность звонка' : 'Адрес квартиры')}
+        {addrCaret ? <span style={{ width: 2, height: 17, marginLeft: 2, background: C.cta }}></span> : null}
+      </span>
+      {['ул. Мичурина д.71', 'ЖК Парковый, к.3'].map(a => (
+        <span key={a} style={{ height: 34, padding: '0 13px', borderRadius: 999, background: C.panel,
+          fontSize: 12, color: C.tx2, display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>{a}</span>
+      ))}
+    </div>
+    <div style={{ marginTop: 14, fontSize: 12, color: C.tx3 }}>
+      Статус {status ? 'меняется на «' + status + '»' : 'сейчас «Активен» — меняйте, только если что-то изменилось'}
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 14, marginTop: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        {[['Активен', C.stA], ['Жду звонка', C.stW], ['Холодный', C.stC], ['Отказал', C.stR]].map(([l, col]) => (
+          <span key={l} style={{ height: 32, padding: '0 13px', borderRadius: 999, display: 'flex',
+            alignItems: 'center', gap: 7, fontSize: 12, fontWeight: l === status ? 600 : 500,
+            background: l === status ? 'color-mix(in srgb, ' + col + ' 22%, ' + C.panel + ')' : C.panel,
+            color: l === status ? col : C.tx2 }}>
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: col }}></span>{l}
+          </span>
+        ))}
+      </div>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <span style={{ height: 36, padding: '0 16px', borderRadius: 999, background: C.panel, color: C.tx1,
+          fontSize: 12, fontWeight: 600, display: 'flex', alignItems: 'center' }}>Отменить</span>
+        <span style={{ height: 36, padding: '0 20px', borderRadius: 999, background: C.cta, color: C.pillTx,
+          fontSize: 12, fontWeight: 600, display: 'flex', alignItems: 'center' }}>Сохранить</span>
+      </div>
+    </div>
+  </div>
+  );
+};
+
 function Piece() {
   const { T, authoredTotal } = useComposition();
 
@@ -182,7 +254,7 @@ function Piece() {
 
   const clients = 26 + Math.round(newP);
   const shows = 14 + Math.round(MOTION.draw(19.4, 19.7)(T));
-  const NAV = [['Клиенты', String(clients)], ['Показы', String(shows)], ['Сделки', '4'], ['Дашборд', ''], ['Отчёты', ''], ['Команда', '6']];
+  const NAV = [['Клиенты', String(clients)], ['Показы', String(shows)], ['Сделки', '4'], ['Дашборд', ''], ['Отчёты', '']];
   const barPattern = [1, 0, 2, 1, 3, 2];
   const dim = (label) => label === 'Клиенты';
 
@@ -223,6 +295,9 @@ function Piece() {
                 <Icon kind="filter" size={15} color={C.tx3} />
               </div>
               <div style={{ width: 34, height: 34, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Icon kind="help" size={15} color={C.tx3} />
+              </div>
+              <div style={{ width: 34, height: 34, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Icon kind="bell" size={15} color={C.tx3} />
               </div>
             </div>
@@ -250,16 +325,6 @@ function Piece() {
               <span style={{ fontFamily: MONO, fontSize: 11, color: C.tx3 }}>{count}</span>
             </div>
           ))}
-          <div style={{ position: 'absolute', left: 12, right: 12, bottom: 16, borderRadius: 16, padding: 14,
-            background: C.bg2 }}>
-            <div style={{ fontSize: 14, fontWeight: 600, color: C.tx1, lineHeight: 1.4 }}>Ни одного повторного звонка</div>
-            <div style={{ fontSize: 12, color: C.tx2, marginTop: 6, lineHeight: 1.5 }}>
-              Коллеги видят каждое ваше касание клиента в общей ленте.
-            </div>
-            <div style={{ marginTop: 12, height: 32, borderRadius: 999, border: '1px solid ' + C.hair,
-              color: C.tx1, fontSize: 12, fontWeight: 600, display: 'flex', alignItems: 'center',
-              justifyContent: 'center' }}>Как это работает</div>
-          </div>
         </div>
 
         <div style={{ position: 'absolute', left: 212, top: 58, bottom: 0, width: 296, borderRight: '1px solid ' + C.hair }}>
@@ -301,7 +366,7 @@ function Piece() {
                   <span style={{ width: 7, height: 7, borderRadius: '50%', background: active ? C.stA : C.tx3 }}></span>
                   {active ? 'Активен' : 'Новый'}
                 </span>
-                <span style={{ fontSize: 12, color: C.tx3 }}>Создан 10 сентября · ведёт Василий Петров</span>
+                <span style={{ fontSize: 12, color: C.tx3 }}>{active ? 'вы поставили сегодня' : 'новый лид с сайта'} · создан 10 сентября</span>
               </div>
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
@@ -314,22 +379,7 @@ function Piece() {
             </div>
           </div>
 
-          <div style={{ position: 'absolute', left: 28, top: 116, right: 28, display: 'flex', gap: 12 }}>
-            {[['Показов', String(shown.filter(e => e.kind === 'home').length), 'всего'],
-              ['Звонков', String(shown.filter(e => e.kind === 'phone').length), 'всего'],
-              ['В работе', '4', 'дня'],
-              ['Бюджет', fBudget.done ? '15M' : '—', 'до']].map(([label, val, unit]) => (
-              <div key={label} style={{ flex: 1, borderRadius: 16, padding: '14px 16px', background: C.panel }}>
-                <div style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: C.tx3 }}>{label}</div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 8 }}>
-                  <span style={{ fontFamily: MONO, fontSize: 22, fontWeight: 500, color: C.tx1 }}>{val}</span>
-                  <span style={{ fontSize: 11, color: C.tx3 }}>{unit}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ position: 'absolute', left: 28, top: 224, right: 28, bottom: 88, borderRadius: 18,
+          <div style={{ position: 'absolute', left: 28, top: 116, right: 28, bottom: 88, borderRadius: 18,
             background: C.panel, overflow: 'hidden' }}>
             <div style={{ padding: '16px 18px', borderBottom: '1px solid ' + C.hair, display: 'flex',
               alignItems: 'center', justifyContent: 'space-between' }}>
@@ -337,7 +387,11 @@ function Piece() {
                 <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: C.tx3 }}>
                   История взаимодействий
                 </div>
-                <div style={{ fontFamily: MONO, fontSize: 11, color: C.cta }}>{shown.length} событий</div>
+                <div style={{ fontFamily: MONO, fontSize: 11, color: C.cta }}>{shown.length === 1 ? '1 событие' : shown.length + ' события'}</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 5 }}>
+                  <span style={{ fontFamily: MONO, fontSize: 11, color: C.tx2 }}>4</span>
+                  <span style={{ fontSize: 11, color: C.tx3 }}>дня в работе</span>
+                </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 26 }}>
@@ -434,6 +488,16 @@ function Piece() {
             </div>
           </div>
 
+          {ev1O > 0.01 ? (
+            <Composer o={ev1O} type="Звонок" addr={T > 11.35 ? '25 мин' : ''}
+              note={n1.text} noteCaret={n1.active} status={T > 13.5 ? 'Активен' : ''} />
+          ) : null}
+          {ev2O > 0.01 ? (
+            <Composer o={ev2O} type={T > 15.95 ? 'Показ квартиры' : 'Звонок'} addr={addr.text} addrCaret={addr.active}
+              note={n2.text} noteCaret={n2.active} status="" />
+          ) : null}
+
+          {ev1O < 0.01 && ev2O < 0.01 ? (
           <div style={{ position: 'absolute', left: 28, right: 28, bottom: 22, display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{ flex: 1, height: 44, borderRadius: 999, background: C.cta, color: C.pillTx,
               fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -441,10 +505,8 @@ function Piece() {
                 - 0.015 * clamp(1 - Math.abs(T - 15.65) / 0.3, 0, 1)) + ')' }}>
               + Добавить событие
             </div>
-            <div style={{ fontSize: 11, color: C.tx3, maxWidth: 200, lineHeight: 1.4 }}>
-              30 секунд на запись — и коллеги в курсе
-            </div>
           </div>
+          ) : null}
         </div>
 
         {formO > 0.01 ? (
@@ -458,39 +520,6 @@ function Piece() {
           </Modal>
         ) : null}
 
-        {ev1O > 0.01 ? (
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(6,6,5,.62)', opacity: ev1O }}></div>
-        ) : null}
-        {ev1O > 0.01 ? (
-          <Modal o={ev1O} title="Добавить событие" sub="Клиент Сергей Грин" cta="Сохранить">
-            <div style={{ position: 'absolute', left: 22, top: 96, fontSize: 12, color: C.tx3 }}>Тип события</div>
-            <Chip x={22} y={118} label="Звонок" on={T > 11.0} />
-            <Chip x={118} y={118} label="Показ квартиры" on={false} />
-            <Chip x={258} y={118} label="Сообщение" on={false} />
-            <Field x={22} y={176} w={264} label="Длительность звонка" value={T > 11.35 ? '25 мин' : ''} caret={false} mono />
-            <Field x={22} y={264} w={556} label="Заметка" value={n1.text} caret={n1.active} />
-            <div style={{ position: 'absolute', left: 22, top: 356, fontSize: 12, color: C.tx3 }}>Статус клиента</div>
-            <Chip x={22} y={378} label="Активен" on={T > 13.5} dot={C.stA} />
-            <Chip x={132} y={378} label="Жду звонка" on={false} dot={C.stW} />
-          </Modal>
-        ) : null}
-
-        {ev2O > 0.01 ? (
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(6,6,5,.62)', opacity: ev2O }}></div>
-        ) : null}
-        {ev2O > 0.01 ? (
-          <Modal o={ev2O} title="Добавить событие" sub="Клиент Сергей Грин · 14 сентября" cta="Сохранить">
-            <div style={{ position: 'absolute', left: 22, top: 96, fontSize: 12, color: C.tx3 }}>Тип события</div>
-            <Chip x={22} y={118} label="Звонок" on={false} />
-            <Chip x={118} y={118} label="Показ квартиры" on={T > 15.95} />
-            <Chip x={258} y={118} label="Сообщение" on={false} />
-            <Field x={22} y={176} w={556} label="Адрес квартиры" value={addr.text} caret={addr.active} />
-            <Field x={22} y={264} w={556} label="Заметка" value={n2.text} caret={n2.active} />
-            <div style={{ position: 'absolute', left: 22, top: 356, fontSize: 12, color: C.tx3 }}>Статус клиента</div>
-            <Chip x={22} y={378} label="Активен" on={true} dot={C.stA} />
-            <Chip x={132} y={378} label="Жду звонка" on={false} dot={C.stW} />
-          </Modal>
-        ) : null}
       </div>
 
       <div style={{ position: 'absolute', left: cur.x - 3, top: cur.y - 2, width: 22, height: 22, opacity: shell }}>

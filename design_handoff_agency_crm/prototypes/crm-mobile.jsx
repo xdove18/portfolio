@@ -22,6 +22,7 @@ const PATHS = {
   burger: 'M4 7h16M4 12h16M4 17h16',
   back: 'M19 12H5M11 18l-6-6 6-6',
   more: 'M5 12h.01M12 12h.01M19 12h.01',
+  note: 'M6 4h12v16l-6-3.5L6 20z',
   link: 'M10 13a4 4 0 0 0 5.7 0l3-3a4 4 0 1 0-5.7-5.7L11.5 5.8M14 11a4 4 0 0 0-5.7 0l-3 3a4 4 0 1 0 5.7 5.7l1.5-1.5'
 };
 const Icon = ({ kind, size, color, w }) => (
@@ -48,21 +49,42 @@ const HIST = [
   { kind: 'msg', title: 'Подборка из 4 объектов', when: '11 сент · 19:20', by: 'Марина Грязнова',
     notes: [{ by: 'Марина Грязнова', at: '19:22', text: 'Три варианта выше третьего этажа.' }] }
 ];
-const NAV = [['Клиенты', '26'], ['Показы', '14'], ['Сделки', '4'], ['Дашборд', ''], ['Отчёты', ''], ['Команда', '6']];
+const NAV = [['Клиенты', '26'], ['Показы', '14'], ['Сделки', '4'], ['Дашборд', ''], ['Отчёты', '']];
 const SHOWINGS = [
-  ['ул. Толстого д.25', '8.5 млн', 'Сергей Грин · сегодня 14:30', 'Запланирован', C.phone],
-  ['ул. Мичурина д.71', '19 млн', 'Ольга Панина · сегодня 11:00', 'Думает', C.msg],
-  ['ЖК Парковый, к.3', '23 млн', 'Ксения Гладко · 13 сент', 'Понравилось', C.home],
-  ['ул. Лениных полей д.10', '12 млн', 'Сергей Грин · 12 сент', 'Отказ', C.stR]
+  { time: '09:30', dur: '45 мин', addr: 'пр. Гагарина д.4', price: '11.2 млн',
+    client: 'Тимур Асхабов', realtor: 'В. Петров', result: 'Думает' },
+  { time: '11:00', dur: '1 ч', addr: 'ул. Мичурина д.71', price: '19 млн',
+    client: 'Ольга Панина', realtor: 'М. Грязнова', result: 'Запланирован', pend: true },
+  { gap: 'Окно 2 ч 30 мин' },
+  { time: '14:30', dur: '45 мин', addr: 'ул. Толстого д.25', price: '8.5 млн',
+    client: 'Сергей Грин', realtor: 'В. Петров', result: 'Запланирован' },
+  { gap: 'Окно 1 ч 45 мин' },
+  { time: '17:00', dur: '45 мин', addr: 'ул. Заречная д.8', price: '9.4 млн',
+    client: 'Марина Ковалёва', realtor: 'Д. Кутузов', result: 'Запланирован' }
 ];
+
 const DEALS = [
-  ['Подбор', '34 млн', C.msg, [['Сергей Грин', 'ул. Толстого д.25', '8.5 млн', 'В. Петров'],
-    ['Тимур Асхабов', 'пр. Гагарина д.4', '11.2 млн', 'В. Петров']]],
-  ['Оформление', '19 млн', C.phone, [['Ольга Панина', 'ул. Мичурина д.71', '19 млн', 'М. Грязнова']]],
-  ['Закрыты', '23 млн', C.home, [['Ксения Гладко', 'ЖК Парковый, к.3', '23 млн', 'М. Грязнова']]]
+  { name: 'Ольга Панина', addr: 'ул. Мичурина д.71', sum: '19 млн', stage: 'Оформление', stageCol: '#7FA8D4',
+    next: 'Подписать договор купли-продажи', due: 'просрочено на 1 дн', late: true,
+    docs: '4 / 5', pct: 80, missing: 'нет справки из УК' },
+  { name: 'Ксения Гладко', addr: 'ЖК Парковый, к.3', sum: '23 млн', stage: 'Ипотека', stageCol: '#D2B36B',
+    next: 'Ждём решение банка', due: 'через 2 дн', soon: true,
+    docs: '5 / 5', pct: 100, missing: 'все собраны' },
+  { name: 'Сергей Грин', addr: 'ул. Толстого д.25', sum: '8.5 млн', stage: 'Подбор', stageCol: '#6FC2A0',
+    next: 'Показать 3 варианта выше 3 этажа', due: 'через 4 дн',
+    docs: '1 / 4', pct: 25, missing: 'нет паспорта и согласия супруги' },
+  { name: 'Тимур Асхабов', addr: 'пр. Гагарина д.4', sum: '11.2 млн', stage: 'Подбор', stageCol: '#6FC2A0',
+    next: 'Согласовать скидку с собственником', due: 'сегодня', soon: true,
+    docs: '2 / 4', pct: 50, missing: 'нет выписки ЕГРН' }
 ];
+
+const FUNNEL = [
+  ['Новые лиды', 9, 0], ['Первый контакт', 7, 1], ['Показы назначены', 5, 2],
+  ['Выбирают объект', 4, 3], ['Оформление', 2, 0], ['Закрыто', 1, 0]
+];
+
 const TOUCH = [['Пн', 6], ['Вт', 11], ['Ср', 8], ['Чт', 4], ['Пт', 12], ['Сб', 9], ['Вс', 3]];
-const LEADERS = [['Марина Грязнова', 6], ['Василий Петров', 5], ['Дмитрий Кутузов', 2], ['Анна Соболь', 1]];
+const LEADERS = [['Понравилось', 2, '#6FC2A0'], ['Думает', 1, '#D2B36B'], ['Отказ', 1, '#D4837A'], ['Без итога', 1, '#D2A65B']];
 const REPORTS = [['Активность риелторов', 'сентябрь'], ['Воронка по клиентам', 'сентябрь'],
   ['Показы и итоги', 'неделя'], ['Клиенты без касания', 'сейчас']];
 const TEAM = [['Марина Грязнова', '9', '6', 90], ['Василий Петров', '8', '5', 80],
@@ -84,8 +106,6 @@ const SCREENS = [
   { at: 26.2, nav: 'Дашборд', title: 'Дашборд' },
   { at: 28.4, nav: 'Дашборд', title: 'Дашборд', sheet: 'menu' },
   { at: 29.8, nav: 'Отчёты', title: 'Отчёты' },
-  { at: 31.4, nav: 'Отчёты', title: 'Отчёты', sheet: 'menu' },
-  { at: 32.8, nav: 'Команда', title: 'Команда' }
 ];
 
 // строки шторки «Меню»: 6 пунктов по 48px, шторка прижата к низу телефона
@@ -110,9 +130,7 @@ const TAPS = [
   [24.55, BURGER[0], BURGER[1]],
   [25.95, 800, SHEET_ROW(3)],             // «Дашборд»
   [28.15, BURGER[0], BURGER[1]],
-  [29.55, 800, SHEET_ROW(4)],             // «Отчёты»
-  [31.15, BURGER[0], BURGER[1]],
-  [32.55, 800, SHEET_ROW(5)]              // «Команда»
+  [29.55, 800, SHEET_ROW(4)]              // «Отчёты»
 ];
 
 function fingerAt(T) {
@@ -268,6 +286,18 @@ const Sheet = ({ kind, o, cur, pick }) => (
 const ClientCard = () => (
   <div style={{ position: 'relative', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
     <div style={{ flex: 1, minHeight: 0, overflow: 'hidden', padding: '8px 12px 16px 12px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div style={{ display: 'flex', gap: 10, padding: 12, borderRadius: 14,
+        background: 'color-mix(in srgb, ' + C.phone + ' 14%, ' + C.panel + ')' }}>
+        <div style={{ width: 28, height: 28, flex: '0 0 auto', borderRadius: 8,
+          background: 'color-mix(in srgb, ' + C.phone + ' 30%, ' + C.panel + ')', color: C.tx1, fontSize: 10,
+          fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>МГ</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 12, fontWeight: 600, color: C.tx1, lineHeight: 1.4 }}>Ведёт Марина Грязнова</div>
+          <div style={{ fontSize: 11, color: C.tx2, marginTop: 2, lineHeight: 1.45 }}>
+            последнее касание сегодня в 17:40 · показ на Толстого д.25
+          </div>
+        </div>
+      </div>
       <div style={{ borderRadius: 20, padding: '20px 16px', background: C.panel, display: 'flex',
         flexDirection: 'column', alignItems: 'center', gap: 10 }}>
         <div style={{ width: 64, height: 64, borderRadius: '50%', background: C.bg2, color: C.tx1,
@@ -276,12 +306,20 @@ const ClientCard = () => (
         <span style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 13, color: C.stA, fontWeight: 500 }}>
           <span style={{ width: 7, height: 7, borderRadius: '50%', background: C.stA }}></span>Активен
         </span>
-        <div style={{ fontSize: 12, color: C.tx3 }}>Создан 10 сентября · Марина Грязнова</div>
+        <div style={{ fontSize: 12, color: C.tx3 }}>поставила Марина, вчера · создан 10 сентября</div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '4px 12px', marginTop: 2 }}>
+          {[['Бюджет', '10–15 млн'], ['Комнаты', '2–3к'], ['Районы', 'юго-запад']].map(([l, v]) => (
+            <span key={l} style={{ display: 'inline-flex', alignItems: 'baseline', gap: 5 }}>
+              <span style={{ fontSize: 11, color: C.tx3 }}>{l}</span>
+              <span style={{ fontSize: 12, color: C.tx1 }}>{v}</span>
+            </span>
+          ))}
+        </div>
         <div style={{ display: 'flex', gap: 8, width: '100%', marginTop: 6 }}>
           <div style={{ flex: 1, minHeight: 44, borderRadius: 999, background: C.cta, color: C.pillTx,
-            fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Позвонить</div>
+            fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Написать Марине</div>
           <div style={{ flex: 1, minHeight: 44, borderRadius: 999, background: C.bg2, color: C.tx1,
-            fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>WhatsApp</div>
+            fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Позвонить</div>
         </div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -294,7 +332,15 @@ const ClientCard = () => (
       </div>
       <div style={{ borderRadius: 16, padding: 14, background: C.panel }}>
         <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: C.tx3 }}>
-          История · последние 5
+          История · 5 событий
+        </div>
+        <div style={{ display: 'flex', gap: 14, marginTop: 8 }}>
+          {[['12', 'дней в работе']].map(([v, l]) => (
+            <span key={l} style={{ display: 'inline-flex', alignItems: 'baseline', gap: 5 }}>
+              <span style={{ fontFamily: MONO, fontSize: 12, color: C.tx2 }}>{v}</span>
+              <span style={{ fontSize: 11, color: C.tx3 }}>{l}</span>
+            </span>
+          ))}
         </div>
         <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
           {HIST.map((e, ei) => (
@@ -356,9 +402,9 @@ const ClientCard = () => (
 
 const EventForm = ({ T, start }) => {
   const p = clamp((T - start - 0.6) / 1.6, 0, 1);
-  const addr = 'ул. Толстого д.25'.slice(0, Math.round(p * 17));
-  const note = p >= 1 ? 'Квартира понравилась, смущает первый этаж'.slice(0,
-    Math.round(clamp((T - start - 2.3) / 1.2, 0, 1) * 41)) : '';
+  const note = 'Квартира понравилась, смущает первый этаж'.slice(0, Math.round(p * 41));
+  const ap = clamp((T - start - 2.3) / 0.9, 0, 1);
+  const addr = 'ул. Толстого д.25'.slice(0, Math.round(ap * 17));
   const label = t => <div style={{ fontSize: 12, color: C.tx3 }}>{t}</div>;
   return (
     <div style={{ position: 'relative', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column',
@@ -375,8 +421,22 @@ const EventForm = ({ T, start }) => {
           </div>
         </div>
 
+        <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: C.tx1 }}>Как прошёл показ</span>
+            <span style={{ fontSize: 12, color: C.stR }}>*</span>
+            <span style={{ fontSize: 11, color: C.tx3 }}>обязательно для показа</span>
+          </div>
+          <div style={{ height: 88, flexShrink: 0, padding: '12px 16px', borderRadius: 14, background: C.bg2,
+            color: note ? C.tx1 : C.tx3, fontSize: 14, lineHeight: 1.6 }}>
+            {note || 'Что понравилось, что смутило...'}
+            {note && note.length < 41 ? <span style={{ width: 2, height: 17, marginLeft: 2, background: C.cta,
+              display: 'inline-block', verticalAlign: 'text-bottom' }}></span> : null}
+          </div>
+        </div>
+
         <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {label('Тип события *')}
+          {label('Тип события')}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {['Показ квартиры', 'Звонок', 'WhatsApp', 'Встреча', 'Другое'].map((t, i) => (
               <span key={t} style={{ minHeight: 40, padding: '0 14px', borderRadius: 999, fontSize: 12,
@@ -391,31 +451,23 @@ const EventForm = ({ T, start }) => {
           <div style={{ minHeight: 48, padding: '0 16px', borderRadius: 14, background: C.bg2,
             color: addr ? C.tx1 : C.tx3, fontSize: 14, display: 'flex', alignItems: 'center' }}>
             {addr || 'Начните вводить адрес...'}
-            {p > 0 && p < 1 ? <span style={{ width: 2, height: 18, marginLeft: 2, background: C.cta }}></span> : null}
+            {ap > 0 && ap < 1 ? <span style={{ width: 2, height: 18, marginLeft: 2, background: C.cta }}></span> : null}
           </div>
         </div>
 
         <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {label('Статус клиента *')}
+          {label('Статус сейчас «Активен» — меняйте, только если изменился')}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {[['Активен', C.stA], ['Жду звонка', C.stW], ['Холодный', C.stC], ['Отказал', C.stR]].map(([l, col], i) => (
               <span key={l} style={{ minHeight: 40, padding: '0 14px', borderRadius: 999, fontSize: 12,
-                fontWeight: i === 0 ? 600 : 500, display: 'flex', alignItems: 'center', gap: 7,
-                background: i === 0 ? 'color-mix(in srgb, ' + col + ' 22%, ' + C.panel + ')' : C.bg2,
-                color: i === 0 ? col : C.tx2 }}>
+                fontWeight: 500, display: 'flex', alignItems: 'center', gap: 7,
+                background: C.bg2, color: C.tx2 }}>
                 <span style={{ width: 7, height: 7, borderRadius: '50%', background: col }}></span>{l}
               </span>
             ))}
           </div>
         </div>
 
-        <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {label('Заметка (опционально)')}
-          <div style={{ height: 104, flexShrink: 0, padding: '12px 16px', borderRadius: 14, background: C.bg2,
-            color: note ? C.tx1 : C.tx3, fontSize: 14, lineHeight: 1.6 }}>
-            {note || 'Добавьте информацию о клиенте...'}
-          </div>
-        </div>
       </div>
 
       <div style={{ flexShrink: 0, padding: '12px 12px 24px 12px', borderTop: '1px solid ' + C.hair,
@@ -430,48 +482,100 @@ const EventForm = ({ T, start }) => {
 };
 
 const ShowingsM = () => (
-  <div style={{ flex: 1, padding: '4px 12px 24px 12px' }}>
-    {SHOWINGS.map(([addr, price, meta, result, col]) => (
-      <div key={addr} style={{ padding: '14px 4px', borderBottom: '1px solid ' + C.hair }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
-          <span style={{ fontSize: 15, fontWeight: 500, color: C.tx1 }}>{addr}</span>
-          <span style={{ fontFamily: MONO, fontSize: 13, color: C.tx1 }}>{price}</span>
+  <div style={{ flex: 1, padding: '4px 12px 24px 12px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+    <div style={{ display: 'flex', gap: 4, padding: 3, borderRadius: 999, background: C.bg2 }}>
+      {['Сегодня', 'Завтра', 'Неделя'].map((t, i) => (
+        <span key={t} style={{ flex: 1, minHeight: 36, borderRadius: 999, fontSize: 12, fontWeight: 600,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: i === 0 ? C.cta : 'transparent', color: i === 0 ? C.pillTx : C.tx2 }}>{t}</span>
+      ))}
+    </div>
+    <div style={{ fontSize: 12, color: C.tx2, padding: '0 4px' }}>
+      14 сентября · 4 показа · 1 без итога · 2 впереди
+    </div>
+    {SHOWINGS.map((s, i) => {
+      if (s.gap) {
+        return (
+          <div key={'g' + i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '4px 4px' }}>
+            <span style={{ flex: 1, height: 1, background: C.hair }}></span>
+            <span style={{ fontSize: 11, color: C.tx3, whiteSpace: 'nowrap' }}>{s.gap}</span>
+            <span style={{ minHeight: 30, padding: '0 12px', borderRadius: 999, background: C.bg2, color: C.cta,
+              fontSize: 11, fontWeight: 600, display: 'flex', alignItems: 'center' }}>+ Вписать</span>
+          </div>
+        );
+      }
+      const col = s.result === 'Думает' ? C.msg : s.result === 'Понравилось' ? C.home : C.phone;
+      return (
+        <div key={s.time} style={{ borderRadius: 16, padding: 12, background: C.panel, display: 'flex', gap: 12 }}>
+          <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
+            <div style={{ fontFamily: MONO, fontSize: 14, fontWeight: 500, color: C.tx1, lineHeight: 1 }}>{s.time}</div>
+            <div style={{ fontSize: 10, color: C.tx3, marginTop: 4 }}>{s.dur}</div>
+          </div>
+          <span style={{ width: 3, alignSelf: 'stretch', borderRadius: 2, background: col, opacity: s.pend ? 0.55 : 1 }}></span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 }}>
+              <span style={{ fontSize: 14, fontWeight: 500, color: C.tx1 }}>{s.addr}</span>
+              <span style={{ fontFamily: MONO, fontSize: 12, color: C.tx2 }}>{s.price}</span>
+            </div>
+            <div style={{ fontSize: 12, color: C.tx3, marginTop: 4 }}>{s.client} · {s.realtor}</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginTop: 10 }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500, color: col }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: col }}></span>{s.result}
+              </span>
+              <div style={{ display: 'flex', gap: 6 }}>
+                {['phone', 'note'].map(k => (
+                  <span key={k} style={{ width: 40, height: 40, borderRadius: 999, background: C.bg2,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Icon kind={k} size={16} color={C.tx1} />
+                  </span>
+                ))}
+                <span style={{ minHeight: 40, padding: '0 16px', borderRadius: 999, fontSize: 12, fontWeight: 600,
+                  display: 'flex', alignItems: 'center',
+                  background: s.pend ? C.cta : C.bg2, color: s.pend ? C.pillTx : C.tx1 }}>
+                  {s.pend ? 'Итог' : 'Статус'}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginTop: 6 }}>
-          <span style={{ fontSize: 12, color: C.tx2 }}>{meta}</span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 8, color: col, fontSize: 13, fontWeight: 500 }}>
-            <span style={{ width: 3, height: 14, borderRadius: 1, background: col }}></span>{result}
-          </span>
-        </div>
-      </div>
-    ))}
+      );
+    })}
   </div>
 );
 
 const DealsM = () => (
-  <div style={{ flex: 1, padding: '4px 12px 24px 12px', display: 'flex', flexDirection: 'column', gap: 20 }}>
-    {DEALS.map(([title, sum, col, cards]) => (
-      <div key={title}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 4px 10px 4px', borderBottom: '1px solid ' + C.hair }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: col }}></span>
-            <span style={{ fontSize: 14, fontWeight: 600, color: C.tx1 }}>{title}</span>
-          </div>
-          <span style={{ fontFamily: MONO, fontSize: 12, color: C.tx3 }}>{sum}</span>
+  <div style={{ flex: 1, padding: '4px 12px 24px 12px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+    {DEALS.map(d => (
+      <div key={d.name} style={{ borderRadius: 16, padding: 14, background: C.panel }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 }}>
+          <span style={{ fontSize: 15, fontWeight: 600, color: C.tx1 }}>{d.name}</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, color: C.tx1 }}>{d.sum}</span>
         </div>
-        {cards.map(([name, addr, s, realtor]) => (
-          <div key={name} style={{ padding: '13px 4px', borderBottom: '1px solid ' + C.hair }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
-              <span style={{ fontSize: 14, fontWeight: 500, color: C.tx1 }}>{name}</span>
-              <span style={{ fontFamily: MONO, fontSize: 13, color: C.tx1 }}>{s}</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginTop: 4 }}>
-              <span style={{ fontSize: 12, color: C.tx2 }}>{addr}</span>
-              <span style={{ fontSize: 11, color: C.tx3 }}>{realtor}</span>
-            </div>
-          </div>
-        ))}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 6 }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 12, fontWeight: 500, color: d.stageCol }}>
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: d.stageCol }}></span>{d.stage}
+          </span>
+          <span style={{ fontSize: 12, fontWeight: d.late || d.soon ? 600 : 400,
+            color: d.late ? C.stR : d.soon ? C.stW : C.tx2 }}>{d.due}</span>
+        </div>
+        <div style={{ fontSize: 13, color: C.tx1, marginTop: 10, lineHeight: 1.5 }}>{d.next}</div>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, marginTop: 12 }}>
+          <span style={{ fontSize: 11, color: C.tx3 }}>Документы {d.missing}</span>
+          <span style={{ fontFamily: MONO, fontSize: 12, color: d.pct === 100 ? C.home : C.tx2 }}>{d.docs}</span>
+        </div>
+        <div style={{ height: 4, borderRadius: 999, background: C.bg3, marginTop: 7, overflow: 'hidden' }}>
+          <div style={{ height: '100%', width: d.pct + '%', borderRadius: 999,
+            background: d.pct === 100 ? C.home : C.cta }}></div>
+        </div>
+        <div style={{ display: 'flex', gap: 6, marginTop: 12 }}>
+          {['Позвонить', 'Заметка'].map(l => (
+            <span key={l} style={{ flex: 1, minHeight: 40, borderRadius: 999, background: C.bg2, color: C.tx1,
+              fontSize: 12, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{l}</span>
+          ))}
+          <span style={{ flex: 1, minHeight: 40, borderRadius: 999, fontSize: 12, fontWeight: 600,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: d.late ? C.cta : C.bg2, color: d.late ? C.pillTx : C.tx1 }}>Этап</span>
+        </div>
       </div>
     ))}
   </div>
@@ -533,18 +637,47 @@ const DashM = ({ T, start }) => {
           ))}
         </div>
       </div>
+      <div style={{ borderRadius: 18, padding: 16, background: C.panel }}>
+        <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: C.tx3 }}>
+          Воронка по клиентам
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 14 }}>
+          {FUNNEL.map(([label, n, stuck], i) => {
+            const p = lin(start + 0.5 + i * 0.08, start + 1.1 + i * 0.08)(T);
+            return (
+              <div key={label}>
+                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 }}>
+                  <span style={{ fontSize: 12, color: C.tx1 }}>{label}</span>
+                  <span style={{ fontFamily: MONO, fontSize: 12, color: C.tx2 }}>{n}</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 5 }}>
+                  <div style={{ height: 18, borderRadius: 6, minWidth: 4,
+                    width: Math.max(4, Math.round(n / FUNNEL[0][1] * 74 * p)) + '%',
+                    background: stuck > 1 ? C.stW : C.cta, opacity: stuck > 1 ? 1 : 0.82 - i * 0.07 }}></div>
+                  {stuck > 1 ? (
+                    <span style={{ fontSize: 10, fontWeight: 600, color: C.stW, whiteSpace: 'nowrap' }}>
+                      {stuck} застряли
+                    </span>
+                  ) : null}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       <div>
         <div style={{ fontFamily: MONO, fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase',
-          color: C.tx3, padding: '0 4px 12px 4px' }}>Показы по риелторам</div>
+          color: C.tx3, padding: '0 4px 12px 4px' }}>Мои показы за неделю — итоги</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14, padding: '0 4px' }}>
-          {LEADERS.map(([name, n]) => (
+          {LEADERS.map(([name, n, col]) => (
             <div key={name}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span style={{ fontSize: 13, color: C.tx1 }}>{name}</span>
-                <span style={{ fontFamily: MONO, fontSize: 12, color: C.tx2 }}>{n} показов</span>
+                <span style={{ fontFamily: MONO, fontSize: 12, color: C.tx2 }}>{n === 1 ? '1 показ' : n < 5 ? n + ' показа' : n + ' показов'}</span>
               </div>
               <div style={{ height: 6, borderRadius: 999, background: C.bg2, marginTop: 8, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: (n / 6 * 100 * grow) + '%', borderRadius: 999, background: C.cta }}></div>
+                <div style={{ height: '100%', width: (n / 2 * 100 * grow) + '%', borderRadius: 999, background: col }}></div>
               </div>
             </div>
           ))}

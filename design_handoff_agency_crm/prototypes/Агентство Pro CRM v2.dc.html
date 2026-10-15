@@ -75,16 +75,19 @@
             <button onClick="{{ toggleFilters }}" style="{{ filtersBtnStyle }}">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16"></path><path d="M4 17h16"></path><circle cx="9" cy="7" r="2.4"></circle><circle cx="15" cy="17" r="2.4"></circle></svg>
             </button>
+            <button onClick="{{ openTour }}" title="Как это работает" style="width:34px;height:34px;border-radius:10px;border:none;background:transparent;color:var(--tx3,#8B8680);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 0 1 4.6 1.3c0 1.7-2.1 2-2.1 3.4"></path><path d="M12 17.2h.01"></path></svg>
+            </button>
             <button style="width:34px;height:34px;border-radius:10px;border:none;background:transparent;color:var(--tx3,#8B8680);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0)">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 1 0-12 0c0 5-2 6.5-2 6.5h16s-2-1.5-2-6.5z"></path><path d="M10.5 19a2 2 0 0 0 3 0"></path></svg>
             </button>
           </div>
           <div style="display:flex;align-items:center;gap:9px;padding-left:16px;border-left:1px solid var(--hair,rgba(255,255,255,.08))">
             <div style="text-align:right;line-height:1.25">
-              <div style="font-size:12px;font-weight:600;color:var(--tx1,#F5F3F0)">Василий Петров</div>
-              <div style="font-size:11px;color:var(--tx3,#8B8680)">Риелтор</div>
+              <div style="font-size:12px;font-weight:600;color:var(--tx1,#F5F3F0)">{{ meName }}</div>
+              <div style="font-size:11px;color:var(--tx3,#8B8680)">{{ meRole }}</div>
             </div>
-            <div style="width:32px;height:32px;border-radius:10px;background:var(--bg3,#26241F);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--tx1,#F5F3F0)">ВП</div>
+            <div style="width:32px;height:32px;border-radius:10px;background:var(--bg3,#26241F);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--tx1,#F5F3F0)">{{ meInitials }}</div>
           </div>
         </div>
       </div>
@@ -100,15 +103,70 @@
               <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ n.count }}</span>
             </div>
           </sc-for>
-          <div style="flex:1"></div>
-          <div style="border-radius:16px;padding:14px;background:var(--bg2,#1C1B19);border:1px solid var(--hair,rgba(255,255,255,.08))">
-            <div style="font-size:14px;font-weight:600;line-height:1.4">Ни одного повторного звонка</div>
-            <div style="font-size:12px;line-height:1.5;color:var(--tx2,#BCB8B2);margin-top:6px">Коллеги видят каждое ваше касание клиента в общей ленте.</div>
-            <button onClick="{{ openTour }}" style="margin-top:12px;width:100%;height:32px;border-radius:999px;border:1px solid var(--hair,rgba(255,255,255,.08));background:transparent;color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Как это работает</button>
-          </div>
+
         </div>
 
-        <sc-if value="{{ isClients }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ tableOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;padding:24px 28px 20px 28px;animation:omFade 180ms ease-out">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+              <div>
+                <button onClick="{{ closeTable }}" style="border:none;background:transparent;padding:0;color:var(--tx3,#8B8680);font-size:12px;cursor:pointer" style-hover="color:var(--tx1,#F5F3F0)">← К карточкам клиентов</button>
+                <div style="font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:6px">Вся база</div>
+                <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">{{ tTotal }} клиентов агентства · найдено {{ tFound }}</div>
+              </div>
+              <div style="position:relative;width:280px">
+                <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--tx3,#8B8680);display:flex">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4.2-4.2"></path></svg>
+                </span>
+                <input value="{{ tQuery }}" onChange="{{ tSetQuery }}" placeholder="Имя клиента" style="width:100%;height:36px;padding:0 12px 0 34px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;outline:none" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))">
+              </div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ tStatusChips }}" as="ch" hint-placeholder-count="5">
+                <button onClick="{{ ch.pick }}" style="{{ ch.style }}">{{ ch.label }}<span style="font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.7">{{ ch.count }}</span></button>
+              </sc-for>
+              <span style="width:1px;height:18px;background:var(--hair,rgba(255,255,255,.08));margin:0 6px"></span>
+              <button onClick="{{ tToggleMine }}" style="{{ tMineStyle }}">Только мои</button>
+              <button onClick="{{ tToggleStale }}" style="{{ tStaleStyle }}">Без касания &gt; 7 дней<span style="font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.7">{{ tStaleCount }}</span></button>
+            </div>
+
+            <div style="flex:1;min-height:0;display:flex;flex-direction:column;border-radius:18px;background:var(--panel,#131312);overflow:hidden">
+              <div style="flex-shrink:0;display:grid;grid-template-columns:minmax(0,1.6fr) 130px 160px 100px 70px minmax(0,1fr);gap:14px;align-items:center;height:42px;padding:0 18px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                <sc-for list="{{ tHead }}" as="h" hint-placeholder-count="6">
+                  <button onClick="{{ h.pick }}" style="{{ h.style }}">{{ h.label }}<span>{{ h.arrow }}</span></button>
+                </sc-for>
+              </div>
+              <div ref="{{ tScrollRef }}" onScroll="{{ tOnScroll }}" style="flex:1;min-height:0;overflow-y:auto">
+                <div style="{{ tSpacerStyle }}">
+                  <sc-for list="{{ tRows }}" as="r" hint-placeholder-count="12">
+                    <div onClick="{{ r.open }}" style="{{ r.rowStyle }}" style-hover="background:var(--bg2,#1C1B19)">
+                      <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                        <span style="width:26px;height:26px;flex:0 0 auto;border-radius:50%;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ r.initials }}</span>
+                        <span style="font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</span>
+                        <span style="font-size:11px;color:var(--tx3,#8B8680);white-space:nowrap">{{ r.district }}</span>
+                      </div>
+                      <span style="display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--tx2,#BCB8B2)"><span style="{{ r.dotStyle }}"></span>{{ r.statusLabel }}</span>
+                      <span style="{{ r.lastStyle }}">{{ r.last }}</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ r.budget }}</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2,#BCB8B2)">{{ r.shows }}</span>
+                      <span style="{{ r.ownerStyle }}">{{ r.owner }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ tEmpty }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:40px;text-align:center;font-size:13px;color:var(--tx3,#8B8680)">Под эти фильтры никто не подходит</div>
+                </sc-if>
+              </div>
+              <div style="flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 18px;border-top:1px solid var(--hair,rgba(255,255,255,.08))">
+                <span style="font-size:11px;color:var(--tx3,#8B8680)">Строки {{ tRange }} · в DOM сейчас {{ tRendered }} строк из {{ tFound }}</span>
+                <span style="font-size:11px;color:var(--tx3,#8B8680)">Виртуализация: рендерятся только видимые строки, поэтому список не тормозит на тысячах клиентов</span>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showClientCard }}" hint-placeholder-val="{{ true }}">
         <div style="width:296px;flex:0 0 296px;border-right:1px solid var(--hair,rgba(255,255,255,.08));display:flex;flex-direction:column">
           <div style="padding:16px 14px 12px 14px;display:flex;flex-direction:column;gap:12px">
             <div style="display:flex;align-items:center;justify-content:space-between">
@@ -145,12 +203,13 @@
             <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
               <div style="padding:28px 8px;text-align:center;font-size:12px;color:var(--tx3,#8B8680)">Клиентов не найдено</div>
             </sc-if>
+            <button onClick="{{ openTable }}" style="width:100%;height:36px;margin-top:6px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);font-size:12px;font-weight:600;cursor:pointer" style-hover="color:var(--tx1,#F5F3F0);background:var(--bg3,#26241F)">Вся база · {{ tTotal }} клиентов</button>
           </div>
         </div>
 
         <div style="flex:1;min-width:0;display:flex;flex-direction:column">
-          <div style="flex:1;overflow-y:auto;padding:24px 28px 8px 28px">
-            <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="flex:1;min-height:0;overflow-y:auto;padding:24px 28px 8px 28px;display:flex;flex-direction:column">
+            <div style="flex:1;min-height:0;display:flex;flex-direction:column;gap:16px">
 
               <sc-if value="{{ never }}" hint-placeholder-val="{{ false }}">
                 <div style="border-radius:18px;background:var(--bg2,#1C1B19);padding:20px;display:flex;flex-direction:column;gap:16px;animation:omSlideUp 260ms ease-out">
@@ -195,21 +254,51 @@
                 </div>
               </sc-if>
 
+              <sc-if value="{{ isCollision }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;background:color-mix(in srgb, var(--kPhone,#7FA8D4) 14%, var(--panel,#131312))">
+                  <div style="width:32px;height:32px;flex:0 0 auto;border-radius:10px;background:color-mix(in srgb, var(--kPhone,#7FA8D4) 30%, var(--panel,#131312));color:var(--tx1,#F5F3F0);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ collision.ownerInitials }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;font-weight:600;line-height:1.4">Ведёт {{ collision.owner }} · последнее касание {{ collision.when }} · {{ collision.what }}</div>
+                    <div style="font-size:12px;color:var(--tx2,#BCB8B2);margin-top:2px">Клиент в работе у коллеги. Прежде чем звонить, уточните у неё — клиенту не придётся рассказывать всё заново.</div>
+                  </div>
+                </div>
+              </sc-if>
+
               <div style="display:flex;align-items:flex-start;gap:16px">
                 <div style="{{ sel.bigAvatarStyle }}">{{ sel.initials }}</div>
                 <div style="flex:1;min-width:0">
                   <div style="font-size:28px;font-weight:600;line-height:1.2;letter-spacing:-.02em">{{ sel.name }}</div>
-                  <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+                  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;margin-top:8px">
                     <span style="{{ sel.badgeStyle }}"><span style="{{ sel.dotStyle }}"></span>{{ sel.statusLabel }}</span>
-                    <span style="font-size:12px;color:var(--tx3,#8B8680)">Создан {{ sel.created }} · ведёт {{ sel.owner }}</span>
+                    <span style="font-size:12px;color:var(--tx3,#8B8680)">{{ statusMeta }} · создан {{ sel.created }}</span>
+                  </div>
+                  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;margin-top:12px">
+                    <sc-for list="{{ selFacts }}" as="ft" hint-placeholder-count="6">
+                      <span style="display:inline-flex;align-items:baseline;gap:6px;font-size:13px">
+                        <span style="font-size:12px;color:var(--tx3,#8B8680)">{{ ft.label }}</span>
+                        <span style="{{ ft.style }}">{{ ft.value }}</span>
+                      </span>
+                    </sc-for>
                   </div>
                 </div>
                 <div style="display:flex;gap:8px">
+                  <sc-if value="{{ isCollision }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ collision.write }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.98)">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                      {{ collision.writeLabel }}
+                    </button>
+                    <button onClick="{{ collision.callAnyway }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px" style-hover="background:var(--bg3,#26241F)">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9z"></path></svg>
+                      Позвонить
+                    </button>
+                  </sc-if>
+                  <sc-if value="{{ isMine }}" hint-placeholder-val="{{ true }}">
                   <button onClick="{{ copyPhone }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background 150ms ease-out" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.98)">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9z"></path></svg>
                     Позвонить
                   </button>
                   <button onClick="{{ openWhatsapp }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)" style-active="transform:scale(.98)">WhatsApp</button>
+                  </sc-if>
                   <div style="position:relative">
                     <button onClick="{{ toggleMore }}" style="{{ moreBtnStyle }}" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg>
@@ -228,69 +317,17 @@
                 </div>
               </div>
 
-              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
-                <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
-                  <div style="border-radius:16px;padding:14px 16px;background:var(--panel,#131312)">
-                    <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3,#8B8680)">{{ s.label }}</div>
-                    <div style="display:flex;align-items:baseline;gap:6px;margin-top:8px">
-                      <span style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:500;line-height:1.1">{{ s.value }}</span>
-                      <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ s.unit }}</span>
-                    </div>
-                  </div>
-                </sc-for>
-              </div>
-
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-                <div style="border-radius:18px;padding:18px;background:var(--panel,#131312)">
-                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Основная информация</div>
-                  <div style="display:flex;flex-direction:column;margin-top:14px">
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Телефон</span>
-                      <a href="#top" onClick="{{ copyPhone }}" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cta,#27C08B)">{{ sel.phone }}</a>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Email</span>
-                      <a href="#top" onClick="{{ copyMail }}" style="font-size:13px;color:var(--cta,#27C08B)">{{ sel.email }}</a>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Статус</span>
-                      <span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500"><span style="{{ sel.dotStyle }}"></span>{{ sel.statusLabel }}</span>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0">
-                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Ответственный</span>
-                      <span style="font-size:13px">{{ sel.owner }}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div style="border-radius:18px;padding:18px;background:var(--panel,#131312)">
-                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Предпочтения</div>
-                  <div style="display:flex;flex-direction:column;margin-top:14px">
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Бюджет</span>
-                      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500">{{ sel.budget }}</span>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Районы</span>
-                      <span style="font-size:13px;text-align:right">{{ sel.districts }}</span>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Срочность</span>
-                      <span style="font-size:13px">{{ sel.urgency }}</span>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0">
-                      <span style="font-size:13px;color:var(--tx2,#BCB8B2)">Комнаты</span>
-                      <span style="font-size:13px">{{ sel.rooms }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div style="border-radius:18px;background:var(--panel,#131312);overflow:hidden">
+              <div style="flex:1;min-height:0;display:flex;flex-direction:column;border-radius:18px;background:var(--panel,#131312);overflow:hidden">
                 <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
                   <div style="display:flex;align-items:baseline;gap:10px">
                     <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">История взаимодействий</div>
                     <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cta,#27C08B)">{{ histCount }}</div>
+                    <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+                      <div style="display:flex;align-items:baseline;gap:5px">
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2,#BCB8B2)">{{ s.value }}</span>
+                        <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ s.compact }}</span>
+                      </div>
+                    </sc-for>
                   </div>
                   <div style="display:flex;align-items:center;gap:10px">
                     <div style="display:flex;align-items:flex-end;gap:3px;height:26px">
@@ -306,7 +343,7 @@
                     </div>
                   </div>
                 </div>
-                <div style="max-height:380px;overflow-y:auto;padding:6px 18px 18px 18px">
+                <div style="flex:1;min-height:0;overflow-y:auto;padding:6px 18px 18px 18px">
                   <sc-for list="{{ eventGroups }}" as="g" hint-placeholder-count="2">
                     <div style="display:flex;gap:16px;padding-top:16px;animation:omFade 200ms ease-out">
                       <div style="width:96px;flex:0 0 96px;padding-top:6px;text-align:right">
@@ -396,39 +433,145 @@
             </div>
           </div>
 
-          <div style="padding:16px 28px;border-top:1px solid var(--hair,rgba(255,255,255,.08));display:flex;gap:10px;align-items:center">
-            <button onClick="{{ openModal }}" style="flex:1;height:44px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 150ms ease-out,box-shadow 150ms ease-out" style-hover="background:var(--pillH,#4AE8A8);box-shadow:0 8px 28px rgba(39,192,139,.28)" style-active="transform:scale(.99)">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
-              Добавить событие
-            </button>
-            <div style="font-size:11px;color:var(--tx3,#8B8680);max-width:200px;line-height:1.4">30 секунд на запись — и коллеги в курсе</div>
+          <div style="padding:14px 28px 18px 28px;border-top:1px solid var(--hair,rgba(255,255,255,.08))">
+            <sc-if value="{{ composerClosed }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:10px;align-items:center">
+                <button onClick="{{ openModal }}" style="flex:1;height:44px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 150ms ease-out,box-shadow 150ms ease-out" style-hover="background:var(--pillH,#4AE8A8);box-shadow:0 8px 28px rgba(39,192,139,.28)" style-active="transform:scale(.99)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+                  Добавить событие
+                </button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="border-radius:16px;background:var(--bg2,#1C1B19);padding:16px;animation:omFade 160ms ease-out">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                    <span style="font-size:14px;font-weight:600">Новое касание</span>
+                    <input value="{{ fDate }}" onChange="{{ setDate }}" style="height:30px;width:150px;padding:0 12px;border-radius:999px;border:none;background:var(--panel,#131312);color:var(--tx1,#F5F3F0);font-family:'JetBrains Mono',monospace;font-size:12px;outline:none" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))">
+                  </div>
+                  <button onClick="{{ closeModal }}" style="width:28px;height:28px;border-radius:999px;border:none;background:transparent;color:var(--tx3,#8B8680);font-size:15px;cursor:pointer" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">×</button>
+                </div>
+
+                <div style="margin-top:14px">
+                  <div style="display:flex;align-items:baseline;gap:8px">
+                    <span style="font-size:12px;font-weight:600;color:var(--tx1,#F5F3F0)">{{ noteLabel }}</span>
+                    <sc-if value="{{ noteRequired }}" hint-placeholder-val="{{ true }}">
+                      <span style="font-size:12px;color:var(--stR,#D4837A)">*</span>
+                    </sc-if>
+                    <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ noteHint }}</span>
+                  </div>
+                  <textarea value="{{ fNote }}" onChange="{{ setNote }}" placeholder="{{ notePlaceholder }}" style="{{ noteBoxStyle }}" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))"></textarea>
+                  <sc-if value="{{ noteErr }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:11px;color:var(--stR,#D4837A);margin-top:6px">Опишите итог показа — без него показ не сохранится</div>
+                  </sc-if>
+                </div>
+
+                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+                  <sc-for list="{{ typeChips }}" as="t" hint-placeholder-count="6">
+                    <button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+                  </sc-for>
+                </div>
+
+                <sc-if value="{{ needsAddr }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap">
+                    <input value="{{ fAddr }}" onChange="{{ setAddr }}" placeholder="Адрес квартиры" style="{{ addrInlineStyle }}" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))">
+                    <sc-for list="{{ recentAddrs }}" as="r" hint-placeholder-count="2">
+                      <button onClick="{{ r.pick }}" style="height:34px;padding:0 13px;border-radius:999px;border:none;background:var(--panel,#131312);color:var(--tx2,#BCB8B2);font-size:12px;cursor:pointer;white-space:nowrap" style-hover="color:var(--tx1,#F5F3F0)">{{ r.label }}</button>
+                    </sc-for>
+                  </div>
+                </sc-if>
+
+                <div style="margin-top:14px;font-size:12px;color:var(--tx3,#8B8680)">Статус {{ statusFormHint }}</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:8px;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                    <sc-for list="{{ statusOpts }}" as="st" hint-placeholder-count="4">
+                      <button onClick="{{ st.pick }}" style="{{ st.inlineStyle }}"><span style="{{ st.dotStyle }}"></span>{{ st.label }}</button>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;gap:8px">
+                    <button onClick="{{ closeModal }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--panel,#131312);color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Отменить</button>
+                    <button onClick="{{ saveEvent }}" style="height:36px;padding:0 20px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Сохранить</button>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
           </div>
         </div>
         </sc-if>
 
         <sc-if value="{{ isShowings }}" hint-placeholder-val="{{ false }}">
           <div style="flex:1;min-width:0;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:16px;animation:omFade 200ms ease-out">
-            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
               <div>
                 <div style="font-size:26px;font-weight:600;letter-spacing:-.02em">Показы</div>
-                <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">14 показов за неделю · 3 запланированы на сегодня</div>
+                <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">{{ dayTitle }} · {{ daySummary }}</div>
               </div>
-              <button onClick="{{ openModal }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Записать показ</button>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="display:flex;gap:4px;padding:3px;border-radius:999px;background:var(--bg2,#1C1B19)">
+                  <sc-for list="{{ dayTabs }}" as="t" hint-placeholder-count="3">
+                    <button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+                  </sc-for>
+                </div>
+                <button onClick="{{ openModal }}" style="height:36px;padding:0 16px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:12px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)">Записать показ</button>
+              </div>
             </div>
-            <div style="border-radius:18px;background:var(--panel,#131312);overflow:hidden">
-              <div style="display:grid;grid-template-columns:120px 1fr 180px 170px 130px;gap:12px;padding:12px 18px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08));font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3,#8B8680)">
-                <div>Дата</div><div>Объект</div><div>Клиент</div><div>Риелтор</div><div>Итог</div>
+
+            <sc-if value="{{ hasPending }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;background:var(--bg2,#1C1B19)">
+                <span style="width:7px;height:7px;border-radius:50%;flex:0 0 auto;background:var(--stW,#D2A65B)"></span>
+                <div style="flex:1;min-width:0">
+                  <span style="font-size:13px;font-weight:600">Показы без итога: {{ pendingCount }}</span>
+                  <span style="font-size:12px;color:var(--tx2,#BCB8B2);margin-left:8px">{{ pendingNames }}</span>
+                </div>
+                <sc-for list="{{ pendingResults }}" as="p" hint-placeholder-count="2">
+                  <button onClick="{{ p.fill }}" style="height:30px;padding:0 13px;border-radius:999px;border:none;background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--bd2,#4A4540)">Итог · {{ p.client }}</button>
+                </sc-for>
               </div>
-              <sc-for list="{{ showings }}" as="r" hint-placeholder-count="6">
-                <div style="display:grid;grid-template-columns:120px 1fr 180px 170px 130px;gap:12px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))" style-hover="background:var(--bg2,#1C1B19)">
-                  <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2,#BCB8B2)">{{ r.date }}</div>
-                  <div>
-                    <div style="font-size:14px;font-weight:500">{{ r.addr }}</div>
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680);margin-top:2px">{{ r.price }}</div>
-                  </div>
-                  <div style="font-size:13px">{{ r.client }}</div>
-                  <div style="font-size:13px;color:var(--tx2,#BCB8B2)">{{ r.realtor }}</div>
-                  <div><span style="{{ r.chipStyle }}"><span style="{{ r.markStyle }}"></span>{{ r.result }}</span></div>
+            </sc-if>
+
+            <div style="border-radius:18px;background:var(--panel,#131312);overflow:hidden">
+              <sc-for list="{{ slots }}" as="r" hint-placeholder-count="6">
+                <div style="{{ r.rowStyle }}" style-hover="background:var(--bg2,#1C1B19)">
+                  <sc-if value="{{ r.gap }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;gap:12px;padding:9px 18px 9px 76px">
+                      <span style="flex:1;height:1px;background:var(--hair,rgba(255,255,255,.08))"></span>
+                      <span style="font-size:11px;color:var(--tx3,#8B8680);white-space:nowrap">{{ r.label }} · {{ r.hint }}</span>
+                      <button onClick="{{ r.add }}" style="height:26px;padding:0 11px;border-radius:999px;border:none;background:transparent;color:var(--cta,#27C08B);font-size:11px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">+ Вписать</button>
+                      <span style="flex:1;height:1px;background:var(--hair,rgba(255,255,255,.08))"></span>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ r.isShow }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:grid;grid-template-columns:58px 3px minmax(0,1fr) 150px 120px 118px;gap:14px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
+                      <div>
+                        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;line-height:1">{{ r.time }}</div>
+                        <div style="font-size:10px;color:var(--tx3,#8B8680);margin-top:4px">{{ r.until }}</div>
+                      </div>
+                      <span style="{{ r.railStyle }}"></span>
+                      <div style="min-width:0">
+                        <div style="display:flex;align-items:baseline;gap:8px">
+                          <span style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.addr }}</span>
+                          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2,#BCB8B2);white-space:nowrap">{{ r.price }}</span>
+                          <span style="font-size:11px;color:var(--tx3,#8B8680);white-space:nowrap">{{ r.rooms }}</span>
+                        </div>
+                        <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.noteLine }}</div>
+                      </div>
+                      <div style="min-width:0">
+                        <div style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.client }}</div>
+                        <div style="font-size:11px;color:var(--tx3,#8B8680);margin-top:3px">{{ r.realtor }}</div>
+                      </div>
+                      <div><span style="{{ r.resultStyle }}"><span style="{{ r.resultDotStyle }}"></span>{{ r.result }}</span></div>
+                      <div style="display:flex;gap:4px;justify-content:flex-end">
+                        <button onClick="{{ r.call }}" title="Позвонить" style="{{ r.iconBtnStyle }}" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9z"></path></svg>
+                        </button>
+                        <button onClick="{{ r.note2 }}" title="Добавить заметку" style="{{ r.iconBtnStyle }}" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-3.5L6 20z"></path></svg>
+                        </button>
+                        <button onClick="{{ r.status }}" style="{{ r.resultBtnStyle }}" style-hover="background:var(--bd2,#4A4540)">{{ r.resultBtnLabel }}</button>
+                      </div>
+                    </div>
+                  </sc-if>
                 </div>
               </sc-for>
             </div>
@@ -437,32 +580,57 @@
 
         <sc-if value="{{ isDeals }}" hint-placeholder-val="{{ false }}">
           <div style="flex:1;min-width:0;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:16px;animation:omFade 200ms ease-out">
-            <div>
-              <div style="font-size:26px;font-weight:600;letter-spacing:-.02em">Сделки</div>
-              <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">4 сделки в работе на 58 млн</div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start">
-              <sc-for list="{{ dealCols }}" as="col" hint-placeholder-count="3">
-                <div style="display:flex;flex-direction:column;gap:2px">
-                  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 12px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                    <div style="display:flex;align-items:center;gap:8px">
-                      <span style="{{ col.dotStyle }}"></span>
-                      <span style="font-size:13px;font-weight:600">{{ col.title }}</span>
-                    </div>
-                    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ col.sum }}</span>
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+              <div>
+                <div style="font-size:26px;font-weight:600;letter-spacing:-.02em">Сделки</div>
+                <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">Ближайший шаг и документы по каждой сделке</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:24px">
+                <sc-for list="{{ dealStats }}" as="st" hint-placeholder-count="4">
+                  <div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:500;line-height:1">{{ st.value }}</div>
+                    <div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3,#8B8680);margin-top:6px">{{ st.label }}</div>
                   </div>
-                  <sc-for list="{{ col.cards }}" as="d" hint-placeholder-count="2">
-                    <div style="padding:14px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08));cursor:pointer" style-hover="background:var(--panel,#131312)">
-                      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
-                        <span style="font-size:14px;font-weight:500">{{ d.name }}</span>
-                        <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ d.sum }}</span>
-                      </div>
-                      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:5px">
-                        <span style="font-size:12px;color:var(--tx2,#BCB8B2)">{{ d.addr }}</span>
-                        <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ d.realtor }}</span>
-                      </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="border-radius:18px;background:var(--panel,#131312);overflow:hidden">
+              <div style="display:grid;grid-template-columns:minmax(0,1.25fr) 116px minmax(0,1.3fr) 150px 126px 118px;gap:14px;padding:11px 18px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08));font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3,#8B8680)">
+                <div>Клиент и объект</div><div>Этап</div><div>Ближайший шаг</div><div>Документы</div><div>Срок</div><div></div>
+              </div>
+              <sc-for list="{{ dealRows }}" as="d" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:minmax(0,1.25fr) 116px minmax(0,1.3fr) 150px 126px 118px;gap:14px;align-items:center;padding:12px 18px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08));transition:background 120ms ease-out" style-hover="background:var(--bg2,#1C1B19)">
+                  <div style="min-width:0">
+                    <div style="display:flex;align-items:baseline;gap:8px">
+                      <span style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.name }}</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2,#BCB8B2);white-space:nowrap">{{ d.sum }}</span>
                     </div>
-                  </sc-for>
+                    <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.addr }} · {{ d.realtor }}</div>
+                  </div>
+                  <div><span style="{{ d.stageStyle }}"><span style="{{ d.stageDotStyle }}"></span>{{ d.stage }}</span></div>
+                  <div style="min-width:0">
+                    <div style="{{ d.nextStyle }}">{{ d.next }}</div>
+                  </div>
+                  <div>
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+                      <span style="{{ d.docsStyle }}">{{ d.docsText }}</span>
+                      <span style="font-size:11px;color:var(--tx3,#8B8680);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.missing }}</span>
+                    </div>
+                    <div style="height:4px;border-radius:999px;background:var(--bg3,#26241F);margin-top:7px;overflow:hidden">
+                      <div style="{{ d.barStyle }}"></div>
+                    </div>
+                  </div>
+                  <div style="{{ d.deadlineStyle }}">{{ d.deadlineText }}</div>
+                  <div style="display:flex;gap:4px;justify-content:flex-end">
+                    <button onClick="{{ d.call }}" title="Позвонить" style="{{ d.iconBtnStyle }}" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9z"></path></svg>
+                    </button>
+                    <button onClick="{{ d.note }}" title="Добавить заметку" style="{{ d.iconBtnStyle }}" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-3.5L6 20z"></path></svg>
+                    </button>
+                    <button onClick="{{ d.status }}" style="{{ d.stageBtnStyle }}" style-hover="background:var(--bd2,#4A4540)">Этап</button>
+                  </div>
                 </div>
               </sc-for>
             </div>
@@ -473,7 +641,7 @@
           <div style="flex:1;min-width:0;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:16px;animation:omFade 200ms ease-out">
             <div>
               <div style="font-size:26px;font-weight:600;letter-spacing:-.02em">Дашборд</div>
-              <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">Сентябрь 2026 · агентство целиком</div>
+              <div style="font-size:13px;color:var(--tx2,#BCB8B2);margin-top:4px">{{ dashSub }}</div>
             </div>
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
               <sc-for list="{{ dashMetrics }}" as="m" hint-placeholder-count="4">
@@ -486,6 +654,26 @@
                 </div>
               </sc-for>
             </div>
+            <div style="border-radius:18px;padding:18px;background:var(--panel,#131312)">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Воронка по клиентам</div>
+                <div style="font-size:12px;color:var(--tx2,#BCB8B2)">оранжевым — где клиенты стоят дольше недели</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;margin-top:16px">
+                <sc-for list="{{ funnel }}" as="f" hint-placeholder-count="6">
+                  <div style="display:grid;grid-template-columns:150px minmax(0,1fr) 44px 150px;gap:14px;align-items:center">
+                    <div style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.label }}</div>
+                    <div style="{{ f.barStyle }}"></div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;text-align:right">{{ f.value }}</div>
+                    <div style="display:flex;align-items:baseline;gap:8px">
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx3,#8B8680);width:22px">{{ f.dropText }}</span>
+                      <span style="{{ f.stuckStyle }}">{{ f.stuckText }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
             <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:12px">
               <div style="border-radius:18px;padding:18px;background:var(--panel,#131312)">
                 <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px">
@@ -549,7 +737,7 @@
                 </div>
               </div>
               <div style="border-radius:18px;padding:18px;background:var(--panel,#131312)">
-                <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">Показы по риелторам</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">{{ leadersTitle }}</div>
                 <div style="display:flex;flex-direction:column;gap:14px;margin-top:20px">
                   <sc-for list="{{ leaders }}" as="l" hint-placeholder-count="4">
                     <div>
@@ -764,18 +952,10 @@
         <div style="position:absolute;left:50%;bottom:32px;padding:12px 18px;border-radius:999px;background:var(--panel,#131312);border:1px solid var(--ctaLine,rgba(39,192,139,.5));color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;box-shadow:0 16px 48px rgba(0,0,0,.5);animation:omToast 200ms ease-out;z-index:40">{{ toast }}</div>
       </sc-if>
 
-      <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
-        <div onClick="{{ closeModal }}" style="position:absolute;inset:0;background:rgba(6,6,5,.66);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;animation:omFade 200ms ease-out;z-index:30">
-          <div onClick="{{ stop }}" style="width:560px;max-height:820px;display:flex;flex-direction:column;background:var(--panel,#131312);border-radius:20px;box-shadow:0 40px 100px rgba(0,0,0,.6);animation:omSlideUp 300ms ease-out;overflow:hidden">
-            <div style="padding:18px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-              <div>
-                <div style="font-size:20px;font-weight:600;letter-spacing:-.01em">Добавить событие</div>
-                <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:2px">Клиент {{ sel.name }}</div>
-              </div>
-              <button onClick="{{ closeModal }}" style="width:32px;height:32px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--bg3,#26241F);color:var(--tx1,#F5F3F0)">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
-              </button>
-            </div>
+      <sc-if value="{{ legacyModal }}" hint-placeholder-val="{{ false }}">
+        <div style="display:none">
+          <div style="display:none">
+            <div style="display:none">
 
             <div style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -827,7 +1007,7 @@
               </sc-if>
 
               <div style="display:flex;flex-direction:column;gap:6px">
-                <div style="font-size:12px;color:var(--tx3,#8B8680)">Статус клиента <span style="color:var(--stR,#FF6B6B)">*</span></div>
+                <div style="font-size:12px;color:var(--tx3,#8B8680)">Статус {{ statusFormHint }}</div>
                 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
                   <sc-for list="{{ statusOpts }}" as="s" hint-placeholder-count="4">
                     <button onClick="{{ s.pick }}" style="{{ s.btnStyle }}"><span style="{{ s.dotStyle }}"></span>{{ s.label }}</button>
@@ -886,45 +1066,80 @@
         </div>
 
         <sc-if value="{{ mIsShowings }}" hint-placeholder-val="{{ false }}">
-          <div style="flex:1;overflow-y:auto;padding:4px 12px 24px 12px;display:flex;flex-direction:column;gap:2px;animation:omFade 180ms ease-out">
-            <sc-for list="{{ showings }}" as="r" hint-placeholder-count="6">
-              <div style="padding:14px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
-                  <span style="font-size:15px;font-weight:500">{{ r.addr }}</span>
-                  <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ r.price }}</span>
-                </div>
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px">
-                  <span style="font-size:12px;color:var(--tx2,#BCB8B2)">{{ r.client }} · {{ r.date }}</span>
-                  <span style="{{ r.chipStyle }}"><span style="{{ r.markStyle }}"></span>{{ r.result }}</span>
-                </div>
+          <div style="flex:1;overflow-y:auto;padding:4px 12px 24px 12px;display:flex;flex-direction:column;gap:8px;animation:omFade 180ms ease-out">
+            <div style="display:flex;gap:4px;padding:3px;border-radius:999px;background:var(--bg2,#1C1B19)">
+              <sc-for list="{{ dayTabs }}" as="t" hint-placeholder-count="3">
+                <button onClick="{{ t.pick }}" style="{{ t.mStyle }}">{{ t.label }}</button>
+              </sc-for>
+            </div>
+            <div style="font-size:12px;color:var(--tx2,#BCB8B2);padding:0 4px">{{ dayTitle }} · {{ daySummary }}</div>
+            <sc-for list="{{ slots }}" as="r" hint-placeholder-count="5">
+              <div>
+                <sc-if value="{{ r.gap }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:center;gap:10px;padding:4px 4px">
+                    <span style="flex:1;height:1px;background:var(--hair,rgba(255,255,255,.08))"></span>
+                    <span style="font-size:11px;color:var(--tx3,#8B8680);white-space:nowrap">{{ r.label }}</span>
+                    <button onClick="{{ r.add }}" style="min-height:30px;padding:0 12px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--cta,#27C08B);font-size:11px;font-weight:600;cursor:pointer">+ Вписать</button>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ r.isShow }}" hint-placeholder-val="{{ true }}">
+                  <div style="border-radius:16px;padding:12px;background:var(--panel,#131312);display:flex;gap:12px">
+                    <div style="flex:0 0 auto;text-align:center">
+                      <div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;line-height:1">{{ r.time }}</div>
+                      <div style="font-size:10px;color:var(--tx3,#8B8680);margin-top:4px">{{ r.until }}</div>
+                    </div>
+                    <span style="{{ r.railStyle }}"></span>
+                    <div style="flex:1;min-width:0">
+                      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+                        <span style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.addr }}</span>
+                        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2,#BCB8B2);white-space:nowrap">{{ r.price }}</span>
+                      </div>
+                      <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:4px">{{ r.client }} · {{ r.realtor }}</div>
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px">
+                        <span style="{{ r.resultStyle }}"><span style="{{ r.resultDotStyle }}"></span>{{ r.result }}</span>
+                        <div style="display:flex;gap:6px">
+                          <button onClick="{{ r.call }}" style="{{ r.mIconStyle }}">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9z"></path></svg>
+                          </button>
+                          <button onClick="{{ r.note2 }}" style="{{ r.mIconStyle }}">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16l-6-3.5L6 20z"></path></svg>
+                          </button>
+                          <button onClick="{{ r.status }}" style="{{ r.mResultBtnStyle }}">{{ r.resultBtnLabel }}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
               </div>
             </sc-for>
           </div>
         </sc-if>
 
         <sc-if value="{{ mIsDeals }}" hint-placeholder-val="{{ false }}">
-          <div style="flex:1;overflow-y:auto;padding:4px 12px 24px 12px;display:flex;flex-direction:column;gap:20px;animation:omFade 180ms ease-out">
-            <sc-for list="{{ dealCols }}" as="col" hint-placeholder-count="3">
-              <div style="display:flex;flex-direction:column;gap:2px">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px 10px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                  <div style="display:flex;align-items:center;gap:8px">
-                    <span style="{{ col.dotStyle }}"></span>
-                    <span style="font-size:14px;font-weight:600">{{ col.title }}</span>
-                  </div>
-                  <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx3,#8B8680)">{{ col.sum }}</span>
+          <div style="flex:1;overflow-y:auto;padding:4px 12px 24px 12px;display:flex;flex-direction:column;gap:8px;animation:omFade 180ms ease-out">
+            <sc-for list="{{ dealRows }}" as="d" hint-placeholder-count="4">
+              <div style="border-radius:16px;padding:14px;background:var(--panel,#131312)">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+                  <span style="font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d.name }}</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap">{{ d.sum }}</span>
                 </div>
-                <sc-for list="{{ col.cards }}" as="d" hint-placeholder-count="2">
-                  <div style="padding:13px 4px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
-                    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
-                      <span style="font-size:14px;font-weight:500">{{ d.name }}</span>
-                      <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ d.sum }}</span>
-                    </div>
-                    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:4px">
-                      <span style="font-size:12px;color:var(--tx2,#BCB8B2)">{{ d.addr }}</span>
-                      <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ d.realtor }}</span>
-                    </div>
-                  </div>
-                </sc-for>
+                <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+                  <span style="{{ d.stageStyle }}"><span style="{{ d.stageDotStyle }}"></span>{{ d.stage }}</span>
+                  <span style="{{ d.deadlineStyle }}">{{ d.deadlineText }}</span>
+                </div>
+                <div style="font-size:13px;color:var(--tx1,#F5F3F0);margin-top:10px;line-height:1.5">{{ d.next }}</div>
+                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:12px">
+                  <span style="font-size:11px;color:var(--tx3,#8B8680)">Документы {{ d.missing }}</span>
+                  <span style="{{ d.docsStyle }}">{{ d.docsText }}</span>
+                </div>
+                <div style="height:4px;border-radius:999px;background:var(--bg3,#26241F);margin-top:7px;overflow:hidden">
+                  <div style="{{ d.barStyle }}"></div>
+                </div>
+                <div style="display:flex;gap:6px;margin-top:12px">
+                  <button onClick="{{ d.call }}" style="flex:1;min-height:40px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer">Позвонить</button>
+                  <button onClick="{{ d.note }}" style="flex:1;min-height:40px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;cursor:pointer">Заметка</button>
+                  <button onClick="{{ d.status }}" style="{{ d.mStageBtnStyle }}">Этап</button>
+                </div>
               </div>
             </sc-for>
           </div>
@@ -1246,7 +1461,7 @@
             </div>
           </sc-if>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="font-size:12px;color:var(--tx3,#8B8680)">Статус клиента <span style="color:var(--stR,#FF6B6B)">*</span></div>
+            <div style="font-size:12px;color:var(--tx3,#8B8680)">Статус {{ statusFormHint }}</div>
             <div style="display:flex;flex-wrap:wrap;gap:6px">
               <sc-for list="{{ statusOptsMobile }}" as="s" hint-placeholder-count="4">
                 <button onClick="{{ s.pick }}" style="{{ s.btnStyle }}"><span style="{{ s.dotStyle }}"></span>{{ s.label }}</button>
@@ -1328,7 +1543,7 @@
 </div>
 ]]>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark' | 'light'&quot;,&quot;section&quot;:&quot;Тема&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#27C08B&quot;,&quot;#4A9BFF&quot;,&quot;#C8A24A&quot;,&quot;#B06CE8&quot;],&quot;default&quot;:&quot;#27C08B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Тема&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark' | 'light'&quot;,&quot;section&quot;:&quot;Тема&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#27C08B&quot;,&quot;#4A9BFF&quot;,&quot;#C8A24A&quot;,&quot;#B06CE8&quot;],&quot;default&quot;:&quot;#27C08B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Тема&quot;},&quot;role&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Риелтор&quot;,&quot;Руководитель&quot;],&quot;default&quot;:&quot;Риелтор&quot;,&quot;tsType&quot;:&quot;'Риелтор' | 'Руководитель'&quot;,&quot;section&quot;:&quot;Кто вошёл&quot;}}">
 class Component extends DCLogic {
   STATUS = {
     active:  { label: 'Активен',    v: 'var(--stA,#4AFF1A)' },
@@ -1372,13 +1587,13 @@ class Component extends DCLogic {
 
   state = {
     theme: null, selectedId: 'c1', query: '', nav: 'Клиенты', tab: 'Все',
-    seg: 'Все', filtersOpen: false, modalOpen: false, toast: '',
-    fDate: '14 сент, 14:30', fType: 'Показ квартиры', fAddr: '', fStatus: 'active',
+    seg: 'Все', filtersOpen: false, modalOpen: false, toast: '', showDay: 'Сегодня',
+    fDate: '14 сент, 14:30', fType: 'Показ квартиры', fAddr: '', fStatus: '',
     fDur: '25', fNote: '', addrErr: false, openEvent: '0-0', tourStep: -1, touchDay: 4, sheet: '',
     editNote: '', draft: '', removed: {}, addNote: '', newDraft: '', moreOpen: false,
     editOpen: false, transferOpen: false, confirmDelete: false,
     eName: '', ePhone: '', eEmail: '', eBudget: '',
-    filters: { 'Моих клиентов': true },
+    filters: { 'Моих клиентов': true }, statusOver: {}, statusBy: {},
     events: {
       c1: [
         { date:'Вт, 14 сентября, 14:30', kind:'home', title:'Показ ул. Толстого д.25 (8.5M)', sub:'', by:'Василий Петров', notes:[
@@ -1450,6 +1665,218 @@ class Component extends DCLogic {
       color: 'var(--tx1,#F5F3F0)', fontSize: fs, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center' };
   }
   initials(name) { return name.split(' ').map(w => w[0]).join('').slice(0, 2); }
+
+  SHOWINGS = [
+    { day: 'Сегодня', time: '09:30', dur: 45, addr: 'пр. Гагарина д.4', price: '11.2 млн', rooms: '2к, 58 м²',
+      client: 'Тимур Асхабов', phone: '+7 (912) 555-0418', realtor: 'Василий Петров', result: 'Думает', past: true,
+      note: 'Понравился вид, смутила цена' },
+    { day: 'Сегодня', time: '11:00', dur: 60, addr: 'ул. Мичурина д.71', price: '19 млн', rooms: '3к, 96 м²',
+      client: 'Ольга Панина', phone: '+7 (912) 555-0290', realtor: 'Марина Грязнова', result: 'Запланирован', past: true },
+    { day: 'Сегодня', time: '14:30', dur: 45, addr: 'ул. Толстого д.25', price: '8.5 млн', rooms: '2к, 54 м²',
+      client: 'Сергей Грин', phone: '+7 (912) 555-0172', realtor: 'Василий Петров', result: 'Запланирован' },
+    { day: 'Сегодня', time: '17:00', dur: 45, addr: 'ул. Заречная д.8', price: '9.4 млн', rooms: '1к, 42 м²',
+      client: 'Марина Ковалёва', phone: '+7 (912) 555-0733', realtor: 'Дмитрий Кутузов', result: 'Запланирован' },
+    { day: 'Завтра', time: '10:00', dur: 60, addr: 'ЖК Парковый, к.3', price: '23 млн', rooms: '4к, 124 м²',
+      client: 'Ксения Гладко', phone: '+7 (912) 555-0901', realtor: 'Марина Грязнова', result: 'Запланирован' },
+    { day: 'Завтра', time: '13:30', dur: 45, addr: 'ул. Лениных полей д.10', price: '12 млн', rooms: '2к, 61 м²',
+      client: 'Сергей Грин', phone: '+7 (912) 555-0172', realtor: 'Василий Петров', result: 'Запланирован' },
+    { day: '13 сент', time: '16:00', dur: 60, addr: 'ЖК Парковый, к.3', price: '23 млн', rooms: '4к, 124 м²',
+      client: 'Ксения Гладко', phone: '+7 (912) 555-0901', realtor: 'Марина Грязнова', result: 'Понравилось', past: true,
+      note: 'Готова к задатку, ждёт одобрения ипотеки' },
+    { day: '12 сент', time: '16:45', dur: 45, addr: 'ул. Лениных полей д.10', price: '12 млн', rooms: '2к, 61 м²',
+      client: 'Сергей Грин', phone: '+7 (912) 555-0172', realtor: 'Василий Петров', result: 'Отказ', past: true,
+      note: 'Первый этаж, окна во двор-парковку' }
+  ];
+
+  DEALS = [
+    { name: 'Ольга Панина', addr: 'ул. Мичурина д.71', sum: '19 млн', stage: 'Оформление',
+      stageColor: 'var(--kPhone,#7FA8D4)', next: 'Подписать договор купли-продажи', daysLeft: -1,
+      docsDone: 4, docsTotal: 5, missing: 'нет справки из УК', realtor: 'М. Грязнова' },
+    { name: 'Ксения Гладко', addr: 'ЖК Парковый, к.3', sum: '23 млн', stage: 'Ипотека',
+      stageColor: 'var(--kMsg,#D2B36B)', next: 'Ждём решение банка', daysLeft: 2,
+      docsDone: 5, docsTotal: 5, missing: '', realtor: 'М. Грязнова' },
+    { name: 'Сергей Грин', addr: 'ул. Толстого д.25', sum: '8.5 млн', stage: 'Подбор',
+      stageColor: 'var(--kHome,#6FC2A0)', next: 'Показать 3 варианта выше 3 этажа', daysLeft: 4,
+      docsDone: 1, docsTotal: 4, missing: 'нет паспорта и согласия супруги', realtor: 'В. Петров' },
+    { name: 'Тимур Асхабов', addr: 'пр. Гагарина д.4', sum: '11.2 млн', stage: 'Подбор',
+      stageColor: 'var(--kHome,#6FC2A0)', next: 'Согласовать скидку с собственником', daysLeft: 0,
+      docsDone: 2, docsTotal: 4, missing: 'нет выписки ЕГРН', realtor: 'В. Петров' }
+  ];
+
+  get isManager() { return this.props.role === 'Руководитель'; }
+  get ME() { return this.isManager ? 'Марина Грязнова' : 'Василий Петров'; }
+  ROW_H = 44;
+
+  bigBase() {
+    if (this._big) { return this._big; }
+    const F = ['Анна', 'Игорь', 'Елена', 'Максим', 'Ольга', 'Дмитрий', 'Наталья', 'Алексей', 'Юлия', 'Сергей',
+      'Ирина', 'Павел', 'Светлана', 'Роман', 'Татьяна', 'Кирилл', 'Мария', 'Артём', 'Вера', 'Глеб'];
+    const L = ['Смирнов', 'Кузнецов', 'Попов', 'Васильев', 'Соколов', 'Михайлов', 'Новиков', 'Фёдоров', 'Морозов',
+      'Волков', 'Алексеев', 'Лебедев', 'Семёнов', 'Егоров', 'Павлов', 'Козлов', 'Степанов', 'Николаев', 'Орлов', 'Андреев'];
+    const OWN = ['Василий Петров', 'Марина Грязнова', 'Дмитрий Кутузов', 'Анна Соболь'];
+    const ST = ['active', 'active', 'waiting', 'cold', 'active', 'waiting', 'refused', 'cold'];
+    const D = ['центр', 'юго-запад', 'север', 'Заречный', 'Парковый', 'восток'];
+    let seed = 7;
+    const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    const out = [];
+    for (let i = 0; i < 412; i++) {
+      const fi = Math.floor(rnd() * F.length), li = Math.floor(rnd() * L.length);
+      const female = /а$|я$/.test(F[fi]) && F[fi] !== 'Никита';
+      const last = L[li] + (female ? 'а' : '');
+      const days = Math.floor(rnd() * rnd() * 40);
+      const budget = Math.round((4 + rnd() * 26) * 10) / 10;
+      out.push({ id: 'b' + i, name: F[fi] + ' ' + last, status: ST[Math.floor(rnd() * ST.length)],
+        owner: OWN[Math.floor(rnd() * OWN.length)], days, budget, district: D[Math.floor(rnd() * D.length)],
+        shows: Math.floor(rnd() * 6) });
+    }
+    this._big = out;
+    return out;
+  }
+
+  tableVals(s) {
+    const base = this.bigBase();
+    const sort = s.tSort || { key: 'days', dir: 1 };
+    const st = s.tStatus || 'all';
+    const onlyMine = !!s.tMine, stale = !!s.tStale;
+    const q = (s.tQuery || '').trim().toLowerCase();
+    let rows = base.filter(r => (st === 'all' || r.status === st) && (!onlyMine || r.owner === this.ME)
+      && (!stale || r.days > 7) && (!q || r.name.toLowerCase().includes(q)));
+    const k = sort.key;
+    rows = rows.slice().sort((a, b) => {
+      const av = k === 'name' || k === 'owner' ? a[k] : k === 'status' ? this.STATUS[a.status].label : a[k];
+      const bv = k === 'name' || k === 'owner' ? b[k] : k === 'status' ? this.STATUS[b.status].label : b[k];
+      return (av > bv ? 1 : av < bv ? -1 : 0) * sort.dir;
+    });
+    const H = this.ROW_H, VIEW = 560;
+    const top = s.tScroll || 0;
+    const from = Math.max(0, Math.floor(top / H) - 4);
+    const to = Math.min(rows.length, Math.ceil((top + VIEW) / H) + 4);
+    const dayText = d => d === 0 ? 'сегодня' : d === 1 ? 'вчера' : this.plural(d, 'день', 'дня', 'дней') + ' назад';
+    const head = [['name', 'Клиент'], ['status', 'Статус'], ['days', 'Последнее касание'], ['budget', 'Бюджет'],
+      ['shows', 'Показы'], ['owner', 'Ведёт']].map(([key, label]) => ({
+      label, arrow: sort.key === key ? (sort.dir > 0 ? '↑' : '↓') : '',
+      pick: () => this.setState(x => {
+        const cur = x.tSort || { key: 'days', dir: 1 };
+        return { tSort: { key, dir: cur.key === key ? -cur.dir : 1 }, tScroll: 0 };
+      }),
+      style: { display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'transparent', padding: 0,
+        cursor: 'pointer', fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: '.14em',
+        textTransform: 'uppercase', textAlign: 'left',
+        color: sort.key === key ? 'var(--tx1,#F5F3F0)' : 'var(--tx3,#8B8680)' }
+    }));
+    const chip = (on) => ({ height: 32, padding: '0 13px', borderRadius: 999, border: 'none', cursor: 'pointer',
+      display: 'flex', alignItems: 'center', gap: 7, whiteSpace: 'nowrap', fontSize: 12, fontWeight: on ? 600 : 500,
+      background: on ? 'var(--pill,#27C08B)' : 'var(--bg2,#1C1B19)', color: on ? 'var(--pillTx,#08211A)' : 'var(--tx2,#BCB8B2)' });
+    return {
+      tHead: head,
+      tRows: rows.slice(from, to).map((r, j) => {
+        const i = from + j;
+        const mine = r.owner === this.ME;
+        return {
+          key: r.id, name: r.name, initials: this.initials(r.name), statusLabel: this.STATUS[r.status].label,
+          dotStyle: this.dot(r.status, 7), last: dayText(r.days), budget: r.budget.toFixed(1).replace('.0', '') + ' млн',
+          shows: String(r.shows), owner: mine ? 'вы' : r.owner, district: r.district,
+          rowStyle: { position: 'absolute', left: 0, right: 0, top: i * H, height: H, display: 'grid',
+            gridTemplateColumns: 'minmax(0,1.6fr) 130px 160px 100px 70px minmax(0,1fr)', gap: 14, alignItems: 'center',
+            padding: '0 18px', borderBottom: '1px solid var(--hair,rgba(255,255,255,.08))', cursor: 'pointer' },
+          lastStyle: { fontSize: 12, color: r.days > 7 ? 'var(--stW,#D2A65B)' : 'var(--tx2,#BCB8B2)',
+            fontWeight: r.days > 7 ? 600 : 400 },
+          ownerStyle: { fontSize: 12, color: mine ? 'var(--cta,#27C08B)' : 'var(--tx2,#BCB8B2)', fontWeight: mine ? 600 : 400,
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
+          open: () => this.flash('Открываем карточку: ' + r.name)
+        };
+      }),
+      tSpacerStyle: { position: 'relative', height: rows.length * H },
+      tScrollRef: el => { this._tEl = el; },
+      tOnScroll: e => {
+        const y = e.target.scrollTop;
+        if (this._raf) { return; }
+        this._raf = requestAnimationFrame(() => { this._raf = 0; this.setState({ tScroll: y }); });
+      },
+      tTotal: String(base.length),
+      tFound: this.plural(rows.length, 'клиент', 'клиента', 'клиентов'),
+      tRendered: String(to - from),
+      tRange: rows.length ? (from + 1) + '–' + to : '0',
+      tEmpty: rows.length === 0,
+      tQuery: s.tQuery || '',
+      tSetQuery: e => this.setState({ tQuery: e.target.value, tScroll: 0 }),
+      tStatusChips: [['all', 'Все'], ['active', 'Активные'], ['waiting', 'Жду звонка'], ['cold', 'Холодные'], ['refused', 'Отказали']]
+        .map(([key, label]) => ({ label, style: chip(st === key),
+          count: key === 'all' ? '' : String(base.filter(r => r.status === key).length),
+          pick: () => this.setState({ tStatus: key, tScroll: 0 }) })),
+      tMineStyle: chip(onlyMine), tToggleMine: () => this.setState(x => ({ tMine: !x.tMine, tScroll: 0 })),
+      tStaleStyle: chip(stale), tToggleStale: () => this.setState(x => ({ tStale: !x.tStale, tScroll: 0 })),
+      tStaleCount: String(base.filter(r => r.days > 7).length)
+    };
+  }
+
+  plural(n, one, few, many) {
+    const m10 = n % 10, m100 = n % 100;
+    const word = m10 === 1 && m100 !== 11 ? one
+      : m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20) ? few : many;
+    return n + ' ' + word;
+  }
+  resultColor(r) {
+    return r === 'Понравилось' ? 'var(--kHome,#6FC2A0)' : r === 'Отказ' ? 'var(--stR,#D4837A)'
+      : r === 'Думает' ? 'var(--kMsg,#D2B36B)' : 'var(--kPhone,#7FA8D4)';
+  }
+  dayList(day) {
+    if (day === 'Неделя') { return this.SHOWINGS.filter(r => r.day === 'Сегодня' || r.day === 'Завтра'); }
+    return this.SHOWINGS.filter(r => r.day === day);
+  }
+  toMin(t) { return Number(t.slice(0, 2)) * 60 + Number(t.slice(3)); }
+  fmtMin(m) {
+    const h = Math.floor(m / 60), mm = m % 60;
+    return (h ? h + ' ч' : '') + (h && mm ? ' ' : '') + (mm ? mm + ' мин' : '');
+  }
+  buildSlots(day) {
+    const list = this.dayList(day).slice().sort((a, b) =>
+      (a.day === b.day ? 0 : a.day === 'Сегодня' ? -1 : 1) || this.toMin(a.time) - this.toMin(b.time));
+    const out = [];
+    list.forEach((r, i) => {
+      const prev = list[i - 1];
+      if (prev && prev.day === r.day) {
+        const gap = this.toMin(r.time) - (this.toMin(prev.time) + prev.dur);
+        if (gap >= 45) {
+          out.push({ gap: true, key: 'g' + i, time: '', label: 'Окно ' + this.fmtMin(gap),
+            hint: 'можно вписать показ', add: () => this.flash('Новый показ в свободное окно') });
+        }
+      }
+      const col = this.resultColor(r.result);
+      const done = r.result !== 'Запланирован';
+      out.push({
+        gap: false, key: r.day + r.time, time: r.time, dayTag: day === 'Неделя' ? r.day : '',
+        until: this.fmtMin(r.dur), addr: r.addr, price: r.price, rooms: r.rooms,
+        client: r.client, phone: r.phone, realtor: r.realtor, result: r.result, note: r.note || '',
+        needsResult: !done && r.past,
+        railStyle: { width: 3, alignSelf: 'stretch', borderRadius: 2, flex: '0 0 auto', background: col,
+          opacity: done ? 1 : 0.55 },
+        resultStyle: { display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500, color: col, whiteSpace: 'nowrap' },
+        resultDotStyle: { width: 6, height: 6, borderRadius: '50%', background: col },
+        call: () => this.flash('Звоним ' + r.client + ' · ' + r.phone),
+        note2: () => this.flash('Заметка к показу ' + r.addr),
+        status: () => this.flash(done ? 'Смена статуса клиента: ' + r.client : 'Итог показа: ' + r.addr)
+      });
+    });
+    return out.map(o => Object.assign(o, {
+      isShow: !o.gap,
+      rowStyle: { transition: 'background 120ms ease-out' },
+      noteLine: o.gap ? '' : (o.note || (o.needsResult ? 'итог не записан' : 'заметок пока нет')),
+      iconBtnStyle: { width: 28, height: 28, borderRadius: 8, border: 'none', background: 'transparent',
+        color: 'var(--tx3,#8B8680)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+      resultBtnStyle: { height: 28, padding: '0 11px', borderRadius: 999, border: 'none', cursor: 'pointer',
+        fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap',
+        background: o.needsResult ? 'var(--pill,#27C08B)' : 'var(--bg3,#26241F)',
+        color: o.needsResult ? 'var(--pillTx,#08211A)' : 'var(--tx1,#F5F3F0)' },
+      resultBtnLabel: o.needsResult ? 'Итог' : 'Статус',
+      mIconStyle: { width: 40, height: 40, borderRadius: 999, border: 'none', background: 'var(--bg2,#1C1B19)',
+        color: 'var(--tx1,#F5F3F0)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+      mResultBtnStyle: { minHeight: 40, padding: '0 16px', borderRadius: 999, border: 'none', cursor: 'pointer',
+        fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap',
+        background: o.needsResult ? 'var(--pill,#27C08B)' : 'var(--bg2,#1C1B19)',
+        color: o.needsResult ? 'var(--pillTx,#08211A)' : 'var(--tx1,#F5F3F0)' }
+    }));
+  }
 
   pillTab(on, h) {
     return { height: h || 26, padding: '0 12px', borderRadius: 999, border: 'none', cursor: 'pointer',
@@ -1607,7 +2034,8 @@ class Component extends DCLogic {
         color: 'var(--tx2,#BCB8B2)', fontSize: 11, fontWeight: 500 }
     });
 
-    const navItems = [['Клиенты', '26'], ['Показы', '14'], ['Сделки', '4'], ['Дашборд', ''], ['Отчёты', ''], ['Команда', '6']];
+    const navItems = [['Клиенты', '26'], ['Показы', '14'], ['Сделки', '4'], ['Дашборд', ''], ['Отчёты', ''], ['Команда', '6']]
+      .filter(([l]) => this.isManager || l !== 'Команда');
     const nav = navItems.map(([label, count]) => {
       const on = s.nav === label;
       return { label, count, pick: () => this.setState({ nav: label }),
@@ -1627,7 +2055,14 @@ class Component extends DCLogic {
     };
     const opts = mobile => Object.keys(this.STATUS).map(k => ({
       label: this.STATUS[k].label, dotStyle: this.dot(k, 7), btnStyle: btn(k, s.fStatus === k, mobile),
-      pick: () => this.setState({ fStatus: k })
+      inlineStyle: (() => {
+        const on = s.fStatus === k, c = this.STATUS[k].v;
+        return { height: 32, padding: '0 13px', borderRadius: 999, border: 'none', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', gap: 7, whiteSpace: 'nowrap', fontSize: 12, fontWeight: on ? 600 : 500,
+          background: on ? 'color-mix(in srgb, ' + c + ' 22%, var(--panel,#131312))' : 'var(--panel,#131312)',
+          color: on ? c : 'var(--tx2,#BCB8B2)' };
+      })(),
+      pick: () => this.setState(x => ({ fStatus: x.fStatus === k ? '' : k }))
     }));
 
     const chip = (label, on, h) => ({ label, pick: () => this.setState({ fType: label }),
@@ -1666,19 +2101,33 @@ class Component extends DCLogic {
       sel: {
         name: c.name, phone: c.phone, email: c.email, created: c.created, owner: c.owner,
         budget: c.budget, districts: c.districts, urgency: c.urgency, rooms: c.rooms,
-        initials: this.initials(c.name), statusLabel: this.STATUS[c.status].label,
-        dotStyle: this.dot(c.status), badgeStyle: this.badge(c.status),
+        initials: this.initials(c.name), statusLabel: this.STATUS[s.statusOver[c.id] || c.status].label,
+        dotStyle: this.dot(s.statusOver[c.id] || c.status), badgeStyle: this.badge(s.statusOver[c.id] || c.status),
         bigAvatarStyle: this.avatar(c.status, 56, 17), avatar48Style: this.avatar(c.status, 64, 20)
       },
-      stats: [
-        { label: 'Показов', value: String(all.filter(e => e.kind === 'home').length), unit: 'всего' },
-        { label: 'Звонков', value: String(all.filter(e => e.kind === 'phone').length), unit: 'всего' },
-        { label: 'В работе', value: c.days, unit: 'дней' },
-        { label: 'Бюджет', value: c.short, unit: 'до' }
+      selFacts: [
+        { label: 'Телефон', value: c.phone, style: "font-family:'JetBrains Mono',monospace;font-size:13px" },
+        { label: 'Бюджет', value: c.budget, style: "font-family:'JetBrains Mono',monospace;font-size:13px" },
+        { label: 'Комнаты', value: c.rooms, style: 'font-size:13px' },
+        { label: 'Районы', value: c.districts, style: 'font-size:13px' },
+        { label: 'Срочность', value: c.urgency, style: 'font-size:13px' }
       ],
+      stats: [
+        { label: 'В работе', value: c.days, unit: 'дней', compact: 'дней в работе' }
+      ],
+      statusMeta: (() => {
+        const sb = s.statusBy[c.id] || { by: c.owner, when: c.last };
+        const first = sb.by === this.ME ? 'вы' : sb.by.split(' ')[0];
+        const verb = sb.by === this.ME ? 'поставили' : (first.endsWith('а') ? 'поставила' : 'поставил');
+        return verb === 'поставили' ? 'вы поставили ' + sb.when : verb + ' ' + first + ', ' + sb.when;
+      })(),
+      statusFormHint: 'сейчас «' + this.STATUS[s.statusOver[c.id] || c.status].label + '» — меняйте, только если что-то изменилось',
+      meName: this.ME, meRole: this.isManager ? 'Руководитель отдела' : 'Риелтор', meInitials: this.initials(this.ME),
+      dashSub: this.isManager ? 'Сентябрь 2026 · весь отдел' : 'Сентябрь 2026 · ваши клиенты',
+      showTeamLoad: this.isManager,
       tabs: ['Все', 'Показы', 'Звонки', 'Сообщения'].map(l => ({ label: l, style: this.pillTab(s.tab === l), pick: () => this.setState({ tab: l }) })),
       eventGroups, activityBars,
-      histCount: all.length + ' событий',
+      histCount: this.plural(all.length, 'событие', 'события', 'событий'),
       noEvents: events.length === 0,
 
       isClients: s.nav === 'Клиенты',
@@ -1688,20 +2137,118 @@ class Component extends DCLogic {
       isReports: s.nav === 'Отчёты',
       isTeam: s.nav === 'Команда',
 
-      showings: [
-        { date: 'Сегодня 14:30', addr: 'ул. Толстого д.25', price: '8.5 млн', client: 'Сергей Грин', realtor: 'Василий Петров', result: 'Запланирован' },
-        { date: 'Сегодня 11:00', addr: 'ул. Мичурина д.71', price: '19 млн', client: 'Ольга Панина', realtor: 'Марина Грязнова', result: 'Думает' },
-        { date: 'Сегодня 09:30', addr: 'пр. Гагарина д.4', price: '11.2 млн', client: 'Тимур Асхабов', realtor: 'Василий Петров', result: 'Запланирован' },
-        { date: '13 сент 16:00', addr: 'ЖК Парковый, к.3', price: '23 млн', client: 'Ксения Гладко', realtor: 'Марина Грязнова', result: 'Понравилось' },
-        { date: '12 сент 16:45', addr: 'ул. Лениных полей д.10', price: '12 млн', client: 'Сергей Грин', realtor: 'Василий Петров', result: 'Отказ' },
-        { date: '11 сент 12:20', addr: 'ул. Заречная д.8', price: '9.4 млн', client: 'Марина Ковалёва', realtor: 'Дмитрий Кутузов', result: 'Думает' }
-      ].map(r => {
-        const col = r.result === 'Понравилось' ? 'var(--kHome,#6FC2A0)' : r.result === 'Отказ' ? 'var(--stR,#D4837A)'
-          : r.result === 'Думает' ? 'var(--kMsg,#D2B36B)' : 'var(--kPhone,#7FA8D4)';
-        return Object.assign({}, r, { chipStyle: { display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap',
-          color: col, fontSize: 13, fontWeight: 500, letterSpacing: '.01em' },
+      showings: this.SHOWINGS.map(r => {
+        const col = this.resultColor(r.result);
+        return Object.assign({}, r, {
+          date: r.day + ' ' + r.time,
+          chipStyle: { display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap',
+            color: col, fontSize: 13, fontWeight: 500, letterSpacing: '.01em' },
           markStyle: { width: 3, height: 14, borderRadius: 1, flex: '0 0 auto', background: col } });
       }),
+
+      dayTabs: ['Сегодня', 'Завтра', 'Неделя'].map(t => ({
+        label: t, pick: () => this.setState({ showDay: t }),
+        style: { height: 30, padding: '0 14px', borderRadius: 999, border: 'none', cursor: 'pointer',
+          fontSize: 12, fontWeight: 600, background: s.showDay === t ? 'var(--pill,#27C08B)' : 'transparent',
+          color: s.showDay === t ? 'var(--pillTx,#08211A)' : 'var(--tx2,#BCB8B2)' },
+        mStyle: { flex: 1, minHeight: 36, borderRadius: 999, border: 'none', cursor: 'pointer',
+          fontSize: 12, fontWeight: 600, background: s.showDay === t ? 'var(--pill,#27C08B)' : 'transparent',
+          color: s.showDay === t ? 'var(--pillTx,#08211A)' : 'var(--tx2,#BCB8B2)' }
+      })),
+
+      dayTitle: s.showDay === 'Завтра' ? '15 сентября, среда' : s.showDay === 'Неделя' ? '14–20 сентября' : '14 сентября, вторник',
+      daySummary: (() => {
+        const list = this.dayList(s.showDay);
+        const pend = list.filter(r => r.result === 'Запланирован' && r.past).length;
+        const ahead = list.filter(r => r.result === 'Запланирован' && !r.past).length;
+        const mins = list.reduce((a, r) => a + r.dur, 0);
+        const parts = [this.plural(list.length, 'показ', 'показа', 'показов')];
+        if (pend) { parts.push(pend + ' без итога'); }
+        if (ahead) { parts.push(ahead + ' впереди'); }
+        parts.push(Math.floor(mins / 60) + ' ч ' + (mins % 60) + ' мин в разъездах');
+        return parts.join(' · ');
+      })(),
+
+      slots: this.buildSlots(s.showDay),
+
+      pendingResults: this.SHOWINGS.filter(r => r.result === 'Запланирован' && r.past).map(r => Object.assign({}, r, {
+        fill: () => this.flash('Итог показа: ' + r.addr),
+        call: () => this.flash('Звоним ' + r.client)
+      })),
+      hasPending: this.SHOWINGS.filter(r => r.result === 'Запланирован' && r.past).length > 0,
+      pendingCount: String(this.SHOWINGS.filter(r => r.result === 'Запланирован' && r.past).length),
+      pendingNames: this.SHOWINGS.filter(r => r.result === 'Запланирован' && r.past)
+        .map(r => r.addr + ' · ' + r.time).join(', '),
+
+      dealRows: this.DEALS.map(d => {
+        const late = d.daysLeft < 0;
+        const soon = d.daysLeft >= 0 && d.daysLeft <= 2;
+        const col = late ? 'var(--stR,#D4837A)' : soon ? 'var(--stW,#D2A65B)' : 'var(--tx2,#BCB8B2)';
+        return Object.assign({}, d, {
+          deadlineText: late ? 'просрочено на ' + Math.abs(d.daysLeft) + ' дн' : d.daysLeft === 0 ? 'сегодня' : 'через ' + d.daysLeft + ' дн',
+          deadlineStyle: { fontSize: 12, fontWeight: late || soon ? 600 : 400, color: col, whiteSpace: 'nowrap' },
+          stageStyle: { display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 12, fontWeight: 500, color: d.stageColor },
+          stageDotStyle: { width: 7, height: 7, borderRadius: '50%', flex: '0 0 auto', background: d.stageColor },
+          docsText: d.docsDone + ' / ' + d.docsTotal,
+          docsStyle: { fontFamily: "'JetBrains Mono',monospace", fontSize: 12,
+            color: d.docsDone === d.docsTotal ? 'var(--kHome,#6FC2A0)' : 'var(--tx2,#BCB8B2)' },
+          barStyle: { height: 4, borderRadius: 999, background: d.docsDone === d.docsTotal ? 'var(--kHome,#6FC2A0)' : 'var(--cta,#27C08B)',
+            width: Math.round(d.docsDone / d.docsTotal * 100) + '%' },
+          nextStyle: { fontSize: 12, color: late ? 'var(--tx1,#F5F3F0)' : 'var(--tx2,#BCB8B2)' },
+          missing: d.missing || 'все собраны',
+          iconBtnStyle: { width: 28, height: 28, borderRadius: 8, border: 'none', background: 'transparent',
+            color: 'var(--tx3,#8B8680)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+          stageBtnStyle: { height: 28, padding: '0 11px', borderRadius: 999, border: 'none', cursor: 'pointer',
+            fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap',
+            background: late ? 'var(--pill,#27C08B)' : 'var(--bg3,#26241F)',
+            color: late ? 'var(--pillTx,#08211A)' : 'var(--tx1,#F5F3F0)' },
+          call: () => this.flash('Звоним ' + d.name),
+          note: () => this.flash('Заметка к сделке ' + d.name),
+          status: () => this.flash('Смена этапа: ' + d.name),
+          mStageBtnStyle: { flex: 1, minHeight: 40, borderRadius: 999, border: 'none', cursor: 'pointer',
+            fontSize: 12, fontWeight: 600,
+            background: late ? 'var(--pill,#27C08B)' : 'var(--bg2,#1C1B19)',
+            color: late ? 'var(--pillTx,#08211A)' : 'var(--tx1,#F5F3F0)' }
+        });
+      }),
+
+      dealStats: (() => {
+        const late = this.DEALS.filter(d => d.daysLeft < 0).length;
+        const docs = this.DEALS.filter(d => d.docsDone < d.docsTotal).length;
+        return [
+          { value: String(this.DEALS.length), label: 'в работе' },
+          { value: '58 млн', label: 'сумма' },
+          { value: String(late), label: 'просрочены' },
+          { value: String(docs), label: 'ждут документы' }
+        ];
+      })(),
+
+      funnel: (() => {
+        const rows = [
+          { label: 'Новые лиды', n: 9, stuck: 0 },
+          { label: 'Первый контакт', n: 7, stuck: 1 },
+          { label: 'Показы назначены', n: 5, stuck: 2 },
+          { label: 'Выбирают объект', n: 4, stuck: 3 },
+          { label: 'Оформление', n: 2, stuck: 0 },
+          { label: 'Закрыто', n: 1, stuck: 0 }
+        ];
+        return rows.map((r, i) => {
+          const prev = i ? rows[i - 1].n : r.n;
+          const drop = prev - r.n;
+          return {
+            label: r.label,
+            value: String(r.n),
+            barStyle: { height: 34, borderRadius: 8, minWidth: 6,
+              width: Math.round(r.n / rows[0].n * 100) + '%',
+              background: r.stuck > 1 ? 'var(--stW,#D2A65B)' : 'var(--cta,#27C08B)',
+              opacity: r.stuck > 1 ? 1 : 0.82 - i * 0.07 },
+            dropText: i && drop ? '−' + drop : '',
+            stuckText: r.stuck ? this.plural(r.stuck, 'застрял', 'застряли', 'застряли') + ' > 7 дней' : '',
+            stuckStyle: { fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap',
+              color: r.stuck > 1 ? 'var(--stW,#D2A65B)' : 'var(--tx3,#8B8680)' }
+          };
+        });
+      })(),
 
       dealCols: [
         { title: 'Подбор', sum: '34 млн', col: 'var(--kMsg,#D2B36B)', cards: [
@@ -1748,9 +2295,15 @@ class Component extends DCLogic {
             markStyle: { width: 8, height: 8, borderRadius: 2, flex: '0 0 auto', background: this.KCOLOR[k] } })) };
       })(),
 
-      leaders: [['Марина Грязнова', 6], ['Василий Петров', 5], ['Дмитрий Кутузов', 2], ['Анна Соболь', 1]].map(([name, n]) => ({
-        name, shows: n + ' показов',
-        barStyle: { height: '100%', width: (n / 6 * 100) + '%', borderRadius: 999, background: 'var(--cta,#27C08B)' }
+      leadersTitle: this.isManager ? 'Показы по риелторам' : 'Мои показы за неделю — итоги',
+      leaders: (this.isManager
+        ? [['Марина Грязнова', 6, 'var(--cta,#27C08B)'], ['Василий Петров', 5, 'var(--cta,#27C08B)'],
+          ['Дмитрий Кутузов', 2, 'var(--cta,#27C08B)'], ['Анна Соболь', 1, 'var(--cta,#27C08B)']]
+        : [['Понравилось', 2, 'var(--kHome,#6FC2A0)'], ['Думает', 1, 'var(--kMsg,#D2B36B)'],
+          ['Отказ', 1, 'var(--stR,#D4837A)'], ['Без итога', 1, 'var(--stW,#D2A65B)']]
+      ).map(([name, n, col]) => ({
+        name, shows: this.plural(n, 'показ', 'показа', 'показов'),
+        barStyle: { height: '100%', width: (n / (this.isManager ? 6 : 2) * 100) + '%', borderRadius: 999, background: col }
       })),
 
       reports: [
@@ -1779,6 +2332,35 @@ class Component extends DCLogic {
       mobileEvents: all.slice(0, 5).map(dec(true)),
 
       openWhatsapp: () => this.flash('Открываем WhatsApp с ' + c.phone),
+
+      collision: (() => {
+        if (c.owner === this.ME) { return null; }
+        const first = c.owner.split(' ')[0];
+        const dative = first.endsWith('а') ? first.slice(0, -1) + 'е' : first + 'у';
+        let when = '', what = '';
+        for (const ev of all) {
+          const n = (ev.notes || []).slice().reverse().find(x => x.by === c.owner);
+          if (n || ev.by === c.owner) {
+            const day = /14 сентября/.test(ev.date) ? 'сегодня' : /13 сентября/.test(ev.date) ? 'вчера' : ev.date.split(',')[1].trim();
+            when = day + ' в ' + (n ? n.time : ev.date.split(', ').pop());
+            what = ev.title.replace(/\s*\(.*\)$/, '').replace(/^Показ ул\. /, 'показ на ').replace(/^Показ /, 'показ ').toLowerCase()
+              .replace(/^показ на (\S)/, (m, a) => 'показ на ' + a.toUpperCase());
+            break;
+          }
+        }
+        return { owner: c.owner, ownerShort: first, ownerInitials: this.initials(c.owner),
+          when: when || c.last, what: what || 'касание', writeLabel: 'Написать ' + dative,
+          write: () => this.flash('Сообщение для ' + c.owner + ' — откроется чат по клиенту ' + c.name),
+          callAnyway: () => this.flash('Звонок записан. ' + first + ' увидит его в ленте') };
+      })(),
+      isCollision: c.owner !== this.ME,
+      isMine: c.owner === this.ME,
+
+      tableOpen: s.nav === 'Клиенты' && !!s.tableOpen,
+      showClientCard: s.nav === 'Клиенты' && !s.tableOpen,
+      openTable: () => this.setState({ tableOpen: true, tScroll: 0 }),
+      closeTable: () => this.setState({ tableOpen: false }),
+      ...this.tableVals(s),
       moreOpen: s.moreOpen,
       toggleMore: () => this.setState(st => ({ moreOpen: !st.moreOpen })),
       moreBtnStyle: { width: 36, height: 36, borderRadius: 999, border: 'none', cursor: 'pointer',
@@ -1882,7 +2464,7 @@ class Component extends DCLogic {
               { kind: 'meet', title: 'Встреча в офисе', meta: 'Выполнил Василий Петров', tag: '' }
             ] },
           { title: 'Запись события — 30 секунд',
-            text: 'Кнопка «Добавить событие» внизу карточки. Тип, дата, статус клиента и заметка — для показа подсказывается адрес, для звонка длительность.',
+            text: 'Форма раскрывается прямо внизу карточки, без модального окна. Тип, дата, статус клиента и заметка — для показа подсказывается адрес из недавних.',
             demo: [
               { kind: 'home', title: 'Тип события', meta: 'Показ квартиры · адрес из недавних', tag: 'Шаг 1' },
               { kind: 'phone', title: 'Статус клиента', meta: 'Активен · жду звонка · холодный · отказал', tag: 'Шаг 2' },
@@ -1976,6 +2558,11 @@ class Component extends DCLogic {
       }),
 
       modalOpen: s.modalOpen,
+      legacyModal: false,
+      composerClosed: !s.modalOpen,
+      addrInlineStyle: { flex: '1 1 220px', minWidth: 180, height: 34, padding: '0 14px', borderRadius: 999,
+        border: s.addrErr ? '1px solid var(--stR,#D4837A)' : 'none', background: 'var(--panel,#131312)',
+        color: 'var(--tx1,#F5F3F0)', fontSize: 13, outline: 'none' },
       openModal: () => this.setState({ modalOpen: true, addrErr: false }),
       closeModal: () => this.setState({ modalOpen: false }),
       stop: e => e.stopPropagation(),
@@ -1985,7 +2572,17 @@ class Component extends DCLogic {
       fDate: s.fDate, setDate: e => this.setState({ fDate: e.target.value }),
       fAddr: s.fAddr, setAddr: e => this.setState({ fAddr: e.target.value, addrErr: false }),
       fDur: s.fDur, setDur: e => this.setState({ fDur: e.target.value }),
-      fNote: s.fNote, setNote: e => this.setState({ fNote: e.target.value.slice(0, 500) }),
+      fNote: s.fNote, setNote: e => this.setState({ fNote: e.target.value.slice(0, 500), noteErr: false }),
+      noteRequired: s.fType === 'Показ квартиры',
+      noteErr: !!s.noteErr,
+      noteLabel: s.fType === 'Показ квартиры' ? 'Как прошёл показ' : 'Заметка',
+      noteHint: s.fType === 'Показ квартиры' ? 'обязательно — по ней коллеги поймут, что предлагать дальше' : 'по желанию',
+      notePlaceholder: s.fType === 'Показ квартиры'
+        ? 'Что понравилось, что смутило, какой следующий шаг...'
+        : 'Что обсудили с клиентом...',
+      noteBoxStyle: { width: '100%', height: 84, resize: 'none', marginTop: 8, padding: '12px 14px', borderRadius: 12,
+        border: s.noteErr ? '1px solid var(--stR,#D4837A)' : 'none', background: 'var(--panel,#131312)',
+        color: 'var(--tx1,#F5F3F0)', fontSize: 13, lineHeight: 1.6, outline: 'none' },
       noteCount: s.fNote.length + '/500',
       needsAddr: s.fType === 'Показ квартиры',
       isCall: s.fType === 'Звонок',
@@ -2002,18 +2599,29 @@ class Component extends DCLogic {
 
       resetForm: () => this.setState({ fAddr: '', fNote: '', addrErr: false }),
       saveEvent: () => {
-        if (s.fType === 'Показ квартиры' && !s.fAddr.trim()) { this.setState({ addrErr: true }); return; }
+        const showing = s.fType === 'Показ квартиры';
+        const missAddr = showing && !s.fAddr.trim();
+        const missNote = showing && !s.fNote.trim();
+        if (missAddr || missNote) { this.setState({ addrErr: missAddr, noteErr: missNote }); return; }
         const kind = s.fType === 'Звонок' ? 'phone' : s.fType === 'Показ квартиры' ? 'home'
           : s.fType === 'Встреча в офисе' ? 'meet' : 'msg';
         const title = s.fType === 'Показ квартиры' ? 'Показ ' + s.fAddr
           : s.fType === 'Звонок' ? 'Звонок (' + s.fDur + ' мин)' : s.fType;
-        const ev = { date: s.fDate, kind, title, sub: s.fNote, by: 'Василий Петров' };
+        const newStatus = s.fStatus && s.fStatus !== (s.statusOver[c.id] || c.status) ? s.fStatus : '';
+        const statusLine = newStatus ? 'Статус: ' + this.STATUS[s.statusOver[c.id] || c.status].label + ' → ' + this.STATUS[newStatus].label : '';
+        const ev = { date: s.fDate, kind, title, sub: [s.fNote, statusLine].filter(Boolean).join(' · '), by: this.ME };
         this.setState(st => {
           const next = Object.assign({}, st.events);
           next[c.id] = [ev].concat(next[c.id] || []);
-          return { events: next, modalOpen: false, fAddr: '', fNote: '' };
+          const so = Object.assign({}, st.statusOver);
+          const sb = Object.assign({}, st.statusBy);
+          if (newStatus) { so[c.id] = newStatus; sb[c.id] = { by: this.ME, when: 'только что' }; }
+          return { events: next, modalOpen: false, fAddr: '', fNote: '', fStatus: '', noteErr: false,
+            statusOver: so, statusBy: sb };
         });
-        this.flash('Событие добавлено');
+        this.flash(newStatus && c.owner !== this.ME
+          ? 'Событие добавлено. ' + c.owner.split(' ')[0] + ' получит уведомление о смене статуса'
+          : 'Событие добавлено');
       },
       toast: s.toast
     };
