@@ -391,6 +391,36 @@
   font-weight: 600;
 }
 
+/* ---------- ЧТО НЕ ПОЛУЧИЛОСЬ ----------
+   Маркер здесь не галочка, как у идей, а короткая черта:
+   это не список достижений. */
+.failures {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.failures li {
+  position: relative;
+  padding-left: 24px;
+
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.failures li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+
+  width: 12px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line-strong);
+}
+
 .tableNote {
   margin-top: 12px;
   font-size: var(--fs-small);

@@ -381,6 +381,24 @@ export default function ProjectDetail() {
           </>
         )}
 
+        {/* Что не получилось. Блок появляется, только если он
+            заполнен у проекта: признаваться не в чем —
+            не признаёмся. */}
+        {project.failures?.length > 0 && (
+          <div className={s.ideas}>
+            <h3 className={s.subTitle}>
+              {fixHangingWords("что не получилось")}
+            </h3>
+            <ul className={s.failures}>
+              {project.failures.map((item, i) => (
+                <li key={i}>
+                  <RichText>{item}</RichText>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <div className={s.ideas}>
           <h3 className={s.subTitle}>{fixHangingWords("идеи для развития")}</h3>
           <ul className={s.ideasList}>
