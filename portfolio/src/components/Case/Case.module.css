@@ -391,6 +391,28 @@
   font-weight: 600;
 }
 
+/* ---------- КАДР С СОЗВОНА ----------
+   Доказательство, что исследование было живым. Намеренно
+   небольшой: это подтверждение, а не главный экран кейса. */
+.researchPhoto {
+  margin: 28px 0 8px;
+  max-width: 560px;
+}
+
+.researchPhoto img {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+}
+
+.researchPhoto figcaption {
+  margin-top: 10px;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
 /* ---------- ЧТО НЕ ПОЛУЧИЛОСЬ ----------
    Маркер здесь не галочка, как у идей, а короткая черта:
    это не список достижений. */

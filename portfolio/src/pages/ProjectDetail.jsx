@@ -11,6 +11,7 @@ import FlowCompare from "../components/Case/FlowCompare";
 import FlowDiagram from "../components/Case/FlowDiagram";
 import { TablesFor } from "../components/Case/CaseTable";
 import { thumb } from "../components/Case/imagePath";
+import { asset } from "../utils/asset";
 import RichText from "../components/Case/RichText";
 import DemoVideo from "../components/Case/DemoVideo";
 import Flower from "../components/Flower/Flower";
@@ -209,6 +210,22 @@ export default function ProjectDetail() {
             <h3 className={s.subTitle}>{fixHangingWords("кто эти люди")}</h3>
             <p className={s.text}><RichText>{project.research.audience}</RichText></p>
           </>
+        )}
+
+        {/* Кадр с созвона, если он есть у кейса */}
+        {project.research.photo && (
+          <figure className={s.researchPhoto}>
+            <img
+              /* Без уменьшенной копии: кадр и так лёгкий,
+                 а отдельный thumb для него не создаётся */
+              src={asset(project.research.photo.src)}
+              alt="Созвон с респондентом: разбор прототипа"
+              loading="lazy"
+            />
+            {project.research.photo.note && (
+              <figcaption>{project.research.photo.note}</figcaption>
+            )}
+          </figure>
         )}
 
         <h3 className={s.subTitle}>итог</h3>
