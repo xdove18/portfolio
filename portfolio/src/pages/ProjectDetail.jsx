@@ -235,31 +235,41 @@ export default function ProjectDetail() {
           ))}
         </ul>
 
-        <div className={s.panelSoft}>
-          <h3 className={s.subTitle}>
-            {fixHangingWords(
-              project.research.questionsTitle || "вопросы для интервью"
+        {/* Панель с вопросами появляется, только если они есть.
+            В кейсе, где метод и так понятен, список вопросов
+            можно просто не заполнять — блок исчезнет сам. */}
+        {(project.research.questions?.length > 0 ||
+          project.research.wanted?.length > 0) && (
+          <div className={s.panelSoft}>
+            {project.research.questions?.length > 0 && (
+              <>
+                <h3 className={s.subTitle}>
+                  {fixHangingWords(
+                    project.research.questionsTitle || "вопросы для интервью"
+                  )}
+                </h3>
+                <ul className={s.bullets}>
+                  {project.research.questions.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </>
             )}
-          </h3>
-          <ul className={s.bullets}>
-            {project.research.questions.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
 
-          {project.research.wanted && (
-            <>
-              <h3 className={s.subTitle}>
-                {fixHangingWords("что хотели видеть пользователи")}
-              </h3>
-              <ul className={s.bullets}>
-                {project.research.wanted.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
+            {project.research.wanted?.length > 0 && (
+              <>
+                <h3 className={s.subTitle}>
+                  {fixHangingWords("что хотели видеть пользователи")}
+                </h3>
+                <ul className={s.bullets}>
+                  {project.research.wanted.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
 
         <TablesFor
           tables={project.tables}
@@ -416,17 +426,24 @@ export default function ProjectDetail() {
           </div>
         )}
 
-        <div className={s.ideas}>
-          <h3 className={s.subTitle}>{fixHangingWords("идеи для развития")}</h3>
-          <ul className={s.ideasList}>
-            {project.ideas.map((idea, i) => (
-              <li key={i}>
-                <CheckIcon size={16} color={project.color} />
-                {idea}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Идеи для развития — тоже необязательный блок.
+            Если идей нет, лучше его не показывать, чем писать
+            общие слова. */}
+        {project.ideas?.length > 0 && (
+          <div className={s.ideas}>
+            <h3 className={s.subTitle}>
+              {fixHangingWords("идеи для развития")}
+            </h3>
+            <ul className={s.ideasList}>
+              {project.ideas.map((idea, i) => (
+                <li key={i}>
+                  <CheckIcon size={16} color={project.color} />
+                  {idea}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
     ),
   };
