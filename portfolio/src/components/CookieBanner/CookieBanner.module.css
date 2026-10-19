@@ -49,13 +49,14 @@
 }
 
 .accept {
-  background: var(--black);
-  color: var(--on-dark);
-  border: 1px solid var(--black);
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  border: 1px solid var(--cta-bg);
 }
 
 .accept:hover {
-  background: #26262b;
+  background: var(--cta-bg-hover);
+  border-color: var(--cta-bg-hover);
 }
 
 .decline {
