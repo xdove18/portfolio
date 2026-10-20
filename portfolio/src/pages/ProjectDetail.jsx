@@ -10,6 +10,7 @@ import HypothesisList from "../components/Case/HypothesisList";
 import FlowCompare from "../components/Case/FlowCompare";
 import FlowDiagram from "../components/Case/FlowDiagram";
 import { TablesFor } from "../components/Case/CaseTable";
+import { TimelinesFor } from "../components/Case/Timeline";
 import { thumb } from "../components/Case/imagePath";
 import { asset } from "../utils/asset";
 import RichText from "../components/Case/RichText";
@@ -271,6 +272,15 @@ export default function ProjectDetail() {
           </div>
         )}
 
+        {/* Лента времени этого раздела — например, рабочий день
+            человека, про которого кейс. Появляется, только если
+            описана у проекта. */}
+        <TimelinesFor
+          timelines={project.timelines}
+          section="audience"
+          accent={project.color}
+        />
+
         <TablesFor
           tables={project.tables}
           section="audience"
@@ -285,6 +295,13 @@ export default function ProjectDetail() {
         competitors={project.competitors}
         summary={project.competitorsSummary}
         accent={project.color}
+        table={
+          <TablesFor
+            tables={project.tables}
+            section="market"
+            accent={project.color}
+          />
+        }
       />
     ),
 
@@ -318,6 +335,14 @@ export default function ProjectDetail() {
         {/* Приоритизация и прочие таблицы этого раздела */}
         <TablesFor
           tables={project.tables}
+          section="solution"
+          accent={project.color}
+        />
+
+        {/* Как механика разворачивается во времени: по дням,
+            по шагам. Появляется, только если описана. */}
+        <TimelinesFor
+          timelines={project.timelines}
           section="solution"
           accent={project.color}
         />

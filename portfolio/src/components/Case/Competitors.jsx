@@ -17,7 +17,7 @@ import s from "./Case.module.css";
    Если их нет — вместо логотипа рисуется кружок с буквой.
    ============================================================ */
 
-export default function Competitors({ competitors, summary, accent }) {
+export default function Competitors({ competitors, summary, accent, table }) {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -26,7 +26,7 @@ export default function Competitors({ competitors, summary, accent }) {
   /* Раздел появляется, если есть хотя бы сводка по рынку.
      Карточки конкурентов при этом не обязательны: в некоторых
      кейсах достаточно общего вывода без разбора по каждому. */
-  if (!summary && list.length === 0) return null;
+  if (!summary && list.length === 0 && !table) return null;
 
   const hasCards = list.length > 0;
   const current = list[index];
@@ -50,6 +50,12 @@ export default function Competitors({ competitors, summary, accent }) {
         <p className={s.summaryText}>
           <RichText>{summary}</RichText>
         </p>
+
+        {/* Сводная таблица стоит здесь, а не внутри карточек:
+            она видна сразу, а подробный разбор каждого
+            конкурента остаётся за кнопкой. Так рынок читается
+            за один взгляд, но глубина никуда не девается. */}
+        {table}
 
         {/* Кнопку показываем только если есть что разворачивать */}
         {hasCards && !open && (

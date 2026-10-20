@@ -1801,6 +1801,94 @@
 }
 
 /* ============================================================
+   ЛЕНТА ВРЕМЕНИ
+   ============================================================
+   Шаги идут сверху вниз вдоль одной линии. Слева — когда,
+   справа — что происходит. Точка на линии отмечает шаг,
+   красная — место, где что-то теряется.
+   ============================================================ */
+.timeline {
+  margin-top: 40px;
+}
+
+.timelineList {
+  position: relative;
+  margin-top: 18px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Сама линия времени. Начинается и заканчивается у первой
+   и последней точки, а не у краёв списка. */
+.timelineList::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 22px;
+  bottom: 22px;
+  width: 1px;
+  background: var(--line);
+}
+
+.timelineStep {
+  position: relative;
+  display: grid;
+  grid-template-columns: 196px minmax(0, 1fr);
+  gap: 4px 24px;
+  padding: 14px 0 14px 30px;
+  border-bottom: 1px solid var(--line);
+}
+
+.timelineStep:last-child {
+  border-bottom: none;
+}
+
+.timelineDot {
+  position: absolute;
+  left: 0;
+  top: 19px;
+
+  width: 11px;
+  height: 11px;
+  box-sizing: border-box;
+  border-radius: 50%;
+
+  background: var(--bg);
+  border: 2px solid var(--line-strong);
+}
+
+/* Шаг, на котором что-то теряется */
+.timelineLoss .timelineDot {
+  background: var(--no-text);
+  border-color: var(--no-text);
+}
+
+.timelineLoss .timelineWhen {
+  color: var(--no-text);
+}
+
+.timelineWhen {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-strong);
+}
+
+.timelineText {
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ---------- ТЕЛЕФОН ---------- */
+@media (max-width: 760px) {
+  .timelineStep {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+}
+
+/* ============================================================
    КАК ПОЙМУ, ЧТО СРАБОТАЛО
    ============================================================
    Стоит сразу после итога и опирается на жирную линию — так же,
