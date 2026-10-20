@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: #E9EBEF; font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #1F2329; }
+  * { box-sizing: border-box; }
+  a { color: #3B6FD8; text-decoration: none; }
+  a:hover { color: #2A55B0; }
+</style>
+</helmet>
+
+<section style="padding:64px;display:flex;flex-direction:column;gap:64px;width:max-content;background:#E9EBEF">
+
+  <div data-screen-label="01 Сделки" style="display:flex;flex-direction:column;gap:12px">
+    <div style="font-size:13px;color:#6B7280">01 · Сделки</div>
+    <div style="width:1440px;height:900px;border-radius:12px;overflow:hidden;background:#F4F5F7;display:flex;box-shadow:0 20px 60px rgba(20,24,32,.12)">
+      <div style="width:220px;flex:0 0 auto;background:#1E2633;color:#C9D1DC;display:flex;flex-direction:column;padding:18px 12px;gap:4px">
+        <div style="display:flex;align-items:center;gap:10px;padding:0 8px 18px">
+          <div style="width:30px;height:30px;border-radius:8px;background:#3B6FD8;color:#FFFFFF;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">АП</div>
+          <span style="font-size:14px;font-weight:600;color:#FFFFFF">Агентство Pro</span>
+        </div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px">Рабочий стол</div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px;background:#2D3747;color:#FFFFFF;font-weight:500">Сделки</div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px">Контакты</div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px">Компании</div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px">Задачи</div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px">Календарь</div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px">Товары</div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px">Отчёты</div>
+        <div style="flex:1"></div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px">Настройки</div>
+      </div>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+        <div style="height:60px;padding:0 24px;display:flex;align-items:center;gap:16px;background:#FFFFFF;border-bottom:1px solid #E3E6EB">
+          <span style="font-size:18px;font-weight:600">Сделки</span>
+          <div style="display:flex;gap:2px;padding:2px;border-radius:8px;background:#EEF0F3">
+            <span style="height:28px;padding:0 12px;border-radius:6px;background:#FFFFFF;font-size:12px;font-weight:500;display:flex;align-items:center;box-shadow:0 1px 2px rgba(0,0,0,.08)">Канбан</span>
+            <span style="height:28px;padding:0 12px;border-radius:6px;font-size:12px;color:#6B7280;display:flex;align-items:center">Список</span>
+          </div>
+          <div style="width:320px;height:36px;padding:0 12px;border-radius:8px;border:1px solid #D5DAE1;font-size:13px;color:#9AA0A8;display:flex;align-items:center">Поиск по сделкам</div>
+          <span style="height:36px;padding:0 14px;border-radius:8px;border:1px solid #D5DAE1;background:#FFFFFF;font-size:13px;display:flex;align-items:center">Фильтр</span>
+          <div style="flex:1"></div>
+          <span style="height:36px;padding:0 16px;border-radius:8px;background:#3B6FD8;color:#FFFFFF;font-size:13px;font-weight:500;display:flex;align-items:center">+ Сделка</span>
+          <div style="width:32px;height:32px;border-radius:50%;background:#DCE6F5;color:#3B5F9E;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">ВП</div>
+        </div>
+        <div style="flex:1;padding:20px 24px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;min-height:0">
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;box-shadow:inset 0 -3px 0 #9AA0A8">
+              <span style="font-size:13px;font-weight:600">Новая</span><span style="font-size:12px;color:#6B7280">3 · 34 млн ₽</span>
+            </div>
+            <div style="padding:12px;border-radius:8px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+              <div style="font-size:13px;font-weight:500">Ковалёва М. — 1к</div>
+              <div style="font-size:13px;color:#1F2329;margin-top:6px">9 400 000 ₽</div>
+              <div style="font-size:11px;color:#9AA0A8;margin-top:8px">Сайт · 12.09</div>
+            </div>
+            <div style="padding:12px;border-radius:8px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+              <div style="font-size:13px;font-weight:500">Орлов К. — 2к</div>
+              <div style="font-size:13px;margin-top:6px">11 800 000 ₽</div>
+              <div style="font-size:11px;color:#9AA0A8;margin-top:8px">Звонок · 13.09</div>
+            </div>
+            <div style="padding:12px;border-radius:8px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+              <div style="font-size:13px;font-weight:500">Лебедева Н. — 3к</div>
+              <div style="font-size:13px;margin-top:6px">13 000 000 ₽</div>
+              <div style="font-size:11px;color:#9AA0A8;margin-top:8px">Сайт · 14.09</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;box-shadow:inset 0 -3px 0 #3B6FD8">
+              <span style="font-size:13px;font-weight:600">Квалификация</span><span style="font-size:12px;color:#6B7280">2 · 23 млн ₽</span>
+            </div>
+            <div style="padding:12px;border-radius:8px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+              <div style="font-size:13px;font-weight:500">Грин Сергей — квартира</div>
+              <div style="font-size:13px;margin-top:6px">12 000 000 ₽</div>
+              <div style="font-size:11px;color:#9AA0A8;margin-top:8px">Сайт · 10.09</div>
+            </div>
+            <div style="padding:12px;border-radius:8px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+              <div style="font-size:13px;font-weight:500">Асхабов Т. — 2к</div>
+              <div style="font-size:13px;margin-top:6px">11 200 000 ₽</div>
+              <div style="font-size:11px;color:#9AA0A8;margin-top:8px">Рекомендация · 08.09</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;box-shadow:inset 0 -3px 0 #7A62A8">
+              <span style="font-size:13px;font-weight:600">Предложение</span><span style="font-size:12px;color:#6B7280">1 · 23 млн ₽</span>
+            </div>
+            <div style="padding:12px;border-radius:8px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+              <div style="font-size:13px;font-weight:500">Гладко К. — ЖК Парковый</div>
+              <div style="font-size:13px;margin-top:6px">23 000 000 ₽</div>
+              <div style="font-size:11px;color:#9AA0A8;margin-top:8px">Сайт · 02.09</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;box-shadow:inset 0 -3px 0 #D49A3B">
+              <span style="font-size:13px;font-weight:600">Договор</span><span style="font-size:12px;color:#6B7280">1 · 19 млн ₽</span>
+            </div>
+            <div style="padding:12px;border-radius:8px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+              <div style="font-size:13px;font-weight:500">Панина О. — Мичурина 71</div>
+              <div style="font-size:13px;margin-top:6px">19 000 000 ₽</div>
+              <div style="font-size:11px;color:#9AA0A8;margin-top:8px">Звонок · 28.08</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;box-shadow:inset 0 -3px 0 #4F9A6A">
+              <span style="font-size:13px;font-weight:600">Закрыта</span><span style="font-size:12px;color:#6B7280">1 · 8 млн ₽</span>
+            </div>
+            <div style="padding:12px;border-radius:8px;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+              <div style="font-size:13px;font-weight:500">Смирнов А. — 1к</div>
+              <div style="font-size:13px;margin-top:6px">8 100 000 ₽</div>
+              <div style="font-size:11px;color:#9AA0A8;margin-top:8px">Сайт · 15.08</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-screen-label="02 Карточка сделки" style="display:flex;flex-direction:column;gap:12px">
+    <div style="font-size:13px;color:#6B7280">02 · Карточка сделки</div>
+    <div style="width:1440px;height:900px;border-radius:12px;overflow:hidden;background:#F4F5F7;display:flex;box-shadow:0 20px 60px rgba(20,24,32,.12)">
+      <div style="width:220px;flex:0 0 auto;background:#1E2633;color:#C9D1DC;display:flex;flex-direction:column;padding:18px 12px;gap:4px">
+        <div style="display:flex;align-items:center;gap:10px;padding:0 8px 18px">
+          <div style="width:30px;height:30px;border-radius:8px;background:#3B6FD8;color:#FFFFFF;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">АП</div>
+          <span style="font-size:14px;font-weight:600;color:#FFFFFF">Агентство Pro</span>
+        </div>
+        <div style="height:36px;padding:0 10px;display:flex;align-items:center;font-size:13px">Рабочий стол</div>
+        <div style="height:36px;padding:0 10px;border-radius:8px;display:flex;align-items:center;font-size:13px;background:#2D3747;color:#FFFFFF;font-weight:500">Сделки</div>
+        <div style="height:36px;padding:0 10px;display:flex;align-items:center;font-size:13px">Контакты</div>
+        <div style="height:36px;padding:0 10px;display:flex;align-items:center;font-size:13px">Компании</div>
+        <div style="height:36px;padding:0 10px;display:flex;align-items:center;font-size:13px">Задачи</div>
+        <div style="height:36px;padding:0 10px;display:flex;align-items:center;font-size:13px">Календарь</div>
+        <div style="height:36px;padding:0 10px;display:flex;align-items:center;font-size:13px">Товары</div>
+        <div style="height:36px;padding:0 10px;display:flex;align-items:center;font-size:13px">Отчёты</div>
+        <div style="flex:1"></div>
+        <div style="height:36px;padding:0 10px;display:flex;align-items:center;font-size:13px">Настройки</div>
+      </div>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+        <div style="height:60px;padding:0 24px;display:flex;align-items:center;gap:10px;background:#FFFFFF;border-bottom:1px solid #E3E6EB">
+          <span style="font-size:13px;color:#6B7280">Сделки</span>
+          <span style="font-size:13px;color:#B0B5BD">/</span>
+          <span style="font-size:13px;font-weight:600">Грин Сергей — квартира</span>
+          <div style="flex:1"></div>
+          <span style="height:36px;padding:0 14px;border-radius:8px;border:1px solid #D5DAE1;background:#FFFFFF;font-size:13px;display:flex;align-items:center">Редактировать</span>
+          <span style="height:36px;padding:0 16px;border-radius:8px;background:#3B6FD8;color:#FFFFFF;font-size:13px;font-weight:500;display:flex;align-items:center">+ Активность</span>
+        </div>
+        <div style="padding:20px 24px 0">
+          <div style="display:flex;gap:2px">
+            <div style="flex:1;height:32px;background:#3B6FD8;color:#FFFFFF;font-size:12px;display:flex;align-items:center;justify-content:center;border-radius:6px 0 0 6px">Новая</div>
+            <div style="flex:1;height:32px;background:#3B6FD8;color:#FFFFFF;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">Квалификация</div>
+            <div style="flex:1;height:32px;background:#E3E7ED;color:#6B7280;font-size:12px;display:flex;align-items:center;justify-content:center">Предложение</div>
+            <div style="flex:1;height:32px;background:#E3E7ED;color:#6B7280;font-size:12px;display:flex;align-items:center;justify-content:center">Договор</div>
+            <div style="flex:1;height:32px;background:#E3E7ED;color:#6B7280;font-size:12px;display:flex;align-items:center;justify-content:center;border-radius:0 6px 6px 0">Закрыта</div>
+          </div>
+        </div>
+        <div style="flex:1;padding:20px 24px 24px;display:grid;grid-template-columns:420px minmax(0,1fr);gap:20px;min-height:0">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="border-radius:10px;background:#FFFFFF;padding:20px">
+              <div style="font-size:12px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:.04em">О сделке</div>
+              <div style="display:grid;grid-template-columns:140px 1fr;row-gap:14px;column-gap:12px;margin-top:16px;font-size:13px">
+                <span style="color:#6B7280">Сумма</span><span>12 000 000 ₽</span>
+                <span style="color:#6B7280">Вероятность</span><span>30%</span>
+                <span style="color:#6B7280">Ожидаемое закрытие</span><span>30.09.2026</span>
+                <span style="color:#6B7280">Источник</span><span>Сайт, форма заявки</span>
+                <span style="color:#6B7280">Ответственный</span><span style="color:#9AA0A8">не назначен</span>
+                <span style="color:#6B7280">Создана</span><span>10.09.2026, Администратор</span>
+              </div>
+            </div>
+            <div style="border-radius:10px;background:#FFFFFF;padding:20px">
+              <div style="font-size:12px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:.04em">Контакт</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:14px">
+                <div style="width:40px;height:40px;border-radius:50%;background:#E3E7ED;color:#4B5563;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center">СГ</div>
+                <div>
+                  <div style="font-size:14px;font-weight:500">Грин Сергей</div>
+                  <div style="font-size:12px;color:#6B7280;margin-top:2px">+7 (912) 555-01-72</div>
+                </div>
+              </div>
+            </div>
+            <div style="border-radius:10px;background:#FFFFFF;padding:20px">
+              <div style="font-size:12px;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:.04em">Дополнительно</div>
+              <div style="display:grid;grid-template-columns:140px 1fr;row-gap:14px;column-gap:12px;margin-top:16px;font-size:13px">
+                <span style="color:#6B7280">Тип объекта</span><span>Квартира</span>
+                <span style="color:#6B7280">Теги</span><span style="display:flex;gap:6px"><span style="padding:2px 8px;border-radius:4px;background:#EEF0F3;font-size:12px">вторичка</span></span>
+              </div>
+            </div>
+          </div>
+          <div style="border-radius:10px;background:#FFFFFF;display:flex;flex-direction:column;min-height:0">
+            <div style="display:flex;gap:24px;padding:0 20px;height:48px;align-items:center;border-bottom:1px solid #ECEEF1;font-size:13px">
+              <span style="color:#6B7280">Общее</span>
+              <span style="font-weight:600;color:#3B6FD8;height:48px;display:flex;align-items:center;box-shadow:inset 0 -2px 0 #3B6FD8">Активности (1)</span>
+              <span style="color:#6B7280">Задачи (0)</span>
+              <span style="color:#6B7280">Файлы</span>
+              <span style="color:#6B7280">Товары</span>
+              <span style="color:#6B7280">История изменений</span>
+            </div>
+            <div style="padding:16px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #ECEEF1">
+              <span style="height:30px;padding:0 12px;border-radius:6px;background:#EEF0F3;font-size:12px;display:flex;align-items:center">Все типы ▾</span>
+              <span style="height:30px;padding:0 12px;border-radius:6px;background:#EEF0F3;font-size:12px;display:flex;align-items:center">За всё время ▾</span>
+            </div>
+            <div style="display:grid;grid-template-columns:140px 1fr 160px 110px;gap:12px;padding:10px 20px;font-size:12px;color:#6B7280;border-bottom:1px solid #ECEEF1">
+              <span>Тип</span><span>Тема</span><span>Ответственный</span><span>Дата</span>
+            </div>
+            <div style="display:grid;grid-template-columns:140px 1fr 160px 110px;gap:12px;padding:14px 20px;font-size:13px;border-bottom:1px solid #ECEEF1;align-items:center">
+              <span style="display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:#9AA0A8"></span>Звонок</span>
+              <span>Входящий</span>
+              <span style="color:#9AA0A8">—</span>
+              <span style="color:#6B7280">10.09.2026</span>
+            </div>
+            <div style="flex:1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-screen-label="03 Новая активность" style="display:flex;flex-direction:column;gap:12px">
+    <div style="font-size:13px;color:#6B7280">03 · Новая активность</div>
+    <div style="position:relative;width:1440px;height:900px;border-radius:12px;overflow:hidden;background:#F4F5F7;display:flex;box-shadow:0 20px 60px rgba(20,24,32,.12)">
+      <div style="width:220px;flex:0 0 auto;background:#1E2633"></div>
+      <div style="flex:1;display:flex;flex-direction:column">
+        <div style="height:60px;background:#FFFFFF;border-bottom:1px solid #E3E6EB;padding:0 24px;display:flex;align-items:center;font-size:13px;font-weight:600">Грин Сергей — квартира</div>
+        <div style="padding:20px 24px;display:grid;grid-template-columns:420px 1fr;gap:20px;flex:1">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="height:280px;border-radius:10px;background:#FFFFFF"></div>
+            <div style="height:100px;border-radius:10px;background:#FFFFFF"></div>
+          </div>
+          <div style="border-radius:10px;background:#FFFFFF"></div>
+        </div>
+      </div>
+      <div style="position:absolute;inset:0;background:rgba(20,24,32,.48)"></div>
+      <div style="position:absolute;left:460px;top:150px;width:560px;border-radius:12px;background:#FFFFFF;box-shadow:0 24px 60px rgba(0,0,0,.3);overflow:hidden">
+        <div style="height:58px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ECEEF1">
+          <span style="font-size:16px;font-weight:600">Новая активность</span>
+          <span style="font-size:20px;color:#9AA0A8">×</span>
+        </div>
+        <div style="padding:18px 24px 0;display:flex;align-items:center;gap:10px;font-size:12px">
+          <span style="display:flex;align-items:center;gap:6px;color:#3B6FD8"><span style="width:22px;height:22px;border-radius:50%;background:#3B6FD8;color:#FFFFFF;font-size:11px;display:flex;align-items:center;justify-content:center">✓</span>Тип</span>
+          <span style="flex:1;height:1px;background:#3B6FD8"></span>
+          <span style="display:flex;align-items:center;gap:6px;font-weight:600"><span style="width:22px;height:22px;border-radius:50%;background:#3B6FD8;color:#FFFFFF;font-size:11px;display:flex;align-items:center;justify-content:center">2</span>Детали</span>
+          <span style="flex:1;height:1px;background:#D5DAE1"></span>
+          <span style="display:flex;align-items:center;gap:6px;color:#9AA0A8"><span style="width:22px;height:22px;border-radius:50%;background:#E6EAF0;color:#6B7280;font-size:11px;display:flex;align-items:center;justify-content:center">3</span>Результат</span>
+        </div>
+        <div style="padding:22px 24px;display:flex;flex-direction:column;gap:16px">
+          <div>
+            <div style="font-size:12px;color:#6B7280;margin-bottom:6px">Тип активности</div>
+            <div style="height:40px;padding:0 12px;border-radius:8px;background:#F4F5F7;display:flex;align-items:center;font-size:13px;color:#4B5563">Встреча · показ объекта</div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6B7280;margin-bottom:6px">Сделка или контакт *</div>
+            <div style="height:40px;padding:0 12px;border-radius:8px;border:1px solid #D5DAE1;display:flex;align-items:center;justify-content:space-between;font-size:13px">Грин Сергей — квартира<span style="color:#9AA0A8">▾</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <div style="font-size:12px;color:#6B7280;margin-bottom:6px">Дата *</div>
+              <div style="height:40px;padding:0 12px;border-radius:8px;border:1px solid #D5DAE1;display:flex;align-items:center;font-size:13px">14.09.2026</div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:#6B7280;margin-bottom:6px">Время</div>
+              <div style="height:40px;padding:0 12px;border-radius:8px;border:1px solid #D5DAE1;display:flex;align-items:center;font-size:13px">14:30</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6B7280;margin-bottom:6px">Ответственный *</div>
+            <div style="height:40px;padding:0 12px;border-radius:8px;border:1px solid #D5DAE1;display:flex;align-items:center;justify-content:space-between;font-size:13px">Петров Василий<span style="color:#9AA0A8">▾</span></div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:#6B7280;margin-bottom:6px">Продолжительность</div>
+            <div style="height:40px;padding:0 12px;border-radius:8px;border:1px solid #D5DAE1;display:flex;align-items:center;justify-content:space-between;font-size:13px">45 минут<span style="color:#9AA0A8">▾</span></div>
+          </div>
+        </div>
+        <div style="height:66px;padding:0 24px;display:flex;align-items:center;justify-content:flex-end;gap:8px;border-top:1px solid #ECEEF1;background:#F7F8FA">
+          <span style="height:38px;padding:0 18px;border-radius:8px;border:1px solid #D5DAE1;background:#FFFFFF;font-size:13px;display:flex;align-items:center">Назад</span>
+          <span style="height:38px;padding:0 20px;border-radius:8px;background:#3B6FD8;color:#FFFFFF;font-size:13px;font-weight:500;display:flex;align-items:center">Далее</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+</x-dc>
+</body>
+</html>
