@@ -190,11 +190,16 @@
                 </sc-if>
                 <div style="{{ c.avatarStyle }}">{{ c.initials }}</div>
                 <div style="position:relative;flex:1;min-width:0">
-                  <div style="font-size:14px;font-weight:600;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</div>
-                  <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
+                  <div style="display:flex;align-items:center;gap:6px;min-width:0">
+                    <span style="min-width:0;font-size:14px;font-weight:600;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</span>
+                    <sc-if value="{{ c.foreign }}" hint-placeholder-val="{{ false }}">
+                      <span style="{{ c.ownerTagStyle }}">{{ c.ownerShort }}</span>
+                    </sc-if>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:4px;min-width:0">
                     <span style="{{ c.dotStyle }}"></span>
                     <span style="{{ c.statusTextStyle }}">{{ c.statusLabel }}</span>
-                    <span style="font-size:11px;color:var(--tx3,#8B8680)">· {{ c.last }}</span>
+                    <span style="min-width:0;font-size:11px;color:var(--tx3,#8B8680);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">· {{ c.last }}</span>
                   </div>
                 </div>
                 <span style="position:relative;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ c.budgetShort }}</span>
@@ -320,7 +325,7 @@
               <div style="flex:1;min-height:0;display:flex;flex-direction:column;border-radius:18px;background:var(--panel,#131312);overflow:hidden">
                 <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--hair,rgba(255,255,255,.08))">
                   <div style="display:flex;align-items:baseline;gap:10px">
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">История взаимодействий</div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">История касаний</div>
                     <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cta,#27C08B)">{{ histCount }}</div>
                     <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
                       <div style="display:flex;align-items:baseline;gap:5px">
@@ -390,8 +395,11 @@
                                           </div>
                                           <div style="font-size:13px;line-height:1.65;color:var(--tx2,#BCB8B2);margin-top:5px">{{ n.text }}</div>
                                           <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
-                                            <button onClick="{{ n.edit }}" style="border:none;background:transparent;padding:0;font-size:11px;color:var(--tx3,#8B8680);cursor:pointer" style-hover="color:var(--tx1,#F5F3F0)">Изменить</button>
-                                            <button onClick="{{ n.remove }}" style="border:none;background:transparent;padding:0;font-size:11px;color:var(--tx3,#8B8680);cursor:pointer" style-hover="color:var(--stR,#D4837A)">Удалить</button>
+                                            <sc-if value="{{ n.mine }}" hint-placeholder-val="{{ false }}">
+                                              <button onClick="{{ n.edit }}" style="border:none;background:transparent;padding:0;font-size:11px;color:var(--tx3,#8B8680);cursor:pointer" style-hover="color:var(--tx1,#F5F3F0)">Изменить</button>
+                                              <button onClick="{{ n.remove }}" style="border:none;background:transparent;padding:0;font-size:11px;color:var(--tx3,#8B8680);cursor:pointer" style-hover="color:var(--stR,#D4837A)">Удалить</button>
+                                            </sc-if>
+                                            <button onClick="{{ n.reply }}" style="border:none;background:transparent;padding:0;font-size:11px;color:var(--tx3,#8B8680);cursor:pointer" style-hover="color:var(--tx1,#F5F3F0)">Ответить</button>
                                           </div>
                                         </div>
                                       </div>
@@ -426,7 +434,7 @@
                     </div>
                   </sc-for>
                   <sc-if value="{{ noEvents }}" hint-placeholder-val="{{ false }}">
-                    <div style="padding:32px 8px;text-align:center;font-size:12px;color:var(--tx3,#8B8680)">Событий этого типа пока нет</div>
+                    <div style="padding:32px 8px;text-align:center;font-size:12px;color:var(--tx3,#8B8680)">Касаний этого типа пока нет</div>
                   </sc-if>
                 </div>
               </div>
@@ -438,7 +446,7 @@
               <div style="display:flex;gap:10px;align-items:center">
                 <button onClick="{{ openModal }}" style="flex:1;height:44px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 150ms ease-out,box-shadow 150ms ease-out" style-hover="background:var(--pillH,#4AE8A8);box-shadow:0 8px 28px rgba(39,192,139,.28)" style-active="transform:scale(.99)">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
-                  Добавить событие
+                  Добавить касание
                 </button>
               </div>
             </sc-if>
@@ -975,7 +983,7 @@
               </div>
 
               <div style="display:flex;flex-direction:column;gap:6px">
-                <div style="font-size:12px;color:var(--tx3,#8B8680)">Тип события <span style="color:var(--stR,#FF6B6B)">*</span></div>
+                <div style="font-size:12px;color:var(--tx3,#8B8680)">Тип касания</div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px">
                   <sc-for list="{{ typeChips }}" as="t" hint-placeholder-count="6">
                     <button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
@@ -985,7 +993,7 @@
 
               <sc-if value="{{ needsAddr }}" hint-placeholder-val="{{ true }}">
                 <div style="display:flex;flex-direction:column;gap:6px">
-                  <div style="font-size:12px;color:var(--tx3,#8B8680)">Адрес квартиры <span style="color:var(--stR,#FF6B6B)">*</span></div>
+                  <div style="font-size:12px;color:var(--tx3,#8B8680)">Адрес квартиры</div>
                   <input value="{{ fAddr }}" onChange="{{ setAddr }}" placeholder="Начните вводить адрес..." style="{{ addrInputStyle }}">
                   <sc-if value="{{ addrErr }}" hint-placeholder-val="{{ false }}">
                     <div style="font-size:11px;color:var(--stR,#FF6B6B)">Укажите адрес квартиры</div>
@@ -1275,10 +1283,15 @@
               </sc-if>
               <div style="{{ c.avatar36Style }}">{{ c.initials }}</div>
               <div style="position:relative;flex:1;min-width:0">
-                <div style="font-size:15px;font-weight:600;line-height:1.4">{{ c.name }}</div>
-                <div style="display:flex;align-items:center;gap:6px;margin-top:5px">
+                <div style="display:flex;align-items:center;gap:6px;min-width:0">
+                  <span style="min-width:0;font-size:15px;font-weight:600;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</span>
+                  <sc-if value="{{ c.foreign }}" hint-placeholder-val="{{ false }}">
+                    <span style="{{ c.ownerTagStyle }}">{{ c.ownerShort }}</span>
+                  </sc-if>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;margin-top:5px;min-width:0">
                   <span style="{{ c.miniBadgeStyle }}"><span style="{{ c.dotStyle }}"></span>{{ c.statusLabel }}</span>
-                  <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ c.last }}</span>
+                  <span style="min-width:0;font-size:11px;color:var(--tx3,#8B8680);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.last }}</span>
                 </div>
               </div>
               <div style="position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:5px">
@@ -1354,24 +1367,32 @@
         </div>
 
         <div style="position:relative;flex:1;overflow-y:auto;padding:8px 12px 16px 12px;display:flex;flex-direction:column;gap:12px">
+          <sc-if value="{{ isCollision }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:12px;padding:14px;border-radius:16px;background:color-mix(in srgb, var(--kPhone,#7FA8D4) 14%, var(--panel,#131312))">
+              <div style="width:36px;height:36px;flex:0 0 auto;border-radius:11px;background:color-mix(in srgb, var(--kPhone,#7FA8D4) 30%, var(--panel,#131312));color:var(--tx1,#F5F3F0);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">{{ collision.ownerInitials }}</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-weight:600;line-height:1.35">Ведёт {{ collision.owner }}</div>
+                <div style="font-size:12px;color:var(--tx2,#BCB8B2);margin-top:3px;line-height:1.45">Последнее касание {{ collision.when }} · {{ collision.what }}</div>
+                <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:6px;line-height:1.45">Прежде чем звонить, уточните у неё</div>
+              </div>
+            </div>
+          </sc-if>
+
           <div style="border-radius:20px;padding:20px 16px;background:var(--panel,#131312);display:flex;flex-direction:column;align-items:center;gap:10px">
             <div style="{{ sel.avatar48Style }}">{{ sel.initials }}</div>
             <div style="font-size:20px;font-weight:600;letter-spacing:-.01em">{{ sel.name }}</div>
             <span style="{{ sel.badgeStyle }}"><span style="{{ sel.dotStyle }}"></span>{{ sel.statusLabel }}</span>
-            <div style="font-size:12px;color:var(--tx3,#8B8680)">Создан {{ sel.created }} · {{ sel.owner }}</div>
+            <div style="font-size:12px;color:var(--tx3,#8B8680);text-align:center">{{ statusMeta }} · {{ sinceDays }} дн. в работе</div>
             <div style="display:flex;gap:8px;width:100%;margin-top:6px">
-              <button onClick="{{ copyPhone }}" style="flex:1;min-height:44px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.98)">Позвонить</button>
-              <button style="flex:1;min-height:44px;border-radius:999px;border:1px solid var(--hair,rgba(255,255,255,.08));background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">WhatsApp</button>
+              <sc-if value="{{ isCollision }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ collision.write }}" style="flex:1;min-height:44px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.98)">{{ collision.writeLabel }}</button>
+                <button onClick="{{ collision.callAnyway }}" style="flex:1;min-height:44px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">Позвонить</button>
+              </sc-if>
+              <sc-if value="{{ isMine }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ copyPhone }}" style="flex:1;min-height:44px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.98)">Позвонить</button>
+                <button onClick="{{ openWhatsapp }}" style="flex:1;min-height:44px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--bg3,#26241F)">WhatsApp</button>
+              </sc-if>
             </div>
-          </div>
-
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
-              <div style="border-radius:14px;padding:12px;background:var(--panel,#131312)">
-                <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3,#8B8680)">{{ s.label }}</div>
-                <div style="font-family:'JetBrains Mono',monospace;font-size:18px;margin-top:6px">{{ s.value }}</div>
-              </div>
-            </sc-for>
           </div>
 
           <div style="border-radius:16px;padding:14px;background:var(--panel,#131312)">
@@ -1393,7 +1414,7 @@
           </div>
 
           <div style="border-radius:16px;padding:14px;background:var(--panel,#131312)">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">История · последние 5</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3,#8B8680)">История касаний</div>
             <div style="max-height:320px;overflow-y:auto;margin-top:12px;display:flex;flex-direction:column;gap:8px">
               <sc-for list="{{ mobileEvents }}" as="e" hint-placeholder-count="3">
                 <div style="display:flex;gap:10px;padding:10px;border-radius:14px;background:var(--bg2,#1C1B19)">
@@ -1415,7 +1436,7 @@
         <div style="padding:12px 12px 24px 12px;border-top:1px solid var(--hair,rgba(255,255,255,.08))">
           <button onClick="{{ openModal }}" style="width:100%;min-height:48px;border-radius:999px;border:none;background:var(--pill,#27C08B);color:var(--pillTx,#08211A);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="background:var(--pillH,#4AE8A8)" style-active="transform:scale(.99)">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
-            Добавить событие
+            Добавить касание
           </button>
         </div>
       </div>
@@ -1429,20 +1450,40 @@
           <button style="width:44px;height:44px;border:none;background:transparent;color:var(--tx1,#F5F3F0);cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="opacity:.7">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5"></path><path d="M11 18l-6-6 6-6"></path></svg>
           </button>
-          <div style="font-size:16px;font-weight:600">Добавить событие</div>
+          <div style="font-size:16px;font-weight:600">Новое касание</div>
           <div style="width:44px"></div>
         </div>
         <div style="flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:16px">
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:12px;color:var(--tx3,#8B8680)">Клиент</div>
-            <div style="min-height:48px;padding:0 16px;border-radius:14px;border:none;background:var(--bg2,#1C1B19);color:var(--tx2,#BCB8B2);font-size:14px;display:flex;align-items:center">{{ sel.name }}</div>
+          <div style="border-radius:16px;padding:12px 14px;background:var(--panel,#131312)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <span style="font-size:14px;font-weight:600">{{ sel.name }}</span>
+              <input value="{{ fDate }}" onChange="{{ setDate }}" style="width:132px;height:32px;padding:0 12px;border-radius:999px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-family:'JetBrains Mono',monospace;font-size:12px;outline:none;text-align:center">
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3,#8B8680);margin-top:12px">Последние касания</div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+              <sc-for list="{{ mobileRecent }}" as="e" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="{{ e.iconStyle }}">{{ e.icon }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ e.title }}</div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680);margin-top:2px">{{ e.dateShort }} · {{ e.by }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:12px;color:var(--tx3,#8B8680)">Дата</div>
-            <input value="{{ fDate }}" onChange="{{ setDate }}" placeholder="Выбери дату..." style="width:100%;min-height:48px;padding:0 16px;border-radius:14px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-family:'JetBrains Mono',monospace;font-size:14px;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))">
+            <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap">
+              <span style="font-size:12px;font-weight:600;color:var(--tx1,#F5F3F0)">Заметка</span>
+              <sc-if value="{{ noteRequired }}" hint-placeholder-val="{{ true }}">
+                <span style="font-size:12px;color:var(--stR,#D4837A)">*</span>
+              </sc-if>
+              <span style="font-size:11px;color:var(--tx3,#8B8680)">{{ noteHint }}</span>
+            </div>
+            <textarea value="{{ fNote }}" onChange="{{ setNote }}" placeholder="{{ notePlaceholder }}" style="width:100%;height:96px;resize:none;padding:12px 16px;border-radius:14px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:14px;line-height:1.6;outline:none" style-focus="box-shadow:0 0 0 2px var(--ctaSoft,rgba(39,192,139,.18))"></textarea>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="font-size:12px;color:var(--tx3,#8B8680)">Тип события <span style="color:var(--stR,#FF6B6B)">*</span></div>
+            <div style="font-size:12px;color:var(--tx3,#8B8680)">Тип касания</div>
             <div style="display:flex;flex-wrap:wrap;gap:6px">
               <sc-for list="{{ typeChipsMobile }}" as="t" hint-placeholder-count="6">
                 <button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
@@ -1451,7 +1492,7 @@
           </div>
           <sc-if value="{{ needsAddr }}" hint-placeholder-val="{{ true }}">
             <div style="display:flex;flex-direction:column;gap:8px">
-              <div style="font-size:12px;color:var(--tx3,#8B8680)">Адрес квартиры <span style="color:var(--stR,#FF6B6B)">*</span></div>
+              <div style="font-size:12px;color:var(--tx3,#8B8680)">Адрес квартиры</div>
               <input value="{{ fAddr }}" onChange="{{ setAddr }}" placeholder="Начните вводить адрес..." style="width:100%;min-height:48px;padding:0 16px;border-radius:14px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:14px;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))">
               <div style="display:flex;flex-wrap:wrap;gap:6px">
                 <sc-for list="{{ recentAddrs }}" as="r" hint-placeholder-count="2">
@@ -1467,11 +1508,6 @@
                 <button onClick="{{ s.pick }}" style="{{ s.btnStyle }}"><span style="{{ s.dotStyle }}"></span>{{ s.label }}</button>
               </sc-for>
             </div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:12px;color:var(--tx3,#8B8680)">Заметка (опционально)</div>
-            <textarea value="{{ fNote }}" onChange="{{ setNote }}" placeholder="Добавьте информацию о клиенте..." style="width:100%;height:96px;resize:none;padding:12px 16px;border-radius:14px;border:none;background:var(--bg2,#1C1B19);color:var(--tx1,#F5F3F0);font-size:14px;line-height:1.6;outline:none" style-focus="border-color:var(--cta,#27C08B);box-shadow:0 0 0 3px var(--ctaSoft,rgba(39,192,139,.18))"></textarea>
-            <div style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">{{ noteCount }}</div>
           </div>
         </div>
         <div style="padding:12px 12px 24px 12px;border-top:1px solid var(--hair,rgba(255,255,255,.08));display:flex;flex-direction:column;gap:8px">
@@ -1533,7 +1569,7 @@
         <div style="padding-left:16px;border-left:1px solid var(--hair,rgba(255,255,255,.08));position:relative">
           <span style="position:absolute;left:-5px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--panel,#131312);border:2px solid var(--cta,#27C08B)"></span>
           <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3,#8B8680)">Вт, 14 сентября, 14:30</div>
-          <div style="font-size:15px;font-weight:500;margin-top:6px">Показ ул. Толстого д.25 (8.5M)</div>
+          <div style="font-size:15px;font-weight:500;margin-top:6px">Показ ул. Толстого д.25</div>
           <div style="font-size:12px;color:var(--tx3,#8B8680);margin-top:4px">Выполнена Василий Петров</div>
         </div>
       </div>
@@ -1578,7 +1614,7 @@ class Component extends DCLogic {
   KINDS = { home:'Показ', phone:'Звонок', msg:'Сообщение', meet:'Встреча' };
   KCOLOR = { home:'var(--kHome,#6FC2A0)', phone:'var(--kPhone,#7FA8D4)', msg:'var(--kMsg,#D2B36B)', meet:'var(--kMeet,#B99AD4)' };
   THREADS = {
-    'Показ ул. Толстого д.25 (8.5M)': [
+    'Показ ул. Толстого д.25': [
       { id:'n1', by:'Василий Петров', time:'15:10', text:'Квартира понравилась, но смущает первый этаж. Просил посмотреть похожие выше третьего.' },
       { id:'n2', by:'Марина Грязнова', time:'17:40', text:'Подобрала три варианта в этом же доме, отправлю завтра утром.' },
       { id:'n3', by:'Василий Петров', time:'19:05', text:'Готов торговаться до 8.2 млн, если собственник оставит кухню.' }
@@ -1596,7 +1632,7 @@ class Component extends DCLogic {
     filters: { 'Моих клиентов': true }, statusOver: {}, statusBy: {},
     events: {
       c1: [
-        { date:'Вт, 14 сентября, 14:30', kind:'home', title:'Показ ул. Толстого д.25 (8.5M)', sub:'', by:'Василий Петров', notes:[
+        { date:'Вт, 14 сентября, 14:30', kind:'home', title:'Показ ул. Толстого д.25', sub:'', by:'Василий Петров', notes:[
           { id:'n1', by:'Василий Петров', time:'15:10', text:'Квартира понравилась, но смущает первый этаж. Просил посмотреть похожие выше третьего.' },
           { id:'n2', by:'Марина Грязнова', time:'17:40', text:'Подобрала три варианта в этом же доме, отправлю завтра утром.' },
           { id:'n3', by:'Василий Петров', time:'19:05', text:'Готов торговаться до 8.2 млн, если собственник оставит кухню.' }
@@ -1623,7 +1659,7 @@ class Component extends DCLogic {
   };
 
   CLIENTS = [
-    { id:'c1', name:'Сергей Грин', status:'active', phone:'+7 (912) 555-0172', email:'sergey@mail.ru', created:'10 сентября', last:'вчера', owner:'Марина Грязнова', budget:'10–15 млн', short:'15M', districts:'Юго-запад, центр', urgency:'В течение месяца', rooms:'2–3 комнаты', days:'12' },
+    { id:'c1', name:'Сергей Грин', status:'active', phone:'+7 (912) 555-0172', email:'sergey@mail.ru', created:'10 сентября', last:'сегодня', owner:'Марина Грязнова', budget:'10–15 млн', short:'15M', districts:'Юго-запад, центр', urgency:'В течение месяца', rooms:'2–3 комнаты', days:'12' },
     { id:'c2', name:'Марина Ковалёва', status:'waiting', phone:'+7 (912) 447-1108', email:'m.kovaleva@mail.ru', created:'2 сентября', last:'2 дня назад', owner:'Дмитрий Кутузов', budget:'8–10 млн', short:'10M', districts:'Центр', urgency:'До конца года', rooms:'2 комнаты', days:'20' },
     { id:'c3', name:'Артём Дубов', status:'cold', phone:'+7 (901) 220-9964', email:'dubov.a@mail.ru', created:'18 августа', last:'неделю назад', owner:'Василий Петров', budget:'6–8 млн', short:'8M', districts:'Северный', urgency:'Не срочно', rooms:'1–2 комнаты', days:'35' },
     { id:'c4', name:'Ольга Панина', status:'active', phone:'+7 (922) 310-4471', email:'o.panina@mail.ru', created:'6 сентября', last:'сегодня', owner:'Марина Грязнова', budget:'17–20 млн', short:'20M', districts:'Юго-запад', urgency:'В течение двух недель', rooms:'3–4 комнаты', days:'16' },
@@ -1894,7 +1930,11 @@ class Component extends DCLogic {
     const segKey = SEGMAP[s.seg];
     const list = this.CLIENTS.filter(c => (!q || c.name.toLowerCase().includes(q) || c.phone.replace(/\D/g, '').includes(q.replace(/\D/g, ''))) && (!segKey || c.status === segKey));
     const clients = list.map(c => ({
-      name: c.name, last: c.last, budgetShort: c.short, initials: this.initials(c.name),
+      name: c.name, last: 'касание ' + c.last, budgetShort: c.short, initials: this.initials(c.name),
+      foreign: c.owner !== this.ME, ownerShort: c.owner.split(' ')[0],
+      ownerTagStyle: { display: 'inline-flex', alignItems: 'center', height: 20, padding: '0 8px', borderRadius: 999,
+        background: 'color-mix(in srgb, var(--kPhone,#7FA8D4) 18%, var(--panel,#131312))',
+        color: 'var(--kPhone,#7FA8D4)', fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap', flex: '0 0 auto' },
       statusLabel: this.STATUS[c.status].label, selected: c.id === s.selectedId,
       dotStyle: this.dot(c.status),
       statusTextStyle: { fontSize: 12, color: this.STATUS[c.status].v, fontWeight: 500 },
@@ -1936,7 +1976,7 @@ class Component extends DCLogic {
           const open = s.openEvent === id;
           e.notes = e.notes || this.THREADS[e.title];
           return {
-            title: e.title, by: e.by, time: time, kindLabel: this.KINDS[e.kind] || 'Событие',
+            title: e.title, by: e.by, time: time, kindLabel: this.KINDS[e.kind] || 'Касание',
             byInitials: this.initials(e.by), open: open,
             note: e.sub || 'Заметку не добавили — коллеги не узнают деталей этого касания',
             hasNote: !!e.sub || !!(e.notes && e.notes.length),
@@ -1944,7 +1984,8 @@ class Component extends DCLogic {
             hasThread: !!(e.notes && e.notes.filter(n => !s.removed[n.id]).length),
             thread: (e.notes || []).filter(n => !s.removed[n.id]).map(n => {
               const editing = s.editNote === n.id;
-              return { by: n.by, time: n.time, text: n.text, editing: editing,
+              return { by: n.by, time: n.time, text: n.text, editing: editing, mine: n.by === this.ME,
+                reply: ev => { ev.stopPropagation(); this.setState({ addNote: id, newDraft: n.by.split(' ')[0] + ', ', openEvent: id }); },
                 draft: editing ? s.draft : n.text,
                 setDraft: ev => this.setState({ draft: ev.target.value }),
                 edit: ev => { ev.stopPropagation(); this.setState({ editNote: n.id, draft: n.text }); },
@@ -1971,7 +2012,7 @@ class Component extends DCLogic {
               ev.stopPropagation();
               const text = s.newDraft.trim();
               if (!text) { this.setState({ addNote: '', newDraft: '' }); return; }
-              e.notes = (e.notes || []).concat([{ id: 'nn' + Date.now(), by: 'Василий Петров', time: 'сейчас', text: text }]);
+              e.notes = (e.notes || []).concat([{ id: 'nn' + Date.now(), by: this.ME, time: 'сейчас', text: text }]);
               this.setState({ addNote: '', newDraft: '' });
               this.flash('Заметка добавлена');
             },
@@ -2027,7 +2068,7 @@ class Component extends DCLogic {
     });
     const dec = short => e => ({
       date: e.date, dateShort: e.date.replace('сентября', 'сент').replace('августа', 'авг'),
-      title: e.title, sub: e.sub, by: e.by, kindLabel: this.KINDS[e.kind] || 'Событие',
+      title: e.title, sub: e.sub, by: e.by, kindLabel: this.KINDS[e.kind] || 'Касание',
       icon: this.icon(e.kind, short ? 12 : 13),
       chipStyle: { display: 'inline-flex', alignItems: 'center', gap: 5, height: 22, padding: '0 9px', borderRadius: 999,
         background: 'var(--bg2,#1C1B19)', border: '1px solid var(--hair,rgba(255,255,255,.08))',
@@ -2113,7 +2154,8 @@ class Component extends DCLogic {
         { label: 'Срочность', value: c.urgency, style: 'font-size:13px' }
       ],
       stats: [
-        { label: 'В работе', value: c.days, unit: 'дней', compact: 'дней в работе' }
+        (() => { const m = /^(\d+) сентября$/.exec(c.created); const d = m ? 14 - Number(m[1]) : Number(c.days);
+          return { label: 'В работе', value: String(d), unit: 'дн', compact: this.plural(d, 'день', 'дня', 'дней').replace(/^\d+ /, '') + ' в работе' }; })()
       ],
       statusMeta: (() => {
         const sb = s.statusBy[c.id] || { by: c.owner, when: c.last };
@@ -2127,7 +2169,7 @@ class Component extends DCLogic {
       showTeamLoad: this.isManager,
       tabs: ['Все', 'Показы', 'Звонки', 'Сообщения'].map(l => ({ label: l, style: this.pillTab(s.tab === l), pick: () => this.setState({ tab: l }) })),
       eventGroups, activityBars,
-      histCount: this.plural(all.length, 'событие', 'события', 'событий'),
+      histCount: this.plural(all.length, 'касание', 'касания', 'касаний'),
       noEvents: events.length === 0,
 
       isClients: s.nav === 'Клиенты',
@@ -2330,6 +2372,8 @@ class Component extends DCLogic {
       segChips: ['Все', 'Активные', 'Жду звонка', 'Холодные'].map(l => ({ label: l, style: this.pillTab(s.seg === l, 32), pick: () => this.setState({ seg: l }) })),
       selEvents: events.map(dec(false)),
       mobileEvents: all.slice(0, 5).map(dec(true)),
+      mobileRecent: all.slice(0, 2).map(dec(true)),
+      sinceDays: (() => { const m = /^(\d+) сентября$/.exec(c.created); return m ? String(14 - Number(m[1])) : c.days; })(),
 
       openWhatsapp: () => this.flash('Открываем WhatsApp с ' + c.phone),
 
@@ -2575,8 +2619,8 @@ class Component extends DCLogic {
       fNote: s.fNote, setNote: e => this.setState({ fNote: e.target.value.slice(0, 500), noteErr: false }),
       noteRequired: s.fType === 'Показ квартиры',
       noteErr: !!s.noteErr,
-      noteLabel: s.fType === 'Показ квартиры' ? 'Как прошёл показ' : 'Заметка',
-      noteHint: s.fType === 'Показ квартиры' ? 'обязательно — по ней коллеги поймут, что предлагать дальше' : 'по желанию',
+      noteLabel: 'Заметка',
+      noteHint: s.fType === 'Показ квартиры' ? 'обязательна для показа — по ней коллеги поймут, что предлагать дальше' : 'для показа обязательна, для остального по желанию',
       notePlaceholder: s.fType === 'Показ квартиры'
         ? 'Что понравилось, что смутило, какой следующий шаг...'
         : 'Что обсудили с клиентом...',
@@ -2600,7 +2644,7 @@ class Component extends DCLogic {
       resetForm: () => this.setState({ fAddr: '', fNote: '', addrErr: false }),
       saveEvent: () => {
         const showing = s.fType === 'Показ квартиры';
-        const missAddr = showing && !s.fAddr.trim();
+        const missAddr = false;
         const missNote = showing && !s.fNote.trim();
         if (missAddr || missNote) { this.setState({ addrErr: missAddr, noteErr: missNote }); return; }
         const kind = s.fType === 'Звонок' ? 'phone' : s.fType === 'Показ квартиры' ? 'home'
@@ -2620,8 +2664,8 @@ class Component extends DCLogic {
             statusOver: so, statusBy: sb };
         });
         this.flash(newStatus && c.owner !== this.ME
-          ? 'Событие добавлено. ' + c.owner.split(' ')[0] + ' получит уведомление о смене статуса'
-          : 'Событие добавлено');
+          ? 'Касание записано. ' + c.owner.split(' ')[0] + ' получит уведомление о смене статуса'
+          : 'Касание записано');
       },
       toast: s.toast
     };
