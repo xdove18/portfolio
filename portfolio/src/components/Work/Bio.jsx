@@ -19,7 +19,11 @@ export default function Bio() {
     <section className={s.bio} id="about">
       <h2 className={s.title}>{fixHangingWords("О себе")}</h2>
 
-      <p className={s.lead}>{about.text}</p>
+      {/* Через RichText — чтобы в тексте о себе работали
+          те же выделения, что и везде: **жирный** и ==цветом==. */}
+      <p className={s.lead}>
+        <RichText>{about.text}</RichText>
+      </p>
 
       {/* ---------- ОПЫТ ---------- */}
       <div className={s.rows}>

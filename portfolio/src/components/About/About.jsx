@@ -34,7 +34,9 @@ export default function About() {
           {/* ---------- ПРАВАЯ КОЛОНКА: ТЕКСТ ---------- */}
           <div className={s.textCol}>
             <h2 className={s.title}>{site.about.title}</h2>
-            <p className={s.lead}>{site.about.text}</p>
+            <p className={s.lead}>
+              <RichText>{site.about.text}</RichText>
+            </p>
 
             {/* Опыт работы — выше образования: для работодателя
                 это главное, что он ищет на странице */}
