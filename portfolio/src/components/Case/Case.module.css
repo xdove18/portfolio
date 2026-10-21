@@ -1653,6 +1653,42 @@
   display: block;
 }
 
+/* ---------- СНИМОК СТРАНИЦЫ ЦЕЛИКОМ ----------
+   Страница сайта в снимке бывает в десять экранов высотой.
+   В плитке показываем только её верх, а снизу кладём плашку
+   «нажмите, чтобы посмотреть целиком» — иначе одна картинка
+   растягивается на половину кейса. */
+.screenThumbTall {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.screenThumbTall img {
+  max-height: 520px;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.screenThumbTall::after {
+  content: "нажмите, чтобы посмотреть страницу целиком";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 44px 16px 14px;
+
+  font-size: var(--fs-small);
+  color: var(--on-dark);
+  text-align: center;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 12, 0),
+    rgba(10, 10, 12, 0.82)
+  );
+}
+
 /* ---------- ШИРОКИЕ КОМПОЗИЦИИ ----------
    Для картинок, где на одном изображении сразу несколько
    телефонов или широкий экран компьютера: им нужны колонки
@@ -1701,6 +1737,22 @@
   height: auto;
   object-fit: contain;
   border-radius: 16px;
+}
+
+/* ---------- ДЛИННАЯ СТРАНИЦА НА ВЕСЬ ЭКРАН ----------
+   Обычный снимок вписывается в окно целиком. Страницу сайта
+   вписать нельзя: она станет шириной в палец. Поэтому здесь
+   окно прокручивается, а картинка идёт во всю ширину. */
+.lightboxTall {
+  align-items: flex-start;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.lightboxImageTall {
+  max-height: none;
+  width: min(1000px, 92vw);
+  max-width: none;
 }
 
 .lightboxClose {

@@ -17,6 +17,13 @@ import s from "./Case.module.css";
 
    Ещё у группы можно указать note — короткое пояснение
    под заголовком.
+
+   tall: true — для снимков страниц сайта во всю длину. Такие
+   картинки бывают в десять экранов высотой, и в плитке они
+   превращаются в бесконечную ленту. С этим флагом плитка
+   показывает только верх страницы и подсказывает, что
+   остальное откроется по клику, а на весь экран страница
+   открывается с прокруткой, а не ужимается до нечитаемого.
    ============================================================ */
 
 export default function ScreenGallery({ groups }) {
@@ -39,8 +46,20 @@ export default function ScreenGallery({ groups }) {
             {group.screens.map((src, i) => (
               <button
                 key={src}
-                className={`${s.screenThumb} ${group.wide ? s.screenThumbWide : ""}`}
-                onClick={() => setLightbox({ screens: group.screens, index: i })}
+                className={[
+                  s.screenThumb,
+                  group.wide ? s.screenThumbWide : "",
+                  group.tall ? s.screenThumbTall : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                onClick={() =>
+                  setLightbox({
+                    screens: group.screens,
+                    index: i,
+                    tall: group.tall,
+                  })
+                }
                 aria-label={`Открыть экран ${i + 1} из раздела «${group.title}»`}
                 /* data-cursor="image" — над этим элементом
                    курсор превращается в кольцо с надписью
@@ -62,6 +81,7 @@ export default function ScreenGallery({ groups }) {
           screens={lightbox.screens}
           index={lightbox.index}
           onClose={() => setLightbox(null)}
+          tall={lightbox.tall}
           onChange={(index) => setLightbox((prev) => ({ ...prev, index }))}
         />
       )}

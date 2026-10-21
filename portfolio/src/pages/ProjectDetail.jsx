@@ -513,19 +513,27 @@ export default function ProjectDetail() {
             <h1 className={s.sidebarTitle}>{project.title}</h1>
             <p className={s.sidebarTagline}>{project.tagline}</p>
 
+            {/* Каждая строчка появляется, только если заполнена:
+                у проекта может не быть, например, известного года. */}
             <dl className={s.meta}>
-              <div>
-                <dt>роль</dt>
-                <dd>{project.role}</dd>
-              </div>
-              <div>
-                <dt>год</dt>
-                <dd>{project.year}</dd>
-              </div>
-              <div>
-                <dt>инструменты</dt>
-                <dd>{project.tools.join(", ")}</dd>
-              </div>
+              {project.role && (
+                <div>
+                  <dt>роль</dt>
+                  <dd>{project.role}</dd>
+                </div>
+              )}
+              {project.year && (
+                <div>
+                  <dt>год</dt>
+                  <dd>{project.year}</dd>
+                </div>
+              )}
+              {project.tools?.length > 0 && (
+                <div>
+                  <dt>инструменты</dt>
+                  <dd>{project.tools.join(", ")}</dd>
+                </div>
+              )}
             </dl>
 
             {/* Оглавление */}

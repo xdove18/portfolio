@@ -11,7 +11,7 @@ import s from "./Case.module.css";
    на клавиатуре, закрывается по Esc или крестику.
    ============================================================ */
 
-export default function Lightbox({ screens, index, onClose, onChange }) {
+export default function Lightbox({ screens, index, onClose, onChange, tall }) {
   /* Управление с клавиатуры */
   useEffect(() => {
     function onKeyDown(event) {
@@ -33,7 +33,11 @@ export default function Lightbox({ screens, index, onClose, onChange }) {
   }, [index, screens.length, onClose, onChange]);
 
   return (
-    <div className={s.lightbox} role="dialog" aria-label="Просмотр экрана">
+    <div
+      className={`${s.lightbox} ${tall ? s.lightboxTall : ""}`}
+      role="dialog"
+      aria-label="Просмотр экрана"
+    >
       {/* Клик по фону тоже закрывает окно */}
       <button
         className={s.lightboxBackdrop}
@@ -45,7 +49,11 @@ export default function Lightbox({ screens, index, onClose, onChange }) {
         <CloseIcon size={22} color="#fff" />
       </button>
 
-      <img className={s.lightboxImage} src={asset(screens[index])} alt="" />
+      <img
+        className={`${s.lightboxImage} ${tall ? s.lightboxImageTall : ""}`}
+        src={asset(screens[index])}
+        alt=""
+      />
 
       {/* Стрелки показываем, только если экранов больше одного */}
       {screens.length > 1 && (
