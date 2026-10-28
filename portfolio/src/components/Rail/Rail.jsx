@@ -145,6 +145,11 @@ export default function Rail() {
               Behance
             </a>
           )}
+          {site.pinterest && (
+            <a href={site.pinterest} target="_blank" rel="noreferrer">
+              Pinterest
+            </a>
+          )}
           {site.email && <a href={`mailto:${site.email}`}>Почта</a>}
 
           <ThemeToggle />

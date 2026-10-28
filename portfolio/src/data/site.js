@@ -31,6 +31,8 @@ const данные = {
   /* Behance. Впишите полный адрес вместе с https://
      Пусто = ссылка не показывается. */
   behance: "https://www.behance.net/631baa24",
+  /* Pinterest — туда же, полным адресом. Пусто = не показывается. */
+  pinterest: "https://ru.pinterest.com/lizaivanova828/",
   /* Резюме. Кнопка CV в левой колонке ведёт на этот файл.
 
      Файл должен лежать в папке portfolio/public/ — тогда
