@@ -6,6 +6,11 @@
   margin-top: 8px;
   border-top: 1px solid var(--line);
   list-style: none;
+
+  /* Браузер сам добавляет нумерованному списку отступ слева
+     в 40 точек. Из-за него весь блок был уже соседних
+     и текст в нём не совпадал по ширине с остальными. */
+  padding-left: 0;
 }
 
 /* Одна гипотеза: слева номер и вердикт, справа разбор.
@@ -13,8 +18,11 @@
    поэтому страница кейса и главная читаются как одно целое. */
 .item {
   display: grid;
+  /* Подпись 196 + промежуток 24 — ровно столько же, сколько
+     в ленте времени, поэтому текст в обоих блоках начинается
+     на одной вертикали и имеет одинаковую ширину. */
   grid-template-columns: 196px minmax(0, 1fr);
-  gap: 32px;
+  gap: 24px;
 
   padding: 26px 0;
   border-bottom: 1px solid var(--line);
@@ -74,7 +82,7 @@
   line-height: 1.45;
   letter-spacing: -0.01em;
   color: var(--text-strong);
-  max-width: 54ch;
+  max-width: var(--read);
 }
 
 .part {
@@ -95,7 +103,7 @@
   font-size: var(--fs-small);
   line-height: 1.55;
   color: var(--text-muted);
-  max-width: 62ch;
+  max-width: var(--read);
 }
 
 /* ============================================================
