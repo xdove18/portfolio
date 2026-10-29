@@ -40,6 +40,11 @@ import s from "../components/Case/Case.module.css";
    Картинки, схемы, видео и таблицы в ряд не ставятся: они
    идут во всю ширину колонки. Из этого и складывается
    страница — узкий текст рядом с большими картинками.
+
+   Пояснения под картинкой, таблицей или списком — тоже
+   не ряд: они начинаются от левого края своего блока, как
+   его подпись. Если такое пояснение отодвинуть в колонку
+   текста, левый край страницы начинает прыгать.
    ============================================================ */
 
 /* Разделы оглавления. id должен совпадать с id секции ниже.
@@ -333,11 +338,9 @@ export default function ProjectDetail() {
             {/* Честная пометка: чем проверялись гипотезы
                 и где вывод, а где измерение */}
             {project.hypothesesNote && (
-              <Row>
-                <p className={s.resultsNote}>
-                  <RichText>{project.hypothesesNote}</RichText>
-                </p>
-              </Row>
+              <p className={s.resultsNote}>
+                <RichText>{project.hypothesesNote}</RichText>
+              </p>
             )}
           </>
         )}
@@ -381,11 +384,9 @@ export default function ProjectDetail() {
             </div>
 
             {project.flowDiagramsNote && (
-              <Row>
-                <p className={s.diagramsSummary}>
-                  <RichText>{project.flowDiagramsNote}</RichText>
-                </p>
-              </Row>
+              <p className={s.diagramsSummary}>
+                <RichText>{project.flowDiagramsNote}</RichText>
+              </p>
             )}
           </>
         ) : project.flowCompare ? (
@@ -403,11 +404,9 @@ export default function ProjectDetail() {
         {/* Экраны приложения */}
         <h3 className={s.subTitle}>{fixHangingWords("экраны приложения")}</h3>
         {project.screensNote && (
-          <Row>
-            <p className={s.text}>
-              <RichText>{project.screensNote}</RichText>
-            </p>
-          </Row>
+          <p className={s.screenGroupNote}>
+            <RichText>{project.screensNote}</RichText>
+          </p>
         )}
         <ScreenGallery groups={project.screenGroups} />
       </section>
@@ -431,9 +430,7 @@ export default function ProjectDetail() {
 
         {/* Честная пометка, откуда взяты цифры */}
         {project.resultsNote && (
-          <Row>
-            <p className={s.resultsNote}>{project.resultsNote}</p>
-          </Row>
+          <p className={s.resultsNote}>{project.resultsNote}</p>
         )}
 
         {/* Таблицы результата: юзабилити-тест, метрики */}

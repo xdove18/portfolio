@@ -26,9 +26,25 @@ export default function CaseTable({ table, accent }) {
   if (!table || !table.rows || table.rows.length === 0) return null;
 
   /* Таблица из двух колонок встаёт на общую сетку кейса:
-     подпись слева, текст справа — как у обычного абзаца. */
+     слева подпись, справа текст — как у обычного абзаца.
+
+     Но только если слева действительно короткий ключ.
+     Если там такая же развёрнутая фраза, как справа, узкая
+     колонка её не вместит, и вместо таблицы получается
+     лесенка. Такие таблицы делим на две соразмерные
+     колонки — вид .tableProse. */
   const двеКолонки =
     (table.columns?.length || table.rows[0]?.length) === 2;
+
+  const самыйДлинныйКлюч = двеКолонки
+    ? Math.max(...table.rows.map((row) => String(row[0]).length))
+    : 0;
+
+  const видТаблицы = !двеКолонки
+    ? ""
+    : самыйДлинныйКлюч <= 60
+      ? s.tableTwo
+      : s.tableProse;
 
   return (
     <div className={s.tableBlock}>
@@ -37,7 +53,7 @@ export default function CaseTable({ table, accent }) {
       {/* Обёртка нужна, чтобы широкая таблица прокручивалась
           вбок сама, а не растягивала всю страницу */}
       <div className={s.tableScroll}>
-        <table className={`${s.table} ${двеКолонки ? s.tableTwo : ""}`}>
+        <table className={`${s.table} ${видТаблицы}`}>
           {table.columns && (
             <thead>
               <tr>

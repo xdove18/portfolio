@@ -469,6 +469,24 @@
    Только на широком экране: на телефоне таблица и так
    прокручивается вбок внутри своей обёртки. */
 @media (min-width: 1000px) {
+  /* Таблица, где слева не ключ, а такой же текст, как справа.
+     Узкая колонка в 216 точек ей не подходит: длинная фраза
+     разворачивалась в семь строк против двух соседних.
+     Поэтому здесь просто две соразмерные колонки. */
+  .tableProse {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .tableProse th:first-child,
+  .tableProse td:first-child {
+    width: 42%;
+  }
+
+  .tableProse th {
+    white-space: normal;
+  }
+
   .tableTwo {
     table-layout: fixed;
     width: calc(var(--label) + var(--label-gap) + var(--read-case) + 36px);
@@ -497,7 +515,12 @@
    небольшой: это подтверждение, а не главный экран кейса. */
 .researchPhoto {
   margin: 28px 0 8px;
-  max-width: 560px;
+
+  /* 840, а не 560: узкая картинка между двумя рядами текста
+     выглядела случайно забытой у левого края. Шире делать
+     нельзя — у исходного кадра 1183 точки, и на всю колонку
+     он растянулся бы в мыло. */
+  max-width: 840px;
 }
 
 .researchPhoto img {
@@ -509,6 +532,8 @@
 
 .researchPhoto figcaption {
   margin-top: 10px;
+  /* Подпись уже картинки — как и любой другой текст на кейсе */
+  max-width: var(--read-case);
   font-size: var(--fs-small);
   line-height: 1.5;
   color: var(--text-muted);
