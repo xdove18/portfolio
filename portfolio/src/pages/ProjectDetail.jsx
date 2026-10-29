@@ -6,6 +6,7 @@ import { site } from "../data/site";
 import Footer from "../components/Footer/Footer";
 import Competitors from "../components/Case/Competitors";
 import ScreenGallery from "../components/Case/ScreenGallery";
+import Row from "../components/Case/Row";
 import HypothesisList from "../components/Case/HypothesisList";
 import FlowCompare from "../components/Case/FlowCompare";
 import FlowDiagram from "../components/Case/FlowDiagram";
@@ -28,6 +29,17 @@ import s from "../components/Case/Case.module.css";
    экраны приложения и результат.
 
    Весь текст берётся из файла src/data/projects.js.
+
+   ------------------------------------------------------------
+   КАК УСТРОЕНА ВЁРСТКА
+   ------------------------------------------------------------
+   Любой текст стоит в ряду <Row label="подпись">: слева
+   короткая подпись, справа узкая колонка текста. Подробнее —
+   в файле src/components/Case/Row.jsx.
+
+   Картинки, схемы, видео и таблицы в ряд не ставятся: они
+   идут во всю ширину колонки. Из этого и складывается
+   страница — узкий текст рядом с большими картинками.
    ============================================================ */
 
 /* Разделы оглавления. id должен совпадать с id секции ниже.
@@ -147,7 +159,12 @@ export default function ProjectDetail() {
         </div>
 
         <h2 className={s.headline}>{project.headline}</h2>
-        <p className={s.intro}><RichText>{project.intro}</RichText></p>
+
+        <Row label="контекст">
+          <p className={s.intro}>
+            <RichText>{project.intro}</RichText>
+          </p>
+        </Row>
       </section>
     ),
 
@@ -156,17 +173,17 @@ export default function ProjectDetail() {
       <section className={s.block} id="task">
         <h2 className={s.blockTitle}>Задача</h2>
 
-        <div className={s.twoCol}>
-          <div className={s.card}>
-            <h3 className={s.cardTitle}>{fixHangingWords("Проблема бизнеса")}</h3>
-            <p className={s.cardText}><RichText>{project.problem.business}</RichText></p>
-          </div>
+        <Row label="проблема бизнеса">
+          <p className={s.text}>
+            <RichText>{project.problem.business}</RichText>
+          </p>
+        </Row>
 
-          <div className={s.card}>
-            <h3 className={s.cardTitle}>{fixHangingWords("Задача продуктового дизайнера")}</h3>
-            <p className={s.cardText}><RichText>{project.problem.designer}</RichText></p>
-          </div>
-        </div>
+        <Row label="моя задача">
+          <p className={s.text}>
+            <RichText>{project.problem.designer}</RichText>
+          </p>
+        </Row>
 
         {/* Данные раздела — например, воронка с отвалом.
             Стоят выше вопросов намеренно: цифра, с которой
@@ -179,14 +196,13 @@ export default function ProjectDetail() {
 
         {/* Вопросы, заданные бизнесу перед началом работы */}
         {project.problem.questionsToBusiness && (
-          <>
-            <h3 className={s.subTitle}>{fixHangingWords("вопросы, заданные перед стартом")}</h3>
+          <Row label="вопросы перед стартом">
             <ul className={s.bullets}>
               {project.problem.questionsToBusiness.map((item, i) => (
                 <li key={i}><RichText>{item}</RichText></li>
               ))}
             </ul>
-          </>
+          </Row>
         )}
       </section>
     ),
@@ -196,21 +212,23 @@ export default function ProjectDetail() {
       <section className={s.block} id="audience">
         <h2 className={s.blockTitle}>Аудитория</h2>
 
-        {/* Заголовок берётся из проекта. По умолчанию
+        {/* Подпись берётся из проекта. По умолчанию
             «глубинные интервью», но в кейсе, где интервью
-            не было, он будет другим: подпись не должна
+            не было, она будет другой: подпись не должна
             обещать то, чего в работе не было. */}
-        <h3 className={s.subTitle}>
-          {fixHangingWords(project.research.methodTitle || "глубинные интервью")}
-        </h3>
-        <p className={s.text}><RichText>{project.research.method}</RichText></p>
+        <Row label={project.research.methodTitle || "глубинные интервью"}>
+          <p className={s.text}>
+            <RichText>{project.research.method}</RichText>
+          </p>
+        </Row>
 
         {/* Кто пользуется продуктом */}
         {project.research.audience && (
-          <>
-            <h3 className={s.subTitle}>{fixHangingWords("кто эти люди")}</h3>
-            <p className={s.text}><RichText>{project.research.audience}</RichText></p>
-          </>
+          <Row label="кто эти люди">
+            <p className={s.text}>
+              <RichText>{project.research.audience}</RichText>
+            </p>
+          </Row>
         )}
 
         {/* Кадр с созвона, если он есть у кейса */}
@@ -229,47 +247,38 @@ export default function ProjectDetail() {
           </figure>
         )}
 
-        <h3 className={s.subTitle}>итог</h3>
-        <ul className={s.bullets}>
-          {project.research.findings.map((item, i) => (
-            <li key={i}><RichText>{item}</RichText></li>
-          ))}
-        </ul>
+        <Row label="что нашла">
+          <ul className={s.bullets}>
+            {project.research.findings.map((item, i) => (
+              <li key={i}><RichText>{item}</RichText></li>
+            ))}
+          </ul>
+        </Row>
 
-        {/* Панель с вопросами появляется, только если они есть.
-            В кейсе, где метод и так понятен, список вопросов
-            можно просто не заполнять — блок исчезнет сам. */}
-        {(project.research.questions?.length > 0 ||
-          project.research.wanted?.length > 0) && (
-          <div className={s.panelSoft}>
-            {project.research.questions?.length > 0 && (
-              <>
-                <h3 className={s.subTitle}>
-                  {fixHangingWords(
-                    project.research.questionsTitle || "вопросы для интервью"
-                  )}
-                </h3>
-                <ul className={s.bullets}>
-                  {project.research.questions.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+        {/* Вопросы интервью и пожелания пользователей.
+            Каждый список появляется, только если заполнен:
+            в кейсе, где метод и так понятен, список вопросов
+            можно просто не заполнять — ряд исчезнет сам. */}
+        {project.research.questions?.length > 0 && (
+          <Row
+            label={project.research.questionsTitle || "вопросы для интервью"}
+          >
+            <ul className={s.bullets}>
+              {project.research.questions.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </Row>
+        )}
 
-            {project.research.wanted?.length > 0 && (
-              <>
-                <h3 className={s.subTitle}>
-                  {fixHangingWords("что хотели видеть пользователи")}
-                </h3>
-                <ul className={s.bullets}>
-                  {project.research.wanted.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </div>
+        {project.research.wanted?.length > 0 && (
+          <Row label="что хотели видеть">
+            <ul className={s.bullets}>
+              {project.research.wanted.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </Row>
         )}
 
         {/* Лента времени этого раздела — например, рабочий день
@@ -311,10 +320,9 @@ export default function ProjectDetail() {
         <h2 className={s.blockTitle}>Решение</h2>
 
         {/* Гипотезы. Блок появляется, только если они
-            описаны у проекта: в кейсе, где их проверяли
-            таблицей, второй раз пересказывать незачем.
-            Если гипотез много, появятся стрелки для
-            перелистывания — см. Hypotheses.jsx */}
+            описаны у проекта. У самого списка слева уже есть
+            колонка — номер и вердикт, — поэтому в ряд он
+            не ставится, а подпись стоит над ним. */}
         {project.hypotheses?.length > 0 && (
           <>
             <h3 className={s.subTitle}>
@@ -325,9 +333,11 @@ export default function ProjectDetail() {
             {/* Честная пометка: чем проверялись гипотезы
                 и где вывод, а где измерение */}
             {project.hypothesesNote && (
-              <p className={s.resultsNote}>
-                <RichText>{project.hypothesesNote}</RichText>
-              </p>
+              <Row>
+                <p className={s.resultsNote}>
+                  <RichText>{project.hypothesesNote}</RichText>
+                </p>
+              </Row>
             )}
           </>
         )}
@@ -371,9 +381,11 @@ export default function ProjectDetail() {
             </div>
 
             {project.flowDiagramsNote && (
-              <p className={s.diagramsSummary}>
-                <RichText>{project.flowDiagramsNote}</RichText>
-              </p>
+              <Row>
+                <p className={s.diagramsSummary}>
+                  <RichText>{project.flowDiagramsNote}</RichText>
+                </p>
+              </Row>
             )}
           </>
         ) : project.flowCompare ? (
@@ -391,7 +403,11 @@ export default function ProjectDetail() {
         {/* Экраны приложения */}
         <h3 className={s.subTitle}>{fixHangingWords("экраны приложения")}</h3>
         {project.screensNote && (
-          <p className={s.text}><RichText>{project.screensNote}</RichText></p>
+          <Row>
+            <p className={s.text}>
+              <RichText>{project.screensNote}</RichText>
+            </p>
+          </Row>
         )}
         <ScreenGallery groups={project.screenGroups} />
       </section>
@@ -415,7 +431,9 @@ export default function ProjectDetail() {
 
         {/* Честная пометка, откуда взяты цифры */}
         {project.resultsNote && (
-          <p className={s.resultsNote}>{project.resultsNote}</p>
+          <Row>
+            <p className={s.resultsNote}>{project.resultsNote}</p>
+          </Row>
         )}
 
         {/* Таблицы результата: юзабилити-тест, метрики */}
@@ -427,10 +445,11 @@ export default function ProjectDetail() {
 
         {/* Итог кейса своими словами */}
         {project.conclusion && (
-          <>
-            <h3 className={s.subTitle}>итог</h3>
-            <p className={s.text}><RichText>{project.conclusion}</RichText></p>
-          </>
+          <Row label="итог">
+            <p className={s.text}>
+              <RichText>{project.conclusion}</RichText>
+            </p>
+          </Row>
         )}
 
         {/* Как автор собирается проверить, что решение сработало.
@@ -442,24 +461,18 @@ export default function ProjectDetail() {
             в портфолио, и то, что сразу отличает продуктового
             дизайнера от интерфейсного. */}
         {project.measure && (
-          <div className={s.measure}>
-            <h3 className={s.subTitle}>
-              {fixHangingWords("как пойму, что сработало")}
-            </h3>
+          <Row label="как пойму, что сработало">
             <p className={s.measureText}>
               <RichText>{project.measure}</RichText>
             </p>
-          </div>
+          </Row>
         )}
 
         {/* Что не получилось. Блок появляется, только если он
             заполнен у проекта: признаваться не в чем —
             не признаёмся. */}
         {project.failures?.length > 0 && (
-          <div className={s.ideas}>
-            <h3 className={s.subTitle}>
-              {fixHangingWords("что не получилось")}
-            </h3>
+          <Row label="что не получилось">
             <ul className={s.failures}>
               {project.failures.map((item, i) => (
                 <li key={i}>
@@ -467,17 +480,14 @@ export default function ProjectDetail() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Row>
         )}
 
         {/* Идеи для развития — тоже необязательный блок.
             Если идей нет, лучше его не показывать, чем писать
             общие слова. */}
         {project.ideas?.length > 0 && (
-          <div className={s.ideas}>
-            <h3 className={s.subTitle}>
-              {fixHangingWords("идеи для развития")}
-            </h3>
+          <Row label="идеи для развития">
             <ul className={s.ideasList}>
               {project.ideas.map((idea, i) => (
                 <li key={i}>
@@ -486,7 +496,7 @@ export default function ProjectDetail() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Row>
         )}
       </section>
     ),

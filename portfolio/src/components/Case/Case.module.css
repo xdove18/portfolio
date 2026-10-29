@@ -15,12 +15,12 @@
   gap: 70px;
   width: 100%;
 
-  /* Шире, чем на остальных страницах: в блоках с подписью слева
-     (гипотезы, лента времени) к тексту прибавляется колонка
-     подписи, и без запаса текст в них сжимался до 520 точек —
-     вдвое уже соседних абзацев. Здесь колонка содержимого
-     получается 880: подпись 196 + текст 660. */
-  max-width: 1290px;
+  /* Шире, чем на остальных страницах. Текст занимает только
+     часть колонки (подпись 180 + промежуток 36 + текст 520 =
+     736), а картинки, схемы и видео разворачиваются во всю
+     ширину — около 970 точек. Этот разрыв и даёт воздух:
+     читаешь узкую строку, смотришь большую картинку. */
+  max-width: 1380px;
   margin: 0 auto;
   padding-inline: var(--pad-side);
 }
@@ -199,7 +199,67 @@
 .intro {
   font-size: 1.0625rem;
   color: var(--text-muted);
-  max-width: var(--read);
+  max-width: var(--read-case);
+}
+
+/* ============================================================
+   РЯД: ПОДПИСЬ СЛЕВА, ТЕКСТ СПРАВА
+   ============================================================
+   Главная раскладка страницы кейса. Любой текст стоит в таком
+   ряду: слева короткая подпись («задача», «что нашла»), справа
+   сам текст узкой колонкой.
+
+   Зачем: все блоки получаются одинаковыми, глаз не ищет заново
+   край строки, а подписи образуют слева ровный столбик, по
+   которому страницу можно просматривать не читая.
+
+   Картинки, схемы, видео и таблицы в такой ряд не ставятся —
+   они идут во всю ширину колонки.
+   ============================================================ */
+.row {
+  display: grid;
+  grid-template-columns: var(--label) minmax(0, 1fr);
+  gap: var(--label-gap);
+  margin-top: 34px;
+}
+
+/* Подпись ряда. Выглядит так же, как subTitle, но без
+   собственных отступов: за расстояния отвечает сам ряд. */
+.rowLabel {
+  font-size: var(--fs-tiny);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  line-height: 1.5;
+  /* Выравнивание по первой строке текста справа */
+  padding-top: 3px;
+}
+
+.rowBody {
+  min-width: 0;
+  max-width: var(--read-case);
+}
+
+/* Абзацы внутри ряда не липнут друг к другу */
+.rowBody > * + * {
+  margin-top: 14px;
+}
+
+/* ---------- ТЕЛЕФОН ----------
+   Колонка под подпись шириной 180 точек на узком экране
+   съела бы весь текст: от строки осталось бы полтора слова.
+   Поэтому подпись встаёт над текстом. */
+@media (max-width: 760px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .rowLabel {
+    padding-top: 0;
+  }
 }
 
 /* ---------- БЛОК-СЕКЦИЯ ---------- */
@@ -227,7 +287,7 @@
 
 .text {
   color: var(--text);
-  max-width: var(--read);
+  max-width: var(--read-case);
 }
 
 /* ---------- ВЫДЕЛЕНИЯ ВНУТРИ ТЕКСТА ----------
@@ -264,7 +324,7 @@
 .bullets {
   display: grid;
   gap: 10px;
-  max-width: var(--read);
+  max-width: var(--read-case);
 }
 
 .bullets li {
@@ -396,6 +456,37 @@
 }
 
 /* Строка, на которую нужно обратить внимание */
+/* ---------- ТАБЛИЦА ИЗ ДВУХ КОЛОНОК ----------
+   Встаёт на ту же сетку, что и весь текст кейса: первая
+   колонка шириной с подпись, вторая — шириной с текст.
+   Поэтому таблица читается как продолжение страницы,
+   а не как вставка из другого документа.
+
+   Сдвиг на 18 точек влево компенсирует отступ внутри
+   ячейки: без него текст таблицы начинался бы правее
+   подписей соседних блоков.
+
+   Только на широком экране: на телефоне таблица и так
+   прокручивается вбок внутри своей обёртки. */
+@media (min-width: 1000px) {
+  .tableTwo {
+    table-layout: fixed;
+    width: calc(var(--label) + var(--label-gap) + var(--read-case) + 36px);
+    min-width: 0;
+    margin-left: -18px;
+  }
+
+  .tableTwo th:first-child,
+  .tableTwo td:first-child {
+    width: calc(var(--label) + var(--label-gap));
+  }
+
+  /* В узкой колонке заголовок должен уметь переноситься */
+  .tableTwo th {
+    white-space: normal;
+  }
+}
+
 .tableRowMarked td {
   background: rgba(223, 242, 106, 0.18);
   font-weight: 600;
@@ -427,7 +518,7 @@
    Маркер здесь не галочка, как у идей, а короткая черта:
    это не список достижений. */
 .failures {
-  max-width: var(--read);
+  max-width: var(--read-case);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -455,7 +546,7 @@
 }
 
 .tableNote {
-  max-width: var(--read);
+  max-width: var(--read-case);
   margin-top: 12px;
   font-size: var(--fs-small);
   color: var(--text-muted);
@@ -544,7 +635,7 @@
 }
 
 .summaryText {
-  max-width: var(--read);
+  max-width: var(--read-case);
   font-size: var(--fs-small);
   color: var(--text);
   line-height: 1.6;
@@ -1196,7 +1287,7 @@
 }
 
 .canvasNote {
-  max-width: var(--read);
+  max-width: var(--read-case);
   margin-top: 20px;
   font-size: var(--fs-small);
   color: var(--text-muted);
@@ -1445,7 +1536,7 @@
 
 /* Общий вывод под обеими схемами */
 .diagramsSummary {
-  max-width: var(--read);
+  max-width: var(--read-case);
   margin-top: 20px;
   font-size: 0.9375rem;
   color: var(--text);
@@ -1586,7 +1677,7 @@
 
 /* Подсказка над рядом видео: объясняет, что они по очереди */
 .demoHint {
-  max-width: var(--read);
+  max-width: var(--read-case);
   margin: -6px 0 16px;
   font-size: var(--fs-small);
   color: var(--text-muted);
@@ -1602,7 +1693,7 @@
 }
 
 .demoNote {
-  max-width: var(--read);
+  max-width: var(--read-case);
   margin-top: 8px;
   font-size: var(--fs-small);
   color: var(--text-muted);
@@ -1626,7 +1717,7 @@
   font-size: var(--fs-small);
   color: var(--text-muted);
   line-height: 1.6;
-  max-width: var(--read);
+  max-width: var(--read-case);
   margin-bottom: 18px;
 }
 
@@ -1637,8 +1728,11 @@
    на следующую строку. */
 .screenRow {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(170px, 100%), 1fr));
-  gap: 20px;
+  /* 250 вместо 170: три экрана в ряд вместо пяти-шести.
+     Телефон получается шириной 260-310 точек и высотой
+     около 600 — его видно, не открывая. */
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+  gap: 24px;
   align-items: start;
 }
 
@@ -1675,7 +1769,7 @@
 }
 
 .screenThumbTall img {
-  max-height: 520px;
+  max-height: 620px;
   object-fit: cover;
   object-position: top center;
 }
@@ -1707,9 +1801,13 @@
    min(420px, 100%) вместо просто 420px обязателен. Иначе на
    телефоне колонка остаётся шириной 420 точек, хотя экран
    уже — и страница начинает ездить вбок. Такая запись
-   означает «420 точек, но не шире самого экрана». */
+   означает «620 точек, но не шире самого экрана».
+
+   620 выбрано так, чтобы две такие картинки в колонку
+   не влезали: оформленная композиция занимает всю ширину
+   и читается как слайд, а не как плитка в сетке. */
 .screenRowWide {
-  grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(620px, 100%), 1fr));
 }
 
 /* Подсказку «нажми на меня» теперь показывает сам курсор —
@@ -1856,7 +1954,7 @@
 
 /* Пометка, откуда взяты цифры */
 .resultsNote {
-  max-width: var(--read);
+  max-width: var(--read-case);
   margin-top: 14px;
   font-size: var(--fs-tiny);
   color: var(--text-muted);
@@ -1896,11 +1994,12 @@
 .timelineStep {
   position: relative;
   display: grid;
-  /* 30 под точку + 166 подпись + 24 промежуток = 220, столько же
-     занимает подпись в блоке гипотез. Текст в обоих блоках
+  /* 30 под точку + 150 подпись + 36 промежуток = 216, столько
+     же занимает подпись в любом другом блоке кейса
+     (--label 180 + --label-gap 36). Текст во всех блоках
      начинается на одной вертикали. */
-  grid-template-columns: 166px minmax(0, 1fr);
-  gap: 4px 24px;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 4px var(--label-gap);
   padding: 14px 0 14px 30px;
   border-bottom: 1px solid var(--line);
 }
@@ -1944,6 +2043,8 @@
   font-size: var(--fs-body);
   line-height: 1.6;
   color: var(--text-muted);
+  /* Та же ширина, что у любого текста на кейсе */
+  max-width: var(--read-case);
 }
 
 /* ---------- ТЕЛЕФОН ---------- */
@@ -1973,7 +2074,7 @@
 }
 
 .measureText {
-  max-width: 660px;
+  max-width: var(--read-case);
   font-size: var(--fs-body);
   line-height: 1.65;
   color: var(--text);
@@ -1989,7 +2090,7 @@
 .ideasList {
   display: grid;
   gap: 12px;
-  max-width: var(--read);
+  max-width: var(--read-case);
 }
 
 .ideasList li {
@@ -2026,7 +2127,16 @@
 /* ============================================================
    ПЛАНШЕТ И ТЕЛЕФОН
    ============================================================ */
-@media (max-width: 1000px) {
+/* ============================================================
+   ПЛАНШЕТ И НЕБОЛЬШОЙ НОУТБУК
+   ============================================================
+   Порог 1200, а не 1000. Причина простая: при двух колонках
+   на боковую панель уходит 330 точек, и на экране 1024 тексту
+   оставалось 430 вместо 520 — то есть на одной и той же
+   странице получались две разные ширины строки. Ради этого
+   и стоит отправить оглавление наверх пораньше.
+   ============================================================ */
+@media (max-width: 1200px) {
   /* Одна колонка: оглавление уезжает наверх */
   .layout {
     grid-template-columns: 1fr;

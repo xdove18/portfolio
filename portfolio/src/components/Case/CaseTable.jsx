@@ -25,6 +25,11 @@ import s from "./Case.module.css";
 export default function CaseTable({ table, accent }) {
   if (!table || !table.rows || table.rows.length === 0) return null;
 
+  /* Таблица из двух колонок встаёт на общую сетку кейса:
+     подпись слева, текст справа — как у обычного абзаца. */
+  const двеКолонки =
+    (table.columns?.length || table.rows[0]?.length) === 2;
+
   return (
     <div className={s.tableBlock}>
       {table.title && <h3 className={s.subTitle}>{table.title}</h3>}
@@ -32,7 +37,7 @@ export default function CaseTable({ table, accent }) {
       {/* Обёртка нужна, чтобы широкая таблица прокручивалась
           вбок сама, а не растягивала всю страницу */}
       <div className={s.tableScroll}>
-        <table className={s.table}>
+        <table className={`${s.table} ${двеКолонки ? s.tableTwo : ""}`}>
           {table.columns && (
             <thead>
               <tr>

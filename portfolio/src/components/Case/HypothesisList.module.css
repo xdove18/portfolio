@@ -18,11 +18,11 @@
    поэтому страница кейса и главная читаются как одно целое. */
 .item {
   display: grid;
-  /* Подпись 196 + промежуток 24 — ровно столько же, сколько
+  /* Подпись 180 + промежуток 36 — ровно столько же, сколько
      в ленте времени, поэтому текст в обоих блоках начинается
      на одной вертикали и имеет одинаковую ширину. */
-  grid-template-columns: 196px minmax(0, 1fr);
-  gap: 24px;
+  grid-template-columns: var(--label) minmax(0, 1fr);
+  gap: var(--label-gap);
 
   padding: 26px 0;
   border-bottom: 1px solid var(--line);
@@ -82,7 +82,7 @@
   line-height: 1.45;
   letter-spacing: -0.01em;
   color: var(--text-strong);
-  max-width: var(--read);
+  max-width: var(--read-case);
 }
 
 .part {
@@ -103,7 +103,7 @@
   font-size: var(--fs-small);
   line-height: 1.55;
   color: var(--text-muted);
-  max-width: var(--read);
+  max-width: var(--read-case);
 }
 
 /* ============================================================
