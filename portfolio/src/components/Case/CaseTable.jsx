@@ -48,7 +48,7 @@ export default function CaseTable({ table, accent }) {
 
   return (
     <div className={s.tableBlock}>
-      {table.title && <h3 className={s.subTitle}>{table.title}</h3>}
+      {table.title && <h3 className={s.blockName}>{table.title}</h3>}
 
       {/* Обёртка нужна, чтобы широкая таблица прокручивалась
           вбок сама, а не растягивала всю страницу */}

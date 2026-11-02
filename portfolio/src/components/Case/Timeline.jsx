@@ -39,7 +39,7 @@ export default function Timeline({ data, accent }) {
   return (
     <div className={s.timeline}>
       {data.title && (
-        <h3 className={s.subTitle}>{fixHangingWords(data.title)}</h3>
+        <h3 className={s.blockName}>{fixHangingWords(data.title)}</h3>
       )}
 
       <ol className={s.timelineList}>

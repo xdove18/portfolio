@@ -356,6 +356,7 @@
 
 .capNum {
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   letter-spacing: 0.08em;
   color: var(--text-muted);
 }

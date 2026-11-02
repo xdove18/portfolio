@@ -46,21 +46,24 @@
 }
 
 .name {
-  font-size: 1.25rem;
+  font-size: var(--fs-lead);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  line-height: var(--lh-lead);
   color: var(--text-strong);
 }
 
 .role {
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
 }
 
 .meta {
   margin-top: 6px;
   font-size: var(--fs-tiny);
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--text-faint);
 }
@@ -75,10 +78,15 @@
 }
 
 .domains li {
-  padding: 4px 9px;
+  /* Поля подрезаны с 9 до 7 точек: с разрядкой метки четыре
+     плашки не влезали в колонку ровно на три точки
+     и «E-COMMERCE» уезжала на вторую строку. */
+  padding: 4px 7px;
 
-  font-size: 0.6875rem;
-  letter-spacing: 0.06em;
+  font-size: var(--fs-tiny);
+  font-weight: 700;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--text-muted);
 
@@ -101,7 +109,7 @@
   gap: 10px;
 
   padding: 7px 0;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   transition: color var(--t-fast) var(--ease);
 }
@@ -155,6 +163,7 @@
   background: var(--cta-bg);
   color: var(--cta-text);
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 600;
   border-radius: 12px;
 
@@ -178,8 +187,8 @@
   padding: 0 22px;
 
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 600;
-  letter-spacing: 0.04em;
   color: var(--text-strong);
 
   border: 1px solid var(--line-strong);
@@ -200,7 +209,10 @@
   align-items: center;
   gap: 18px;
 
-  font-size: var(--fs-tiny);
+  /* 14, а не 12: это ссылки, а не метки. Отдельного размера
+     «мелкая ссылка» в системе нет и не нужно. */
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
 }
 

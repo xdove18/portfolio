@@ -1353,13 +1353,6 @@ const проекты = [
         ],
       },
       {
-        title: "Профиль и настройки",
-        screens: [
-          "/images/projects/habits/screen-05.webp",
-          "/images/projects/habits/screen-08.webp",
-        ],
-      },
-      {
         title: "Уведомления",
         screens: ["/images/projects/habits/screen-19.webp"],
         note: "Мягкий тон вместо упрёка: пропущенный день не обнуляет прогресс и не сопровождается сообщением, после которого хочется удалить приложение.",

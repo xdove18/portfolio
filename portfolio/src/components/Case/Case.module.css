@@ -44,6 +44,7 @@
   display: block;
   width: fit-content;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
   margin-bottom: 40px;
   transition: color var(--t-fast) var(--ease);
@@ -59,23 +60,20 @@
    перетягивала внимание на себя раньше названия. */
 .niche {
   display: block;
-  font-size: var(--fs-tiny);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--text-faint);
   margin-bottom: 14px;
 }
 
 .sidebarTitle {
-  font-size: 1.75rem;
+  font-size: var(--fs-section);
+  line-height: var(--lh-section);
   margin: 16px 0 8px;
 }
 
 .sidebarTagline {
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
-  line-height: 1.5;
 }
 
 /* Роль, год, инструменты */
@@ -88,16 +86,13 @@
 }
 
 .meta dt {
-  font-size: var(--fs-tiny);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
   margin-bottom: 2px;
 }
 
 .meta dd {
   margin: 0;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 600;
   color: var(--text-strong);
 }
@@ -114,6 +109,7 @@
   gap: 12px;
   padding: 8px 0;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
   transition: color var(--t-fast) var(--ease);
 }
@@ -191,13 +187,15 @@
 }
 
 .headline {
-  font-size: clamp(1.5rem, 3vw, 2.125rem);
-  line-height: 1.25;
+  font-size: var(--fs-title);
+  line-height: var(--lh-title);
   margin: 44px 0 16px;
 }
 
+/* Вступление кейса — главная мысль, поэтому крупнее текста */
 .intro {
-  font-size: 1.0625rem;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
   color: var(--text-muted);
   max-width: var(--read-case);
 }
@@ -226,12 +224,6 @@
 /* Подпись ряда. Выглядит так же, как subTitle, но без
    собственных отступов: за расстояния отвечает сам ряд. */
 .rowLabel {
-  font-size: var(--fs-tiny);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  line-height: 1.5;
   /* Выравнивание по первой строке текста справа */
   padding-top: 3px;
 }
@@ -272,20 +264,71 @@
 }
 
 .blockTitle {
-  font-size: var(--fs-h3);
+  font-size: var(--fs-section);
+  line-height: var(--lh-section);
   margin-bottom: 28px;
 }
 
-.subTitle {
+/* ============================================================
+   МЕТКА
+   ============================================================
+   Одна на все блоки кейса: подпись ряда, подпись раздела,
+   шапка таблицы, роль и год, вердикт гипотезы, ниша.
+
+   Раньше у каждого из них были свои размер, насыщенность
+   и разрядка — восемь вариантов одной и той же надписи.
+   Теперь вариант один, а отличаются они только отступами
+   и цветом.
+
+   В текстах метки пишутся строчными буквами: прописными
+   их делает сам сайт.
+   ============================================================ */
+.subTitle,
+.rowLabel,
+.niche,
+.meta dt,
+.table th {
   font-size: var(--fs-tiny);
   font-weight: 700;
-  letter-spacing: 0.14em;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
+}
+
+/* Цвет у метки свой в каждом месте: подпись блока заметнее,
+   ниша в левой колонке тише всех. Поэтому цвет в общем
+   правиле не задаётся. */
+.subTitle,
+.rowLabel,
+.meta dt,
+.table th {
   color: var(--text-muted);
+}
+
+.subTitle {
   margin: 36px 0 14px;
 }
 
+/* ============================================================
+   НАЗВАНИЕ БЛОКА
+   ============================================================
+   То, что подписано в текстах своими словами: название
+   таблицы, ленты времени, группы экранов. В отличие от метки
+   это целая фраза, поэтому пишется с большой буквы и крупнее:
+   «ПОЧЕМУ САЙТ НЕ ПРОДАВАЛ» прописными читается тяжело.
+   ============================================================ */
+.blockName {
+  font-size: var(--fs-block);
+  font-weight: 700;
+  line-height: var(--lh-block);
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+  margin: 40px 0 10px;
+}
+
 .text {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text);
   max-width: var(--read-case);
 }
@@ -330,8 +373,8 @@
 .bullets li {
   position: relative;
   padding-left: 22px;
-  font-size: 0.9375rem;    /* 15px — чуть крупнее для читаемости */
-  line-height: 1.65;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text);      /* тёмный текст, а не серый */
 }
 
@@ -362,14 +405,16 @@
 }
 
 .cardTitle {
-  font-size: 1.0625rem;
+  font-size: var(--fs-block);
+  font-weight: 700;
+  line-height: var(--lh-block);
   margin-bottom: 12px;
 }
 
 .cardText {
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
-  line-height: 1.65;
 }
 
 /* Панель с вопросами интервью.
@@ -424,6 +469,7 @@
   border-collapse: collapse;
   background: none;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
 }
 
 .table th {
@@ -432,11 +478,6 @@
      и строка выглядела съехавшей относительно остальных. */
   padding: 12px 18px;
   text-align: left;
-  font-size: var(--fs-tiny);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
   background: var(--bg);
   white-space: nowrap;
 }
@@ -445,7 +486,7 @@
   padding: 14px 18px;
   border-top: 1px solid var(--line);
   color: var(--text);
-  line-height: 1.5;
+  line-height: var(--lh-small);
   vertical-align: top;
 }
 
@@ -535,7 +576,7 @@
   /* Подпись уже картинки — как и любой другой текст на кейсе */
   max-width: var(--read-case);
   font-size: var(--fs-small);
-  line-height: 1.5;
+  line-height: var(--lh-small);
   color: var(--text-muted);
 }
 
@@ -554,7 +595,7 @@
   padding-left: 24px;
 
   font-size: var(--fs-body);
-  line-height: 1.6;
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -574,8 +615,8 @@
   max-width: var(--read-case);
   margin-top: 12px;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
-  line-height: 1.6;
 }
 
 /* ============================================================
@@ -616,7 +657,8 @@
   grid-template-columns: 10px 1fr auto;
   align-items: baseline;
   gap: 12px;
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
 }
 
 .compareDot {
@@ -636,6 +678,7 @@
 .compareDrop {
   font-family: var(--font-mono);
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   font-weight: 700;
   color: #c94a4a;
   white-space: nowrap;
@@ -644,6 +687,7 @@
 .compareNote {
   grid-column: 1 / -1;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 700;
   text-align: center;
   padding-top: 4px;
@@ -662,8 +706,8 @@
 .summaryText {
   max-width: var(--read-case);
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text);
-  line-height: 1.6;
 }
 
 .expandBtn {
@@ -671,6 +715,7 @@
   padding: 12px 24px;
   min-height: 44px;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 700;
   color: var(--bg-white);
   border-radius: var(--radius-pill);
@@ -720,7 +765,9 @@
 }
 
 .competitorName {
-  font-size: 1.25rem;
+  font-size: var(--fs-block);
+  font-weight: 700;
+  line-height: var(--lh-block);
   flex: 1;
 }
 
@@ -741,6 +788,7 @@
 
 .competitorCount {
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   color: var(--text-muted);
 }
 
@@ -754,7 +802,8 @@
 .consTitle {
   font-size: var(--fs-tiny);
   font-weight: 700;
-  letter-spacing: 0.14em;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   margin-bottom: 12px;
 }
@@ -775,7 +824,7 @@
 .list li {
   font-size: var(--fs-small);
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: var(--lh-small);
   padding-left: 16px;
   position: relative;
 }
@@ -792,6 +841,7 @@
   padding: 12px 24px;
   min-height: 44px;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 700;
   color: var(--text-strong);
   background: var(--accent);
@@ -822,6 +872,7 @@
 
 .hypoCounter {
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -944,6 +995,7 @@
 
 .hypothesisNumber {
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -963,7 +1015,7 @@
   padding: 18px 20px;
   border-radius: var(--radius-sm);
   font-size: var(--fs-small);
-  line-height: 1.55;
+  line-height: var(--lh-small);
 }
 
 /* Подтверждённая — зелёная, опровергнутая — красная.
@@ -983,6 +1035,7 @@
   display: block;
   font-weight: 700;
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 8px;
@@ -1078,6 +1131,7 @@
 .flowIndex {
   font-family: var(--font-mono);
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--text-muted);
@@ -1119,6 +1173,7 @@
   padding: 12px 22px;
   min-height: 44px;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 700;
   color: var(--bg-white);
   border: none;
@@ -1251,6 +1306,7 @@
 
 .canvasZoneTitle {
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 700;
   color: var(--text-strong);
 }
@@ -1316,7 +1372,7 @@
   margin-top: 20px;
   font-size: var(--fs-small);
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: var(--lh-small);
 }
 
 /* ---------- СВЯЗКА С ГИПОТЕЗАМИ ---------- */
@@ -1330,6 +1386,7 @@
 
 .canvasLinksTitle {
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1376,6 +1433,7 @@
 .canvasLinkNote {
   display: block;
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   font-weight: 400;
   color: var(--text-muted);
   margin-top: 3px;
@@ -1436,7 +1494,7 @@
   margin-top: 16px;
   font-size: var(--fs-small);
   color: var(--text-muted);
-  line-height: 1.55;
+  line-height: var(--lh-small);
 }
 
 /* ---------- РАЗВЁРНУТЫЙ ВИД ---------- */
@@ -1533,7 +1591,8 @@
 }
 
 .diagramTitle {
-  font-size: 1rem;
+  font-size: var(--fs-block);
+  line-height: var(--lh-block);
   font-weight: 700;
   color: var(--text-strong);
   margin-bottom: 18px;
@@ -1556,16 +1615,16 @@
   margin-top: 16px;
   font-size: var(--fs-small);
   color: var(--text-muted);
-  line-height: 1.55;
+  line-height: var(--lh-small);
 }
 
 /* Общий вывод под обеими схемами */
 .diagramsSummary {
   max-width: var(--read-case);
   margin-top: 20px;
-  font-size: 0.9375rem;
-  color: var(--text);
-  line-height: 1.6;
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--text-muted);
 }
 
 /* ---------- БЛОКИ СХЕМЫ ---------- */
@@ -1615,7 +1674,7 @@
 /* ---------- ТЕКСТ В БЛОКАХ ---------- */
 .nodeText {
   font-family: var(--font);
-  font-size: 11.5px;
+  font-size: var(--fs-micro);
   font-weight: 600;
   fill: var(--text-strong);
 }
@@ -1642,7 +1701,7 @@
 
 .edgeLabel {
   font-family: var(--font);
-  font-size: 11px;
+  font-size: var(--fs-micro);
   font-weight: 700;
   fill: var(--text-muted);
 }
@@ -1705,6 +1764,7 @@
   max-width: var(--read-case);
   margin: -6px 0 16px;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
 }
 
@@ -1713,6 +1773,7 @@
 .demoCaption {
   margin-top: 12px;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 700;
   color: var(--text-strong);
 }
@@ -1722,7 +1783,7 @@
   margin-top: 8px;
   font-size: var(--fs-small);
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: var(--lh-small);
 }
 
 /* ============================================================
@@ -1732,16 +1793,13 @@
   margin-top: 40px;
 }
 
-.screenGroupTitle {
-  font-size: 1.0625rem;
-  margin-bottom: 8px;
-}
+/* Название группы экранов — такое же, как у таблицы и ленты */
 
 /* Пояснение под заголовком группы экранов */
 .screenGroupNote {
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
-  line-height: 1.6;
   max-width: var(--read-case);
   margin-bottom: 18px;
 }
@@ -1808,6 +1866,7 @@
   padding: 44px 16px 14px;
 
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--on-dark);
   text-align: center;
 
@@ -1972,6 +2031,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: rgba(255, 255, 255, 0.75);
 }
 
@@ -1993,10 +2053,10 @@
 }
 
 .resultValue {
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-size: var(--fs-number);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.1;
+  line-height: var(--lh-number);
 
   /* Цвет проекта здесь больше не используется: на строгой
      странице одна цифра одним цветом читается спокойнее */
@@ -2005,17 +2065,21 @@
 
 .resultLabel {
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
   margin-top: 8px;
 }
 
 /* Пометка, откуда взяты цифры */
+/* Пометка: откуда цифры, чем проверялось, чего не хватает.
+   Курсива больше нет — это был ещё один стиль ради одной
+   мысли, а честность держится на словах, а не на наклоне. */
 .resultsNote {
   max-width: var(--read-case);
   margin-top: 14px;
-  font-size: var(--fs-tiny);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
-  font-style: italic;
 }
 
 /* ============================================================
@@ -2092,13 +2156,13 @@
 .timelineWhen {
   font-size: var(--fs-small);
   font-weight: 600;
-  line-height: 1.5;
+  line-height: var(--lh-small);
   color: var(--text-strong);
 }
 
 .timelineText {
   font-size: var(--fs-body);
-  line-height: 1.6;
+  line-height: var(--lh-body);
   color: var(--text-muted);
   /* Та же ширина, что у любого текста на кейсе */
   max-width: var(--read-case);
@@ -2133,7 +2197,7 @@
 .measureText {
   max-width: var(--read-case);
   font-size: var(--fs-body);
-  line-height: 1.65;
+  line-height: var(--lh-body);
   color: var(--text);
 }
 
@@ -2155,6 +2219,7 @@
   align-items: center;
   gap: 12px;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
 }
 
 /* ============================================================
@@ -2177,8 +2242,8 @@
 .thanksText {
   max-width: 460px;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
-  line-height: 1.6;
 }
 
 /* ============================================================

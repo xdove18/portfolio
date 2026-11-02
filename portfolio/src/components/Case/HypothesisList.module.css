@@ -38,7 +38,8 @@
 .num {
   font-family: var(--font-mono);
   font-size: var(--fs-tiny);
-  letter-spacing: 0.1em;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   color: var(--text-faint);
 }
 
@@ -47,14 +48,17 @@
   align-items: baseline;
   gap: 7px;
 
+  /* Та же метка, что и везде на кейсе: размер, насыщенность
+     и разрядка общие, свой у вердикта только цвет. */
   font-size: var(--fs-tiny);
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
 }
 
 .sign {
-  font-size: 0.875rem;
+  font-size: var(--fs-tiny);
   line-height: 1;
 }
 
@@ -77,9 +81,11 @@
   min-width: 0;
 }
 
+/* Сама гипотеза — главная мысль блока, поэтому крупнее
+   обычного текста. Тот же размер, что у вступления кейса. */
 .text {
-  font-size: 1.125rem;
-  line-height: 1.45;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
   letter-spacing: -0.01em;
   color: var(--text-strong);
   max-width: var(--read-case);
@@ -94,14 +100,16 @@
   margin-bottom: 4px;
 
   font-size: var(--fs-tiny);
-  letter-spacing: 0.1em;
+  font-weight: 700;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--text-faint);
 }
 
 .partText {
   font-size: var(--fs-small);
-  line-height: 1.55;
+  line-height: var(--lh-small);
   color: var(--text-muted);
   max-width: var(--read-case);
 }
@@ -123,9 +131,5 @@
     flex-direction: row;
     align-items: baseline;
     gap: 12px;
-  }
-
-  .text {
-    font-size: 1.0625rem;
   }
 }

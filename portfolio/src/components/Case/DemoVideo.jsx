@@ -220,7 +220,7 @@ function DemoRow({ clips }) {
       {many ? (
         <h3 className={s.subTitle}>{fixHangingWords("как это работает")}</h3>
       ) : (
-        clips[0].title && <h3 className={s.subTitle}>{clips[0].title}</h3>
+        clips[0].title && <h3 className={s.blockName}>{clips[0].title}</h3>
       )}
 
       {many && (

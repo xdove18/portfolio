@@ -10,7 +10,7 @@
 }
 
 .title {
-  font-size: var(--fs-h2);
+  font-size: var(--fs-display);
   margin-bottom: 44px;
 }
 
@@ -65,6 +65,7 @@
 
 .desc {
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-muted);
   transition: color var(--t-fast) var(--ease);
 }

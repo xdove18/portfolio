@@ -122,6 +122,7 @@
 /* Строка «Лиза Иванова · Самара · 23» */
 .eyebrow {
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -241,6 +242,7 @@
   gap: 10px;
   margin-top: 36px;
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   color: var(--text-muted);
 }
 
@@ -281,6 +283,7 @@
   background: var(--accent);
   color: var(--text-strong);
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 700;
   border-radius: var(--radius-pill);
   transition: transform var(--t-fast) var(--ease),

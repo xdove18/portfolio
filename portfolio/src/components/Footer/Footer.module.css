@@ -19,7 +19,9 @@
 
 .label {
   font-size: var(--fs-tiny);
-  letter-spacing: 0.2em;
+  font-weight: 700;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--on-dark-muted);
   margin-bottom: 12px;
@@ -53,6 +55,7 @@
   background: var(--accent);
   color: var(--on-accent);
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 700;
   border-radius: var(--radius-pill);
   transition: transform var(--t-fast) var(--ease);
@@ -105,11 +108,13 @@
   display: block;
   font-weight: 700;
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
 }
 
 .brandRole {
   display: block;
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   color: var(--on-dark-muted);
 }
 
@@ -121,6 +126,7 @@
 
 .links a {
   font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: rgba(255, 255, 255, 0.75);
   transition: color var(--t-fast) var(--ease);
 }
@@ -131,6 +137,7 @@
 
 .copy {
   font-size: var(--fs-tiny);
+  line-height: var(--lh-tiny);
   color: var(--on-dark-muted);
   text-align: right;
 }

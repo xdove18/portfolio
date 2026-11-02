@@ -34,7 +34,7 @@ export default function ScreenGallery({ groups }) {
     <>
       {groups.map((group) => (
         <div className={s.screenGroup} key={group.title}>
-          <h3 className={s.screenGroupTitle}>{group.title}</h3>
+          <h3 className={s.blockName}>{group.title}</h3>
 
           {group.note && (
             <p className={s.screenGroupNote}>

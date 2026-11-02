@@ -8,15 +8,17 @@
 
 .title {
   font-size: var(--fs-tiny);
-  letter-spacing: 0.14em;
+  font-weight: 700;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--text-faint);
   margin-bottom: 28px;
 }
 
 .lead {
-  font-size: clamp(1.25rem, 1.9vw, 1.625rem);
-  line-height: 1.35;
+  font-size: var(--fs-section);
+  line-height: var(--lh-block);
   letter-spacing: -0.02em;
   color: var(--text-strong);
   max-width: 44ch;
@@ -44,7 +46,9 @@
 
 .years {
   font-size: var(--fs-tiny);
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  line-height: var(--lh-tiny);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--text-faint);
   font-family: var(--font-mono);
@@ -59,8 +63,9 @@
 }
 
 .jobTitle {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: var(--fs-block);
+  font-weight: 700;
+  line-height: var(--lh-block);
   letter-spacing: -0.01em;
   color: var(--text-strong);
 }
@@ -79,7 +84,7 @@
 .jobText {
   margin-top: 8px;
   font-size: var(--fs-body);
-  line-height: 1.55;
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -96,7 +101,7 @@
   padding-left: 18px;
 
   font-size: var(--fs-small);
-  line-height: 1.55;
+  line-height: var(--lh-small);
   color: var(--text-muted);
 }
 
@@ -115,7 +120,7 @@
 
 .tools {
   font-size: var(--fs-body);
-  line-height: 1.6;
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 

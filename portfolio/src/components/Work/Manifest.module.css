@@ -7,7 +7,7 @@
 }
 
 .text {
-  font-size: clamp(1.875rem, 3.4vw, 3.125rem);
+  font-size: var(--fs-display);
   font-weight: 600;
 
   /* 1.26, а не плотнее: салатовая подложка выделенных слов
@@ -38,8 +38,8 @@
   margin-top: 24px;
   max-width: 52ch;
 
-  font-size: 1.0625rem;
-  line-height: 1.55;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
   color: var(--text-muted);
 }
 
