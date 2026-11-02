@@ -38,8 +38,8 @@
   margin-top: 24px;
   max-width: 52ch;
 
-  font-size: var(--fs-lead);
-  line-height: var(--lh-lead);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 

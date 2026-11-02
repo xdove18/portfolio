@@ -49,13 +49,13 @@
 
   /* Та же подпись, что и везде на кейсе: размер
      и насыщенность общие, свой у вердикта только цвет. */
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   font-weight: 600;
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
 }
 
 .sign {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   line-height: 1;
 }
 
@@ -81,9 +81,9 @@
 /* Сама гипотеза — главная мысль блока, поэтому крупнее
    обычного текста. Тот же размер, что у вступления кейса. */
 .text {
-  font-size: var(--fs-lead);
-  line-height: var(--lh-lead);
-  letter-spacing: -0.01em;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: normal;
   color: var(--text-strong);
   max-width: var(--read-case);
 }
@@ -96,15 +96,15 @@
   display: block;
   margin-bottom: 4px;
 
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   font-weight: 600;
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
   color: var(--text-faint);
 }
 
 .partText {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
   max-width: var(--read-case);
 }

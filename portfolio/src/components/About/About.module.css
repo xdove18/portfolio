@@ -109,8 +109,8 @@
 }
 
 .strengthText {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -147,13 +147,13 @@
 .eduFull {
   font-weight: 400;
   color: var(--text-muted);
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
 }
 
 .eduSpec {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
   margin-top: 4px;
 }
@@ -172,8 +172,8 @@
 }
 
 .jobYears {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   color: var(--text-strong);
   /* Подчёркивание акцентным цветом — как маркер года */
@@ -186,15 +186,15 @@
 
 .jobTitle {
   display: block;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 600;
   color: var(--text-strong);
 }
 
 .jobText {
   display: block;
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
   line-height: 1.55;
   margin-top: 4px;
@@ -213,7 +213,7 @@
 .jobPoints li {
   position: relative;
   padding-left: 16px;
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
   line-height: 1.55;
 }
@@ -345,7 +345,7 @@
 }
 
 .letterNote {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
   line-height: 1.5;
   margin-bottom: 14px;
@@ -364,8 +364,8 @@
   justify-content: center;
   min-height: 40px;
   padding: 10px 18px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   border-radius: var(--radius-pill);
   cursor: pointer;

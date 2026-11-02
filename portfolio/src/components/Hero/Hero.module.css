@@ -282,8 +282,8 @@
   min-height: 48px;
   background: var(--accent);
   color: var(--text-strong);
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   border-radius: var(--radius-pill);
   transition: transform var(--t-fast) var(--ease),

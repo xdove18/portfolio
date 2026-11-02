@@ -7,9 +7,9 @@
 }
 
 .title {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   font-weight: 600;
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
   letter-spacing: normal;
   color: var(--text-faint);
   margin-bottom: 28px;
@@ -17,7 +17,7 @@
 
 .lead {
   font-size: var(--fs-section);
-  line-height: var(--lh-block);
+  line-height: var(--lh-body);
   letter-spacing: -0.02em;
   color: var(--text-strong);
   max-width: 44ch;
@@ -44,8 +44,8 @@
 }
 
 .years {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-faint);
 
   /* Чуть ниже первой строки заголовка — так годы встают
@@ -58,9 +58,9 @@
 }
 
 .jobTitle {
-  font-size: var(--fs-block);
+  font-size: var(--fs-body);
   font-weight: 700;
-  line-height: var(--lh-block);
+  line-height: var(--lh-body);
   letter-spacing: -0.01em;
   color: var(--text-strong);
 }
@@ -95,8 +95,8 @@
   position: relative;
   padding-left: 18px;
 
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 

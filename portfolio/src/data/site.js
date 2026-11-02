@@ -15,7 +15,7 @@ import { fixHangingWordsDeep } from "../utils/typography";
 const данные = {
   // ---------- О ВАС ----------
   name: "Лиза Иванова",
-  role: "продуктовый дизайнер",
+  role: "Продуктовый дизайнер",
   city: "Самара",
   age: 24,
 

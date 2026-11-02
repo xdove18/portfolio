@@ -46,22 +46,23 @@
 }
 
 .name {
-  font-size: var(--fs-lead);
+  font-size: var(--fs-body);
   font-weight: 700;
-  line-height: var(--lh-lead);
+  line-height: var(--lh-body);
   color: var(--text-strong);
+  letter-spacing: normal;
 }
 
 .role {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
 .meta {
   margin-top: 6px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-faint);
 }
 
@@ -75,12 +76,13 @@
 }
 
 .domains li {
-  padding: 4px 9px;
+  /* Поля подрезаны, чтобы четыре плашки помещались
+     в колонку одной строкой */
+  padding: 3px 8px;
 
-  font-size: var(--fs-small);
-  font-weight: 600;
-  line-height: var(--lh-small);
-  color: var(--text-muted);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-faint);
 
   background: var(--bg-soft);
   border: 1px solid var(--line);
@@ -154,8 +156,8 @@
 
   background: var(--cta-bg);
   color: var(--cta-text);
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 600;
   border-radius: 12px;
 
@@ -178,8 +180,8 @@
   min-height: 42px;
   padding: 0 22px;
 
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 600;
   color: var(--text-strong);
 
@@ -203,8 +205,8 @@
 
   /* 14, а не 12: это ссылки, а не метки. Отдельного размера
      «мелкая ссылка» в системе нет и не нужно. */
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 

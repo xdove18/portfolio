@@ -43,8 +43,8 @@
 .back {
   display: block;
   width: fit-content;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
   margin-bottom: 40px;
   transition: color var(--t-fast) var(--ease);
@@ -71,8 +71,8 @@
 }
 
 .sidebarTagline {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -91,8 +91,8 @@
 
 .meta dd {
   margin: 0;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 600;
   color: var(--text-strong);
 }
@@ -108,8 +108,8 @@
   align-items: center;
   gap: 12px;
   padding: 8px 0;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
   transition: color var(--t-fast) var(--ease);
 }
@@ -194,8 +194,8 @@
 
 /* Вступление кейса — главная мысль, поэтому крупнее текста */
 .intro {
-  font-size: var(--fs-lead);
-  line-height: var(--lh-lead);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
   max-width: var(--read-case);
 }
@@ -292,15 +292,17 @@
 .niche,
 .meta dt,
 .table th {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   font-weight: 600;
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
 
   /* Заголовкам на сайте буквы сжимаются на 0.02em, и подписи,
      набранные тегом заголовка, сжимались вместе с ними —
      на глаз незаметно, а в соседнем блоке та же надпись
      выглядела чуть иначе. Подпись — не заголовок. */
   letter-spacing: normal;
+  /* Выключка влево: в узкой колонке переносы по словам */
+  text-wrap: pretty;
 }
 
 /* Подпись всегда начинается с большой буквы, даже если
@@ -340,10 +342,10 @@
    «ПОЧЕМУ САЙТ НЕ ПРОДАВАЛ» прописными читается тяжело.
    ============================================================ */
 .blockName {
-  font-size: var(--fs-block);
+  font-size: var(--fs-body);
   font-weight: 700;
-  line-height: var(--lh-block);
-  letter-spacing: -0.01em;
+  line-height: var(--lh-body);
+  letter-spacing: normal;
   color: var(--text-strong);
   margin: 40px 0 10px;
 }
@@ -427,15 +429,15 @@
 }
 
 .cardTitle {
-  font-size: var(--fs-block);
+  font-size: var(--fs-body);
   font-weight: 700;
-  line-height: var(--lh-block);
+  line-height: var(--lh-body);
   margin-bottom: 12px;
 }
 
 .cardText {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -490,8 +492,8 @@
   min-width: 460px;
   border-collapse: collapse;
   background: none;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
 }
 
 .table th {
@@ -508,7 +510,7 @@
   padding: 14px 18px;
   border-top: 1px solid var(--line);
   color: var(--text);
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
   vertical-align: top;
 }
 
@@ -597,8 +599,8 @@
   margin-top: 10px;
   /* Подпись уже картинки — как и любой другой текст на кейсе */
   max-width: var(--read-case);
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -636,8 +638,8 @@
 .tableNote {
   max-width: var(--read-case);
   margin-top: 12px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -708,8 +710,8 @@
 
 .compareNote {
   grid-column: 1 / -1;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   text-align: center;
   padding-top: 4px;
@@ -727,8 +729,8 @@
 
 .summaryText {
   max-width: var(--read-case);
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text);
 }
 
@@ -736,8 +738,8 @@
   margin-top: 18px;
   padding: 12px 24px;
   min-height: 44px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   color: var(--bg-white);
   border-radius: var(--radius-pill);
@@ -787,9 +789,9 @@
 }
 
 .competitorName {
-  font-size: var(--fs-block);
+  font-size: var(--fs-body);
   font-weight: 700;
-  line-height: var(--lh-block);
+  line-height: var(--lh-body);
   flex: 1;
 }
 
@@ -809,8 +811,8 @@
 }
 
 .competitorCount {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -822,9 +824,9 @@
 
 .prosTitle,
 .consTitle {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   font-weight: 600;
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
   margin-bottom: 12px;
 }
 
@@ -842,9 +844,9 @@
 }
 
 .list li {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
   padding-left: 16px;
   position: relative;
 }
@@ -860,8 +862,8 @@
   margin-top: 24px;
   padding: 12px 24px;
   min-height: 44px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   color: var(--text-strong);
   background: var(--accent);
@@ -1024,7 +1026,7 @@
 
 .hypothesisText {
   padding: 20px;
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   line-height: 1.5;
   background: var(--bg-white);
   border: 1px solid var(--line);
@@ -1034,8 +1036,8 @@
 .hypothesisResult {
   padding: 18px 20px;
   border-radius: var(--radius-sm);
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
 }
 
 /* Подтверждённая — зелёная, опровергнутая — красная.
@@ -1158,7 +1160,7 @@
 }
 
 .flowText {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   font-weight: 600;
   color: var(--text-strong);
   line-height: 1.35;
@@ -1191,8 +1193,8 @@
   margin-top: 22px;
   padding: 12px 22px;
   min-height: 44px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   color: var(--bg-white);
   border: none;
@@ -1324,8 +1326,8 @@
 }
 
 .canvasZoneTitle {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   color: var(--text-strong);
 }
@@ -1389,9 +1391,9 @@
 .canvasNote {
   max-width: var(--read-case);
   margin-top: 20px;
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
 }
 
 /* ---------- СВЯЗКА С ГИПОТЕЗАМИ ---------- */
@@ -1433,7 +1435,7 @@
 }
 
 .canvasLinkFrom {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
   line-height: 1.45;
 }
@@ -1444,7 +1446,7 @@
 }
 
 .canvasLinkTo {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-strong);
   line-height: 1.45;
 }
@@ -1511,9 +1513,9 @@
 
 .zoomNote {
   margin-top: 16px;
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
 }
 
 /* ---------- РАЗВЁРНУТЫЙ ВИД ---------- */
@@ -1610,8 +1612,8 @@
 }
 
 .diagramTitle {
-  font-size: var(--fs-block);
-  line-height: var(--lh-block);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   color: var(--text-strong);
   margin-bottom: 18px;
@@ -1632,17 +1634,17 @@
 
 .diagramNote {
   margin-top: 16px;
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
 }
 
 /* Общий вывод под обеими схемами */
 .diagramsSummary {
   max-width: var(--read-case);
   margin-top: 20px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -1782,8 +1784,8 @@
 .demoHint {
   max-width: var(--read-case);
   margin: -6px 0 16px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -1791,8 +1793,8 @@
    и надо понимать, где какой сценарий */
 .demoCaption {
   margin-top: 12px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   color: var(--text-strong);
 }
@@ -1800,9 +1802,9 @@
 .demoNote {
   max-width: var(--read-case);
   margin-top: 8px;
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
 }
 
 /* ============================================================
@@ -1816,8 +1818,8 @@
 
 /* Пояснение под заголовком группы экранов */
 .screenGroupNote {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
   max-width: var(--read-case);
   margin-bottom: 18px;
@@ -1884,8 +1886,8 @@
   bottom: 0;
   padding: 44px 16px 14px;
 
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--on-dark);
   text-align: center;
 
@@ -2049,8 +2051,8 @@
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: rgba(255, 255, 255, 0.75);
 }
 
@@ -2083,8 +2085,8 @@
 }
 
 .resultLabel {
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
   margin-top: 8px;
 }
@@ -2096,8 +2098,8 @@
 .resultsNote {
   max-width: var(--read-case);
   margin-top: 14px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 
@@ -2173,9 +2175,9 @@
 }
 
 .timelineWhen {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   font-weight: 600;
-  line-height: var(--lh-small);
+  line-height: var(--lh-body);
   color: var(--text-strong);
 }
 
@@ -2237,8 +2239,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
 }
 
 /* ============================================================
@@ -2260,8 +2262,8 @@
 
 .thanksText {
   max-width: 460px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
 }
 

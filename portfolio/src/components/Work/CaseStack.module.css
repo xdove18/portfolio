@@ -74,9 +74,9 @@
 }
 
 .spineTitle {
-  font-size: var(--fs-block);
+  font-size: var(--fs-body);
   font-weight: 700;
-  line-height: var(--lh-block);
+  line-height: var(--lh-body);
   letter-spacing: -0.01em;
   color: var(--text-strong);
 
@@ -90,8 +90,8 @@
   margin-left: auto;
   flex: none;
 
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-faint);
 }
 
@@ -159,8 +159,8 @@
 }
 
 .text {
-  font-size: var(--fs-lead);
-  line-height: var(--lh-lead);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
   max-width: 54ch;
 }
@@ -171,8 +171,8 @@
   gap: 8px;
   flex: none;
 
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 600;
   color: var(--text-strong);
 

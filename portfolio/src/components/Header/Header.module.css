@@ -95,8 +95,8 @@
 .navLink {
   position: relative;
   padding: 6px 16px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-muted);
   border-radius: var(--radius-pill);
   transition: color var(--t-fast) var(--ease),
@@ -130,8 +130,8 @@
   padding: 10px 10px 10px 22px;
   background: var(--black);
   color: var(--bg-white);
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 600;
   border-radius: var(--radius-pill);
   transition: transform var(--t-fast) var(--ease),
@@ -255,8 +255,8 @@
      Чтобы имя поместилось, чуть уменьшаем его и сокращаем
      отступы вокруг. */
   .logoName {
-    font-size: var(--fs-small);
-  line-height: var(--lh-small);
+    font-size: var(--fs-body);
+  line-height: var(--lh-body);
   }
 
   .logo {

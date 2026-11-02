@@ -77,8 +77,8 @@
   justify-content: center;
   min-height: 50px;
   padding: 15px 34px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 700;
   color: var(--text-strong);
   background: var(--accent);
