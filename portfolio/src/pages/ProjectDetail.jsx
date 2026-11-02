@@ -5,7 +5,7 @@ import { getProject } from "../data/projects";
 import { site } from "../data/site";
 import Footer from "../components/Footer/Footer";
 import Competitors from "../components/Case/Competitors";
-import { ScreensFor } from "../components/Case/ScreenGallery";
+import ScreenGallery from "../components/Case/ScreenGallery";
 import Row from "../components/Case/Row";
 import HypothesisList from "../components/Case/HypothesisList";
 import FlowCompare from "../components/Case/FlowCompare";
@@ -170,8 +170,6 @@ export default function ProjectDetail() {
             <RichText>{project.intro}</RichText>
           </p>
         </Row>
-
-        <ScreensFor groups={project.screenGroups} section="overview" />
       </section>
     ),
 
@@ -200,10 +198,6 @@ export default function ProjectDetail() {
           section="task"
           accent={project.color}
         />
-
-        {/* Экраны этого раздела: показываем решение сразу
-            после того, как назвали проблему */}
-        <ScreensFor groups={project.screenGroups} section="task" />
 
         {/* Вопросы, заданные бизнесу перед началом работы */}
         {project.problem.questionsToBusiness && (
@@ -306,8 +300,6 @@ export default function ProjectDetail() {
           section="audience"
           accent={project.color}
         />
-
-        <ScreensFor groups={project.screenGroups} section="audience" />
       </section>
     ),
 
@@ -409,21 +401,14 @@ export default function ProjectDetail() {
             до того как разбирать отдельные экраны */}
         <DemoVideo demo={project.demoVideo} />
 
-        {/* Экраны этого раздела. Подпись «Экраны приложения»
-            появляется, только если у кейса есть вступление
-            к ним: там, где экраны разложены по разделам,
-            отдельный заголовок только мешает. */}
+        {/* Экраны приложения */}
+        <h3 className={s.subTitle}>{fixHangingWords("Экраны приложения")}</h3>
         {project.screensNote && (
-          <>
-            <h3 className={s.subTitle}>
-              {fixHangingWords("Экраны приложения")}
-            </h3>
-            <p className={s.screenGroupNote}>
-              <RichText>{project.screensNote}</RichText>
-            </p>
-          </>
+          <p className={s.screenGroupNote}>
+            <RichText>{project.screensNote}</RichText>
+          </p>
         )}
-        <ScreensFor groups={project.screenGroups} section="solution" />
+        <ScreenGallery groups={project.screenGroups} />
       </section>
     ),
 
