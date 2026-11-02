@@ -48,7 +48,6 @@ export default function ScreenGallery({ groups }) {
                 key={src}
                 className={[
                   s.screenThumb,
-                  group.wide ? s.screenThumbWide : "",
                   group.tall ? s.screenThumbTall : "",
                 ]
                   .filter(Boolean)

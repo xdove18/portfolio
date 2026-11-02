@@ -48,7 +48,6 @@ export default function Timeline({ data, accent }) {
             className={[
               s.timelineStep,
               step.tone === "loss" ? s.timelineLoss : "",
-              step.tone === "accent" ? s.timelineAccent : "",
             ]
               .filter(Boolean)
               .join(" ")}
