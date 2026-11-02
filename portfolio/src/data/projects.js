@@ -1317,6 +1317,17 @@ const проекты = [
     // ---------- ЭКРАНЫ ----------
     // Каждый экран открывается отдельно по клику
     screenGroups: [
+      /* Витрина: две плитки в ряд и крупная снизу.
+         Раскладку включает collage: true. */
+      {
+        title: "Как это выглядит",
+        collage: true,
+        screens: [
+          "/images/projects/habits/tile-main.webp",
+          "/images/projects/habits/tile-geo.webp",
+          "/images/projects/habits/tile-onboard.webp",
+        ],
+      },
       {
         title: "Онбординг и регистрация",
         screens: [

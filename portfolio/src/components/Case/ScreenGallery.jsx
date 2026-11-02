@@ -10,6 +10,9 @@ import s from "./Case.module.css";
    Показывает скриншоты группами. Клик по скриншоту открывает
    его на весь экран.
 
+   collage: true — две плитки в ряд, третья крупная снизу
+   по центру. Так оформлена витрина HabitFlow.
+
    У группы можно указать wide: true — тогда плитки будут
    широкими. Это нужно для оформленных композиций, где на одной
    картинке сразу несколько телефонов: в узкой плитке они
@@ -42,7 +45,15 @@ export default function ScreenGallery({ groups }) {
             </p>
           )}
 
-          <div className={`${s.screenRow} ${group.wide ? s.screenRowWide : ""}`}>
+          <div
+            className={[
+              s.screenRow,
+              group.wide ? s.screenRowWide : "",
+              group.collage ? s.screenRowCollage : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
             {group.screens.map((src, i) => (
               <button
                 key={src}
