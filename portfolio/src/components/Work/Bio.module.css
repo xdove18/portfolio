@@ -113,6 +113,34 @@
   background: var(--accent);
 }
 
+/* ---------- КАРТОЧКА ПИСЬМА ----------
+   Небольшой снимок письма, который открывает сам файл.
+   Шириной с текст, не больше: это подтверждение, а не работа. */
+.letter {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  margin-bottom: 12px;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+
+  transition: border-color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+.letter:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+.letter img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .tools {
   font-size: var(--fs-body);
   line-height: var(--lh-body);

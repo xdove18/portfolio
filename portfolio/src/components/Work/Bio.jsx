@@ -1,6 +1,7 @@
 import { site } from "../../data/site";
 import { stack } from "../../data/stack";
 import { fixHangingWords } from "../../utils/typography";
+import { asset } from "../../utils/asset";
 import RichText from "../Case/RichText";
 import s from "./Bio.module.css";
 
@@ -60,6 +61,50 @@ export default function Bio() {
             </div>
           </div>
         ))}
+
+        {/* ---------- СИЛЬНЫЕ СТОРОНЫ ----------
+            Берутся из site.js, поле about.strengths. Если
+            список пустой — строка не появляется. */}
+        {about.strengths?.length > 0 && (
+          <div className={s.row}>
+            <div className={s.years}>{fixHangingWords("сильные стороны")}</div>
+            <div className={s.job}>
+              <ul className={s.points}>
+                {about.strengths.map((сторона, i) => (
+                  <li key={i}>
+                    <RichText>{`**${сторона.title}** — ${сторона.text}`}</RichText>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* ---------- ПИСЬМО ----------
+            Карточка ведёт на сам файл в public/letter.pdf.
+            Чтобы убрать строку, сотрите title у letter
+            в src/data/site.js. */}
+        {site.letter?.title && (
+          <div className={s.row}>
+            <div className={s.years}>{fixHangingWords("письмо")}</div>
+            <div className={s.job}>
+              <a
+                className={s.letter}
+                href={asset(site.letter.file)}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="image"
+              >
+                <img
+                  src={asset(site.letter.thumb)}
+                  alt={site.letter.title}
+                  loading="lazy"
+                />
+              </a>
+              <p className={s.jobText}>{site.letter.note}</p>
+            </div>
+          </div>
+        )}
 
         {/* ---------- ОБРАЗОВАНИЕ ---------- */}
         <div className={s.row}>
