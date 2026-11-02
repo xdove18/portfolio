@@ -7,7 +7,6 @@ import Footer from "../components/Footer/Footer";
 import Competitors from "../components/Case/Competitors";
 import ScreenGallery from "../components/Case/ScreenGallery";
 import Row from "../components/Case/Row";
-import Mascot from "../components/Case/Mascot";
 import HypothesisList from "../components/Case/HypothesisList";
 import FlowCompare from "../components/Case/FlowCompare";
 import FlowDiagram from "../components/Case/FlowDiagram";
@@ -510,9 +509,6 @@ export default function ProjectDetail() {
         <div className={s.layout}>
           {/* ================= ЛЕВАЯ КОЛОНКА ================= */}
           <aside className={s.sidebar}>
-            {/* Прокручивается только содержимое: полоска с котом
-                внизу должна оставаться на месте */}
-            <div className={s.sidebarScroll}>
             <Link to="/" className={s.back}>
               {fixHangingWords("← ко всем проектам")}
             </Link>
@@ -572,13 +568,6 @@ export default function ProjectDetail() {
                 </a>
               ))}
             </nav>
-            </div>
-
-            {/* Кот живёт здесь. Если он не нужен — достаточно
-                убрать эту строку, остальное не сломается. */}
-            <div className={s.mascot}>
-              <Mascot />
-            </div>
           </aside>
 
           {/* ================= ПРАВАЯ КОЛОНКА ================= */}
