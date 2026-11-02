@@ -33,7 +33,7 @@ import s from "../components/Case/Case.module.css";
    ------------------------------------------------------------
    КАК УСТРОЕНА ВЁРСТКА
    ------------------------------------------------------------
-   Любой текст стоит в ряду <Row label="подпись">: слева
+   Любой текст стоит в ряду <Row label="Подпись">: слева
    короткая подпись, справа узкая колонка текста. Подробнее —
    в файле src/components/Case/Row.jsx.
 
@@ -165,7 +165,7 @@ export default function ProjectDetail() {
 
         <h2 className={s.headline}>{project.headline}</h2>
 
-        <Row label="контекст">
+        <Row label="Контекст">
           <p className={s.intro}>
             <RichText>{project.intro}</RichText>
           </p>
@@ -178,13 +178,13 @@ export default function ProjectDetail() {
       <section className={s.block} id="task">
         <h2 className={s.blockTitle}>Задача</h2>
 
-        <Row label="проблема бизнеса">
+        <Row label="Проблема бизнеса">
           <p className={s.text}>
             <RichText>{project.problem.business}</RichText>
           </p>
         </Row>
 
-        <Row label="моя задача">
+        <Row label="Моя задача">
           <p className={s.text}>
             <RichText>{project.problem.designer}</RichText>
           </p>
@@ -201,7 +201,7 @@ export default function ProjectDetail() {
 
         {/* Вопросы, заданные бизнесу перед началом работы */}
         {project.problem.questionsToBusiness && (
-          <Row label="вопросы перед стартом">
+          <Row label="Вопросы перед стартом">
             <ul className={s.bullets}>
               {project.problem.questionsToBusiness.map((item, i) => (
                 <li key={i}><RichText>{item}</RichText></li>
@@ -221,7 +221,7 @@ export default function ProjectDetail() {
             «глубинные интервью», но в кейсе, где интервью
             не было, она будет другой: подпись не должна
             обещать то, чего в работе не было. */}
-        <Row label={project.research.methodTitle || "глубинные интервью"}>
+        <Row label={project.research.methodTitle || "Глубинные интервью"}>
           <p className={s.text}>
             <RichText>{project.research.method}</RichText>
           </p>
@@ -229,7 +229,7 @@ export default function ProjectDetail() {
 
         {/* Кто пользуется продуктом */}
         {project.research.audience && (
-          <Row label="кто эти люди">
+          <Row label="Кто эти люди">
             <p className={s.text}>
               <RichText>{project.research.audience}</RichText>
             </p>
@@ -252,7 +252,7 @@ export default function ProjectDetail() {
           </figure>
         )}
 
-        <Row label="что нашла">
+        <Row label="Что нашла">
           <ul className={s.bullets}>
             {project.research.findings.map((item, i) => (
               <li key={i}><RichText>{item}</RichText></li>
@@ -266,7 +266,7 @@ export default function ProjectDetail() {
             можно просто не заполнять — ряд исчезнет сам. */}
         {project.research.questions?.length > 0 && (
           <Row
-            label={project.research.questionsTitle || "вопросы для интервью"}
+            label={project.research.questionsTitle || "Вопросы для интервью"}
           >
             <ul className={s.bullets}>
               {project.research.questions.map((item, i) => (
@@ -277,7 +277,7 @@ export default function ProjectDetail() {
         )}
 
         {project.research.wanted?.length > 0 && (
-          <Row label="что хотели видеть">
+          <Row label="Что хотели видеть">
             <ul className={s.bullets}>
               {project.research.wanted.map((item, i) => (
                 <li key={i}>{item}</li>
@@ -331,7 +331,7 @@ export default function ProjectDetail() {
         {project.hypotheses?.length > 0 && (
           <>
             <h3 className={s.subTitle}>
-              {fixHangingWords("построение гипотез")}
+              {fixHangingWords("Построение гипотез")}
             </h3>
             <HypothesisList items={project.hypotheses} />
 
@@ -367,7 +367,7 @@ export default function ProjectDetail() {
             экранов, который и так виден ниже. */}
         {(project.flowDiagrams || project.flowCompare) && (
           <h3 className={s.subTitle}>
-            {fixHangingWords("путь пользователя")}
+            {fixHangingWords("Путь пользователя")}
           </h3>
         )}
 
@@ -402,7 +402,7 @@ export default function ProjectDetail() {
         <DemoVideo demo={project.demoVideo} />
 
         {/* Экраны приложения */}
-        <h3 className={s.subTitle}>{fixHangingWords("экраны приложения")}</h3>
+        <h3 className={s.subTitle}>{fixHangingWords("Экраны приложения")}</h3>
         {project.screensNote && (
           <p className={s.screenGroupNote}>
             <RichText>{project.screensNote}</RichText>
@@ -442,7 +442,7 @@ export default function ProjectDetail() {
 
         {/* Итог кейса своими словами */}
         {project.conclusion && (
-          <Row label="итог">
+          <Row label="Итог">
             <p className={s.text}>
               <RichText>{project.conclusion}</RichText>
             </p>
@@ -458,7 +458,7 @@ export default function ProjectDetail() {
             в портфолио, и то, что сразу отличает продуктового
             дизайнера от интерфейсного. */}
         {project.measure && (
-          <Row label="как пойму, что сработало">
+          <Row label="Как пойму, что сработало">
             <p className={s.measureText}>
               <RichText>{project.measure}</RichText>
             </p>
@@ -469,7 +469,7 @@ export default function ProjectDetail() {
             заполнен у проекта: признаваться не в чем —
             не признаёмся. */}
         {project.failures?.length > 0 && (
-          <Row label="что не получилось">
+          <Row label="Что не получилось">
             <ul className={s.failures}>
               {project.failures.map((item, i) => (
                 <li key={i}>
@@ -484,7 +484,7 @@ export default function ProjectDetail() {
             Если идей нет, лучше его не показывать, чем писать
             общие слова. */}
         {project.ideas?.length > 0 && (
-          <Row label="идеи для развития">
+          <Row label="Идеи для развития">
             <ul className={s.ideasList}>
               {project.ideas.map((idea, i) => (
                 <li key={i}>

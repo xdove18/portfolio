@@ -39,7 +39,6 @@
   font-family: var(--font-mono);
   font-size: var(--fs-tiny);
   line-height: var(--lh-tiny);
-  letter-spacing: var(--ls-label);
   color: var(--text-faint);
 }
 
@@ -48,17 +47,15 @@
   align-items: baseline;
   gap: 7px;
 
-  /* Та же метка, что и везде на кейсе: размер, насыщенность
-     и разрядка общие, свой у вердикта только цвет. */
-  font-size: var(--fs-tiny);
-  font-weight: 700;
-  line-height: var(--lh-tiny);
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
+  /* Та же подпись, что и везде на кейсе: размер
+     и насыщенность общие, свой у вердикта только цвет. */
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: var(--lh-small);
 }
 
 .sign {
-  font-size: var(--fs-tiny);
+  font-size: var(--fs-small);
   line-height: 1;
 }
 
@@ -99,11 +96,9 @@
   display: block;
   margin-bottom: 4px;
 
-  font-size: var(--fs-tiny);
-  font-weight: 700;
-  line-height: var(--lh-tiny);
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: var(--lh-small);
   color: var(--text-faint);
 }
 

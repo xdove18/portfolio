@@ -60,11 +60,8 @@
 
 .meta {
   margin-top: 6px;
-  font-size: var(--fs-tiny);
-  font-weight: 700;
-  line-height: var(--lh-tiny);
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-faint);
 }
 
@@ -78,16 +75,11 @@
 }
 
 .domains li {
-  /* Поля подрезаны с 9 до 7 точек: с разрядкой метки четыре
-     плашки не влезали в колонку ровно на три точки
-     и «E-COMMERCE» уезжала на вторую строку. */
-  padding: 4px 7px;
+  padding: 4px 9px;
 
-  font-size: var(--fs-tiny);
-  font-weight: 700;
-  line-height: var(--lh-tiny);
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: var(--lh-small);
   color: var(--text-muted);
 
   background: var(--bg-soft);

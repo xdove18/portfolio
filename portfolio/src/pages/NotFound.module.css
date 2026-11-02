@@ -56,7 +56,6 @@
   font-size: var(--fs-tiny);
   font-weight: 700;
   line-height: var(--lh-tiny);
-  letter-spacing: var(--ls-label);
   color: var(--text-muted);
   margin-bottom: 10px;
 }

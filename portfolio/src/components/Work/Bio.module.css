@@ -7,11 +7,10 @@
 }
 
 .title {
-  font-size: var(--fs-tiny);
-  font-weight: 700;
-  line-height: var(--lh-tiny);
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: var(--lh-small);
+  letter-spacing: normal;
   color: var(--text-faint);
   margin-bottom: 28px;
 }
@@ -45,13 +44,9 @@
 }
 
 .years {
-  font-size: var(--fs-tiny);
-  font-weight: 700;
-  line-height: var(--lh-tiny);
-  letter-spacing: var(--ls-label);
-  text-transform: uppercase;
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
   color: var(--text-faint);
-  font-family: var(--font-mono);
 
   /* Чуть ниже первой строки заголовка — так годы встают
      вровень с текстом, а не с его верхним краем */

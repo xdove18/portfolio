@@ -30,9 +30,9 @@ import s from "./HypothesisList.module.css";
 
 /* Подписи вердиктов по умолчанию */
 const ВЕРДИКТ = {
-  confirmed: "подтвердилась",
-  partly: "подтвердилась косвенно",
-  rejected: "опровергнута",
+  confirmed: "Подтвердилась",
+  partly: "Подтвердилась косвенно",
+  rejected: "Опровергнута",
 };
 
 export default function HypothesisList({ items }) {
@@ -68,7 +68,7 @@ export default function HypothesisList({ items }) {
               {item.how && (
                 <div className={s.part}>
                   <span className={s.partLabel}>
-                    {fixHangingWords("чем проверялась")}
+                    {fixHangingWords("Чем проверялась")}
                   </span>
                   <p className={s.partText}>
                     <RichText>{item.how}</RichText>
@@ -79,7 +79,7 @@ export default function HypothesisList({ items }) {
               {item.conclusion && (
                 <div className={s.part}>
                   <span className={s.partLabel}>
-                    {fixHangingWords("что из этого вышло")}
+                    {fixHangingWords("Что из этого вышло")}
                   </span>
                   <p className={s.partText}>
                     <RichText>{item.conclusion}</RichText>
