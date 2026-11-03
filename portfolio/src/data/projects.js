@@ -1092,16 +1092,17 @@ const проекты = [
     // ---------- ЭКРАНЫ ----------
     // Каждый экран открывается отдельно по клику
     screenGroups: [
-      /* Витрина: две плитки в ряд и крупная снизу.
-         Заголовка нет намеренно — она идёт сразу за текстом,
-         который её объясняет. */
+      /* Первые картинки кейса — две плашки в ряд.
+         collage: true ставит их ровно по две в ряд, иначе
+         они разъехались бы на четыре колонки и стали мелкими.
+         Заголовка нет намеренно: над ними текст, который
+         их и объясняет. */
       {
-        section: "overview",
+        section: "task",
         collage: true,
         screens: [
-          "/images/projects/habits/tile-main.webp",
-          "/images/projects/habits/tile-geo.webp",
-          "/images/projects/habits/tile-onboard.webp",
+          "/images/projects/habits/tile-pair-end.webp",
+          "/images/projects/habits/tile-privacy.webp",
         ],
       },
       {
