@@ -10,6 +10,9 @@ import s from "./Case.module.css";
    Показывает скриншоты группами. Клик по скриншоту открывает
    его на весь экран.
 
+   collage: true — две плитки в ряд, третья крупная снизу
+   по центру. Так оформлена витрина HabitFlow.
+
    У группы можно указать wide: true — тогда плитки будут
    широкими. Это нужно для оформленных композиций, где на одной
    картинке сразу несколько телефонов: в узкой плитке они
@@ -25,6 +28,25 @@ import s from "./Case.module.css";
    остальное откроется по клику, а на весь экран страница
    открывается с прокруткой, а не ужимается до нечитаемого.
    ============================================================ */
+
+/* Все группы экранов, относящиеся к одному разделу кейса.
+   Устроено так же, как TablesFor и TimelinesFor: у группы есть
+   поле section, и она появляется только в своём разделе.
+
+   Группы без section показываются в «решении» — так ведут себя
+   кейсы, где экраны идут одним блоком в конце.
+
+   Зачем это нужно: чтобы картинка стояла сразу после текста,
+   который её объясняет. Говорим о проблеме — показываем экран,
+   которым она решена. */
+export function ScreensFor({ groups, section }) {
+  if (!groups) return null;
+
+  const свои = groups.filter((g) => (g.section || "solution") === section);
+  if (свои.length === 0) return null;
+
+  return <ScreenGallery groups={свои} />;
+}
 
 export default function ScreenGallery({ groups }) {
   // Какой скриншот открыт во весь экран. null — лайтбокс закрыт.
@@ -42,7 +64,15 @@ export default function ScreenGallery({ groups }) {
             </p>
           )}
 
-          <div className={`${s.screenRow} ${group.wide ? s.screenRowWide : ""}`}>
+          <div
+            className={[
+              s.screenRow,
+              group.wide ? s.screenRowWide : "",
+              group.collage ? s.screenRowCollage : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
             {group.screens.map((src, i) => (
               <button
                 key={src}
