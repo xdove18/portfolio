@@ -476,6 +476,11 @@ export default function ProjectDetail() {
           accent={project.color}
         />
 
+        {/* Короткие блоки и экраны этого раздела: например,
+            как прошёл юзабилити-тест или что в итоге выпущено */}
+        <CaseRows rows={project.rows} section="result" />
+        <ScreensFor groups={project.screenGroups} section="result" />
+
         {/* Итог кейса своими словами */}
         {project.conclusion && (
           <Row label="Итог">
