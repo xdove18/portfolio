@@ -7,6 +7,7 @@ import Footer from "../components/Footer/Footer";
 import Competitors from "../components/Case/Competitors";
 import { ScreensFor } from "../components/Case/ScreenGallery";
 import Row from "../components/Case/Row";
+import CaseRows from "../components/Case/CaseRows";
 import HypothesisList from "../components/Case/HypothesisList";
 import FlowCompare from "../components/Case/FlowCompare";
 import FlowDiagram from "../components/Case/FlowDiagram";
@@ -76,7 +77,13 @@ function buildSections(project) {
     /* Раздел «рынок» появляется только у кейсов, где разобраны
        конкуренты. У остальных его в оглавлении нет. */
     .filter((id) => (id === "market" ? hasMarket : true))
-    .map((id) => ({ id, label: НАЗВАНИЯ[id] }));
+    .map((id) => ({
+      id,
+      /* Кейс может переименовать раздел полем sectionTitles.
+         Например, у HabitFlow в «аудитории» не аудитория,
+         а ход работы: интервью, конкуренты, гипотеза. */
+      label: (project.sectionTitles?.[id] || НАЗВАНИЯ[id]).toLowerCase(),
+    }));
 }
 
 export default function ProjectDetail() {
@@ -137,6 +144,9 @@ export default function ProjectDetail() {
      в src/data/projects.js. Благодаря этому у разных кейсов
      порядок может быть разным: где-то сначала рынок,
      где-то сначала аудитория. */
+  /* Название раздела: своё у кейса или общее */
+  const назвать = (id, общее) => project.sectionTitles?.[id] || общее;
+
   const блоки = {
     // ---------- ОБЗОР ----------
     overview: (
@@ -171,6 +181,7 @@ export default function ProjectDetail() {
           </p>
         </Row>
 
+        <CaseRows rows={project.rows} section="overview" />
         <ScreensFor groups={project.screenGroups} section="overview" />
       </section>
     ),
@@ -178,7 +189,7 @@ export default function ProjectDetail() {
     // ---------- ЗАДАЧА ----------
     task: (
       <section className={s.block} id="task">
-        <h2 className={s.blockTitle}>Задача</h2>
+        <h2 className={s.blockTitle}>{назвать("task", "Задача")}</h2>
 
         <Row label="Проблема бизнеса">
           <p className={s.text}>
@@ -201,6 +212,8 @@ export default function ProjectDetail() {
           accent={project.color}
         />
 
+        <CaseRows rows={project.rows} section="task" />
+
         {/* Экраны этого раздела: показываем решение сразу
             после того, как назвали проблему */}
         <ScreensFor groups={project.screenGroups} section="task" />
@@ -221,7 +234,7 @@ export default function ProjectDetail() {
     // ---------- АУДИТОРИЯ ----------
     audience: (
       <section className={s.block} id="audience">
-        <h2 className={s.blockTitle}>Аудитория</h2>
+        <h2 className={s.blockTitle}>{назвать("audience", "Аудитория")}</h2>
 
         {/* Подпись берётся из проекта. По умолчанию
             «глубинные интервью», но в кейсе, где интервью
@@ -258,13 +271,15 @@ export default function ProjectDetail() {
           </figure>
         )}
 
-        <Row label="Что нашла">
-          <ul className={s.bullets}>
-            {project.research.findings.map((item, i) => (
-              <li key={i}><RichText>{item}</RichText></li>
-            ))}
-          </ul>
-        </Row>
+        {project.research.findings?.length > 0 && (
+          <Row label="Что нашла">
+            <ul className={s.bullets}>
+              {project.research.findings.map((item, i) => (
+                <li key={i}><RichText>{item}</RichText></li>
+              ))}
+            </ul>
+          </Row>
+        )}
 
         {/* Вопросы интервью и пожелания пользователей.
             Каждый список появляется, только если заполнен:
@@ -307,6 +322,7 @@ export default function ProjectDetail() {
           accent={project.color}
         />
 
+        <CaseRows rows={project.rows} section="audience" />
         <ScreensFor groups={project.screenGroups} section="audience" />
       </section>
     ),
@@ -330,7 +346,7 @@ export default function ProjectDetail() {
     // ---------- РЕШЕНИЕ ----------
     solution: (
       <section className={s.block} id="solution">
-        <h2 className={s.blockTitle}>Решение</h2>
+        <h2 className={s.blockTitle}>{назвать("solution", "Решение")}</h2>
 
         {/* Гипотезы. Блок появляется, только если они
             описаны у проекта. У самого списка слева уже есть
@@ -423,6 +439,7 @@ export default function ProjectDetail() {
             </p>
           </>
         )}
+        <CaseRows rows={project.rows} section="solution" />
         <ScreensFor groups={project.screenGroups} section="solution" />
       </section>
     ),
@@ -430,7 +447,7 @@ export default function ProjectDetail() {
     // ---------- РЕЗУЛЬТАТ ----------
     result: (
       <section className={s.block} id="result">
-        <h2 className={s.blockTitle}>Результат</h2>
+        <h2 className={s.blockTitle}>{назвать("result", "Результат")}</h2>
 
         <div className={s.results}>
           {(project.results || []).map((item, i) => (

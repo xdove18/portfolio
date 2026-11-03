@@ -55,8 +55,11 @@ export default function ScreenGallery({ groups }) {
   return (
     <>
       {groups.map((group) => (
-        <div className={s.screenGroup} key={group.title}>
-          <h3 className={s.blockName}>{group.title}</h3>
+        <div className={s.screenGroup} key={group.screens[0]}>
+          {/* Заголовок необязателен: там, где картинка идёт
+              сразу за текстом, который её объясняет, подпись
+              вроде «Как это выглядит» только мешает. */}
+          {group.title && <h3 className={s.blockName}>{group.title}</h3>}
 
           {group.note && (
             <p className={s.screenGroupNote}>
