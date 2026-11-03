@@ -1,4 +1,4 @@
-﻿import { Fragment, useEffect, useState } from "react";
+﻿import { Fragment, useEffect, useRef, useState } from "react";
 import { fixHangingWords } from "../utils/typography";
 import { Link, useParams } from "react-router-dom";
 import { getProject } from "../data/projects";
@@ -13,7 +13,6 @@ import FlowCompare from "../components/Case/FlowCompare";
 import FlowDiagram from "../components/Case/FlowDiagram";
 import { TablesFor } from "../components/Case/CaseTable";
 import { TimelinesFor } from "../components/Case/Timeline";
-import { thumb } from "../components/Case/imagePath";
 import { asset } from "../utils/asset";
 import RichText from "../components/Case/RichText";
 import DemoVideo from "../components/Case/DemoVideo";
@@ -92,6 +91,14 @@ export default function ProjectDetail() {
 
   const [activeSection, setActiveSection] = useState("overview");
 
+  /* Ссылка «ко всем проектам» стоит над обложкой. Когда
+     обложка уезжает вверх, ссылка пропадает с экрана —
+     и из середины кейса становится некуда вернуться.
+     Поэтому следим за обложкой: как только она ушла,
+     такая же ссылка разворачивается в боковой панели. */
+  const обложка = useRef(null);
+  const [обложкаУшла, setОбложкаУшла] = useState(false);
+
   /* Подсветка активного пункта оглавления при прокрутке.
      Работает так же, как в шапке сайта. */
   useEffect(() => {
@@ -112,6 +119,23 @@ export default function ProjectDetail() {
     });
 
     return () => observer.disconnect();
+  }, [project]);
+
+  /* Следим за обложкой: пока хоть край её виден, ссылка
+     в панели не нужна. */
+  useEffect(() => {
+    if (!project) return;
+
+    const блок = обложка.current;
+    if (!блок) return;
+
+    const наблюдатель = new IntersectionObserver(
+      ([запись]) => setОбложкаУшла(!запись.isIntersecting),
+      { threshold: 0 }
+    );
+
+    наблюдатель.observe(блок);
+    return () => наблюдатель.disconnect();
   }, [project]);
 
   /* Заголовок вкладки браузера и описание для поисковиков */
@@ -151,28 +175,8 @@ export default function ProjectDetail() {
     // ---------- ОБЗОР ----------
     overview: (
       <section id="overview">
-        {/* Обложка на нейтральной серой плашке — такой же,
-            как в стопке кейсов на главной. Цвет проекта
-            остаётся только в мелких деталях: плашке ниши,
-            цифрах результата, маркерах. */}
-        <div
-          className={`${s.cover} ${project.coverWide ? s.coverWide : ""}`}
-        >
-          {/* Обложка не кликается, поэтому метку data-cursor
-              здесь не ставим — надпись «нажми на меня»
-              появляется только там, где клик что-то делает */}
-          {project.cover.map((src) => (
-            <img
-              key={src}
-              /* Обложка показывается небольшой, поэтому
-                 берём лёгкую копию */
-              src={thumb(src)}
-              alt=""
-              className={s.coverShot}
-            />
-          ))}
-        </div>
-
+        {/* Обложка стоит выше, над боковой панелью. Раздел
+            «обзор» начинается сразу с заголовка кейса. */}
         <h2 className={s.headline}>{project.headline}</h2>
 
         <Row label="Контекст">
@@ -538,10 +542,64 @@ export default function ProjectDetail() {
           сайта доступны из футера. Так ничего не перекрывает
           обложку и не отвлекает от чтения. */}
       <main className={s.page}>
+        {/* ================= ОБЛОЖКА ================= */}
+        {/* Страница начинается с большой картинки во всю
+            ширину. Колонки — панель слева и текст справа —
+            идут уже под ней.
+
+            Какая это картинка, задаётся в projects.js:
+              heroImage — одна широкая фотография (например,
+                          макет из Figma целиком);
+              cover     — плашка с экранами, если отдельной
+                          обложки у кейса пока нет. */}
+        <div className={s.heroWrap} ref={обложка}>
+          <Link to="/" className={s.back}>
+            {fixHangingWords("← ко всем проектам")}
+          </Link>
+
+          {project.heroImage ? (
+            <img
+              className={s.hero}
+              src={asset(project.heroImage)}
+              alt=""
+            />
+          ) : (
+            <div
+              className={`${s.cover} ${project.coverWide ? s.coverWide : ""}`}
+            >
+              {/* Обложка не кликается, поэтому метку data-cursor
+                  здесь не ставим — надпись «нажми на меня»
+                  появляется только там, где клик что-то делает.
+
+                  Берём полную картинку, а не уменьшенную копию:
+                  обложка теперь во всю ширину страницы, и на
+                  лёгкой копии видно, что она мылит. */}
+              {project.cover.map((src) => (
+                <img
+                  key={src}
+                  src={asset(src)}
+                  alt=""
+                  className={s.coverShot}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
         <div className={s.layout}>
           {/* ================= ЛЕВАЯ КОЛОНКА ================= */}
           <aside className={s.sidebar}>
-            <Link to="/" className={s.back}>
+            {/* Та же ссылка, что над обложкой. Пока обложка
+                на экране, она свёрнута в ноль и её не видно;
+                когда обложка уехала — разворачивается. */}
+            <Link
+              to="/"
+              className={`${s.backSide} ${
+                обложкаУшла ? s.backSideShown : ""
+              }`}
+              tabIndex={обложкаУшла ? 0 : -1}
+              aria-hidden={!обложкаУшла}
+            >
               {fixHangingWords("← ко всем проектам")}
             </Link>
 
