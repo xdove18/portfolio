@@ -1,4 +1,4 @@
-﻿import { Fragment, useEffect, useState } from "react";
+﻿import { Fragment, useEffect, useRef, useState } from "react";
 import { fixHangingWords } from "../utils/typography";
 import { Link, useParams } from "react-router-dom";
 import { getProject } from "../data/projects";
@@ -7,12 +7,12 @@ import Footer from "../components/Footer/Footer";
 import Competitors from "../components/Case/Competitors";
 import { ScreensFor } from "../components/Case/ScreenGallery";
 import Row from "../components/Case/Row";
+import CaseRows from "../components/Case/CaseRows";
 import HypothesisList from "../components/Case/HypothesisList";
 import FlowCompare from "../components/Case/FlowCompare";
 import FlowDiagram from "../components/Case/FlowDiagram";
 import { TablesFor } from "../components/Case/CaseTable";
 import { TimelinesFor } from "../components/Case/Timeline";
-import { thumb } from "../components/Case/imagePath";
 import { asset } from "../utils/asset";
 import RichText from "../components/Case/RichText";
 import DemoVideo from "../components/Case/DemoVideo";
@@ -76,7 +76,13 @@ function buildSections(project) {
     /* Раздел «рынок» появляется только у кейсов, где разобраны
        конкуренты. У остальных его в оглавлении нет. */
     .filter((id) => (id === "market" ? hasMarket : true))
-    .map((id) => ({ id, label: НАЗВАНИЯ[id] }));
+    .map((id) => ({
+      id,
+      /* Кейс может переименовать раздел полем sectionTitles.
+         Например, у HabitFlow в «аудитории» не аудитория,
+         а ход работы: интервью, конкуренты, гипотеза. */
+      label: (project.sectionTitles?.[id] || НАЗВАНИЯ[id]).toLowerCase(),
+    }));
 }
 
 export default function ProjectDetail() {
@@ -84,6 +90,14 @@ export default function ProjectDetail() {
   const project = getProject(slug);
 
   const [activeSection, setActiveSection] = useState("overview");
+
+  /* Ссылка «ко всем проектам» стоит над обложкой. Когда
+     обложка уезжает вверх, ссылка пропадает с экрана —
+     и из середины кейса становится некуда вернуться.
+     Поэтому следим за обложкой: как только она ушла,
+     такая же ссылка разворачивается в боковой панели. */
+  const обложка = useRef(null);
+  const [обложкаУшла, setОбложкаУшла] = useState(false);
 
   /* Подсветка активного пункта оглавления при прокрутке.
      Работает так же, как в шапке сайта. */
@@ -105,6 +119,23 @@ export default function ProjectDetail() {
     });
 
     return () => observer.disconnect();
+  }, [project]);
+
+  /* Следим за обложкой: пока хоть край её виден, ссылка
+     в панели не нужна. */
+  useEffect(() => {
+    if (!project) return;
+
+    const блок = обложка.current;
+    if (!блок) return;
+
+    const наблюдатель = new IntersectionObserver(
+      ([запись]) => setОбложкаУшла(!запись.isIntersecting),
+      { threshold: 0 }
+    );
+
+    наблюдатель.observe(блок);
+    return () => наблюдатель.disconnect();
   }, [project]);
 
   /* Заголовок вкладки браузера и описание для поисковиков */
@@ -137,32 +168,15 @@ export default function ProjectDetail() {
      в src/data/projects.js. Благодаря этому у разных кейсов
      порядок может быть разным: где-то сначала рынок,
      где-то сначала аудитория. */
+  /* Название раздела: своё у кейса или общее */
+  const назвать = (id, общее) => project.sectionTitles?.[id] || общее;
+
   const блоки = {
     // ---------- ОБЗОР ----------
     overview: (
       <section id="overview">
-        {/* Обложка на нейтральной серой плашке — такой же,
-            как в стопке кейсов на главной. Цвет проекта
-            остаётся только в мелких деталях: плашке ниши,
-            цифрах результата, маркерах. */}
-        <div
-          className={`${s.cover} ${project.coverWide ? s.coverWide : ""}`}
-        >
-          {/* Обложка не кликается, поэтому метку data-cursor
-              здесь не ставим — надпись «нажми на меня»
-              появляется только там, где клик что-то делает */}
-          {project.cover.map((src) => (
-            <img
-              key={src}
-              /* Обложка показывается небольшой, поэтому
-                 берём лёгкую копию */
-              src={thumb(src)}
-              alt=""
-              className={s.coverShot}
-            />
-          ))}
-        </div>
-
+        {/* Обложка стоит выше, над боковой панелью. Раздел
+            «обзор» начинается сразу с заголовка кейса. */}
         <h2 className={s.headline}>{project.headline}</h2>
 
         <Row label="Контекст">
@@ -171,6 +185,7 @@ export default function ProjectDetail() {
           </p>
         </Row>
 
+        <CaseRows rows={project.rows} section="overview" />
         <ScreensFor groups={project.screenGroups} section="overview" />
       </section>
     ),
@@ -178,7 +193,7 @@ export default function ProjectDetail() {
     // ---------- ЗАДАЧА ----------
     task: (
       <section className={s.block} id="task">
-        <h2 className={s.blockTitle}>Задача</h2>
+        <h2 className={s.blockTitle}>{назвать("task", "Задача")}</h2>
 
         <Row label="Проблема бизнеса">
           <p className={s.text}>
@@ -201,6 +216,8 @@ export default function ProjectDetail() {
           accent={project.color}
         />
 
+        <CaseRows rows={project.rows} section="task" />
+
         {/* Экраны этого раздела: показываем решение сразу
             после того, как назвали проблему */}
         <ScreensFor groups={project.screenGroups} section="task" />
@@ -221,7 +238,7 @@ export default function ProjectDetail() {
     // ---------- АУДИТОРИЯ ----------
     audience: (
       <section className={s.block} id="audience">
-        <h2 className={s.blockTitle}>Аудитория</h2>
+        <h2 className={s.blockTitle}>{назвать("audience", "Аудитория")}</h2>
 
         {/* Подпись берётся из проекта. По умолчанию
             «глубинные интервью», но в кейсе, где интервью
@@ -258,13 +275,15 @@ export default function ProjectDetail() {
           </figure>
         )}
 
-        <Row label="Что нашла">
-          <ul className={s.bullets}>
-            {project.research.findings.map((item, i) => (
-              <li key={i}><RichText>{item}</RichText></li>
-            ))}
-          </ul>
-        </Row>
+        {project.research.findings?.length > 0 && (
+          <Row label="Что нашла">
+            <ul className={s.bullets}>
+              {project.research.findings.map((item, i) => (
+                <li key={i}><RichText>{item}</RichText></li>
+              ))}
+            </ul>
+          </Row>
+        )}
 
         {/* Вопросы интервью и пожелания пользователей.
             Каждый список появляется, только если заполнен:
@@ -307,6 +326,7 @@ export default function ProjectDetail() {
           accent={project.color}
         />
 
+        <CaseRows rows={project.rows} section="audience" />
         <ScreensFor groups={project.screenGroups} section="audience" />
       </section>
     ),
@@ -330,7 +350,7 @@ export default function ProjectDetail() {
     // ---------- РЕШЕНИЕ ----------
     solution: (
       <section className={s.block} id="solution">
-        <h2 className={s.blockTitle}>Решение</h2>
+        <h2 className={s.blockTitle}>{назвать("solution", "Решение")}</h2>
 
         {/* Гипотезы. Блок появляется, только если они
             описаны у проекта. У самого списка слева уже есть
@@ -423,6 +443,7 @@ export default function ProjectDetail() {
             </p>
           </>
         )}
+        <CaseRows rows={project.rows} section="solution" />
         <ScreensFor groups={project.screenGroups} section="solution" />
       </section>
     ),
@@ -430,7 +451,7 @@ export default function ProjectDetail() {
     // ---------- РЕЗУЛЬТАТ ----------
     result: (
       <section className={s.block} id="result">
-        <h2 className={s.blockTitle}>Результат</h2>
+        <h2 className={s.blockTitle}>{назвать("result", "Результат")}</h2>
 
         <div className={s.results}>
           {(project.results || []).map((item, i) => (
@@ -454,6 +475,11 @@ export default function ProjectDetail() {
           section="result"
           accent={project.color}
         />
+
+        {/* Короткие блоки и экраны этого раздела: например,
+            как прошёл юзабилити-тест или что в итоге выпущено */}
+        <CaseRows rows={project.rows} section="result" />
+        <ScreensFor groups={project.screenGroups} section="result" />
 
         {/* Итог кейса своими словами */}
         {project.conclusion && (
@@ -521,10 +547,64 @@ export default function ProjectDetail() {
           сайта доступны из футера. Так ничего не перекрывает
           обложку и не отвлекает от чтения. */}
       <main className={s.page}>
+        {/* ================= ОБЛОЖКА ================= */}
+        {/* Страница начинается с большой картинки во всю
+            ширину. Колонки — панель слева и текст справа —
+            идут уже под ней.
+
+            Какая это картинка, задаётся в projects.js:
+              heroImage — одна широкая фотография (например,
+                          макет из Figma целиком);
+              cover     — плашка с экранами, если отдельной
+                          обложки у кейса пока нет. */}
+        <div className={s.heroWrap} ref={обложка}>
+          <Link to="/" className={s.back}>
+            {fixHangingWords("← ко всем проектам")}
+          </Link>
+
+          {project.heroImage ? (
+            <img
+              className={s.hero}
+              src={asset(project.heroImage)}
+              alt=""
+            />
+          ) : (
+            <div
+              className={`${s.cover} ${project.coverWide ? s.coverWide : ""}`}
+            >
+              {/* Обложка не кликается, поэтому метку data-cursor
+                  здесь не ставим — надпись «нажми на меня»
+                  появляется только там, где клик что-то делает.
+
+                  Берём полную картинку, а не уменьшенную копию:
+                  обложка теперь во всю ширину страницы, и на
+                  лёгкой копии видно, что она мылит. */}
+              {project.cover.map((src) => (
+                <img
+                  key={src}
+                  src={asset(src)}
+                  alt=""
+                  className={s.coverShot}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
         <div className={s.layout}>
           {/* ================= ЛЕВАЯ КОЛОНКА ================= */}
           <aside className={s.sidebar}>
-            <Link to="/" className={s.back}>
+            {/* Та же ссылка, что над обложкой. Пока обложка
+                на экране, она свёрнута в ноль и её не видно;
+                когда обложка уехала — разворачивается. */}
+            <Link
+              to="/"
+              className={`${s.backSide} ${
+                обложкаУшла ? s.backSideShown : ""
+              }`}
+              tabIndex={обложкаУшла ? 0 : -1}
+              aria-hidden={!обложкаУшла}
+            >
               {fixHangingWords("← ко всем проектам")}
             </Link>
 
