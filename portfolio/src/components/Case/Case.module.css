@@ -1450,10 +1450,26 @@
   justify-self: center;
 }
 
+/* ---------- КОЛЛАЖ НАОБОРОТ ----------
+   Одна широкая картинка сверху во всю колонку, под ней
+   остальные в два столбца. Включается полем collageTop: true
+   у группы экранов.
+
+   Нужен там, где сверху ноутбук с целой страницей, а под ним
+   два вынесенных куска интерфейса: форма и этапы. */
+.screenRowCollageTop {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.screenRowCollageTop > *:first-child {
+  grid-column: 1 / -1;
+}
+
 /* На телефоне две плитки в ряд превращаются в две марки —
    лучше одна под другой */
 @media (max-width: 760px) {
-  .screenRowCollage {
+  .screenRowCollage,
+  .screenRowCollageTop {
     grid-template-columns: minmax(0, 1fr);
   }
 }
