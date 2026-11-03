@@ -72,6 +72,9 @@ export default function ScreenGallery({ groups }) {
               s.screenRow,
               group.wide ? s.screenRowWide : "",
               group.collage ? s.screenRowCollage : "",
+              /* Коллаж наоборот: широкая картинка сверху,
+                 остальные под ней в два столбца */
+              group.collageTop ? s.screenRowCollageTop : "",
             ]
               .filter(Boolean)
               .join(" ")}

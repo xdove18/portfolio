@@ -1332,12 +1332,38 @@
 /* Название группы экранов — такое же, как у таблицы и ленты */
 
 /* Пояснение под заголовком группы экранов */
+/* Пояснение между картинками.
+
+   Выключка по формату: правый край ровный, как левый.
+   Чтобы в строках не появлялись «дыры» между словами,
+   включены переносы — браузер сам делит длинные слова
+   по слогам (на странице стоит lang="ru", по нему он
+   и знает правила переноса). */
 .screenGroupNote {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   color: var(--text-muted);
-  max-width: var(--read-case);
+
+  /* Во всю ширину картинки, а не в узкую колонку: подпись
+     и снимок начинаются и заканчиваются на одной линии.
+     Вернуть узкую строку — поставить тут var(--read-case). */
+  max-width: 100%;
   margin-bottom: 18px;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* На телефоне строка короткая: при выключке по формату
+   дыры между словами становятся заметными, поэтому там
+   текст прижат влево. */
+@media (max-width: 640px) {
+  .screenGroupNote {
+    text-align: left;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+  }
 }
 
 /* Сетка скриншотов.
@@ -1450,10 +1476,26 @@
   justify-self: center;
 }
 
+/* ---------- КОЛЛАЖ НАОБОРОТ ----------
+   Одна широкая картинка сверху во всю колонку, под ней
+   остальные в два столбца. Включается полем collageTop: true
+   у группы экранов.
+
+   Нужен там, где сверху ноутбук с целой страницей, а под ним
+   два вынесенных куска интерфейса: форма и этапы. */
+.screenRowCollageTop {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.screenRowCollageTop > *:first-child {
+  grid-column: 1 / -1;
+}
+
 /* На телефоне две плитки в ряд превращаются в две марки —
    лучше одна под другой */
 @media (max-width: 760px) {
-  .screenRowCollage {
+  .screenRowCollage,
+  .screenRowCollageTop {
     grid-template-columns: minmax(0, 1fr);
   }
 }
