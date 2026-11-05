@@ -425,10 +425,6 @@ export default function ProjectDetail() {
           />
         ) : null}
 
-        {/* Демо-видео: показываем сценарий вживую,
-            до того как разбирать отдельные экраны */}
-        <DemoVideo demo={project.demoVideo} />
-
         {/* Экраны этого раздела. Подпись «Экраны приложения»
             появляется, только если у кейса есть вступление
             к ним: там, где экраны разложены по разделам,
@@ -445,6 +441,12 @@ export default function ProjectDetail() {
         )}
         <CaseRows rows={project.rows} section="solution" />
         <ScreensFor groups={project.screenGroups} section="solution" />
+
+        {/* Демо-видео в самом конце раздела: сначала человек
+            смотрит картинки и читает, что к чему, и только
+            потом — как это работает вживую. Видео тяжелее
+            картинок, и внизу оно не задерживает чтение. */}
+        <DemoVideo demo={project.demoVideo} />
       </section>
     ),
 

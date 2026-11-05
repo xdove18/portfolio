@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import Lightbox from "./Lightbox";
+import ScreenSlider from "./ScreenSlider";
 import RichText from "./RichText";
 import { thumb } from "./imagePath";
 import s from "./Case.module.css";
@@ -85,6 +86,22 @@ export default function ScreenGallery({ groups }) {
             </p>
           )}
 
+          {/* slider: true — экраны листаются по одному, а не
+              стоят подряд. Так второстепенная группа не
+              растягивает страницу. */}
+          {group.slider ? (
+            <ScreenSlider
+              group={group}
+              alt={подписьКартинки(group)}
+              onOpen={(i) =>
+                setLightbox({
+                  screens: group.screens,
+                  index: i,
+                  tall: group.tall,
+                })
+              }
+            />
+          ) : (
           <div
             className={[
               s.screenRow,
@@ -126,6 +143,7 @@ export default function ScreenGallery({ groups }) {
               </button>
             ))}
           </div>
+          )}
         </div>
       ))}
 

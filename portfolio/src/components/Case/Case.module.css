@@ -3,6 +3,29 @@
    ============================================================ */
 
 .page {
+  /* ----------------------------------------------------------
+     ШИРИНА СТРАНИЦЫ КЕЙСА
+     ----------------------------------------------------------
+     --case-width  вся страница вместе с боковыми отступами
+     --rail        ширина боковой панели слева
+     --rail-gap    промежуток между панелью и содержимым
+
+     Содержимому достаётся всё остальное. При нынешних числах
+     и отступах по 40 это 1180 точек — на них и раскрываются
+     картинки, коллажи и схемы.
+
+     Хотите дизайну ещё больше места — увеличьте --case-width
+     или уменьшите --rail. Ширина текста отсюда не зависит:
+     она своя, в variables.css (--read-case).
+
+     Важно: картинки должны быть примерно в полтора раза шире,
+     чем место под них, иначе они замылятся. Под 1180 точек
+     лёгкие копии плиток сделаны шириной 1800.
+     ---------------------------------------------------------- */
+  --case-width: 1540px;
+  --rail: 220px;
+  --rail-gap: 60px;
+
   /* Сверху чуть больше: шапки над страницей кейса больше нет,
      и содержимое иначе начиналось бы впритык к краю окна */
   padding-block: 56px 100px;
@@ -25,7 +48,7 @@
      чем больше второе число, тем выше обложка. */
   --cover: 1300 / 718;
 
-  max-width: 1380px;
+  max-width: var(--case-width);
   margin: 0 auto 64px;
   padding-inline: var(--pad-side);
 }
@@ -47,16 +70,20 @@
 /* Две колонки: узкое оглавление слева, контент справа */
 .layout {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 70px;
+  grid-template-columns: var(--rail) 1fr;
+  gap: var(--rail-gap);
   width: 100%;
 
   /* Шире, чем на остальных страницах. Текст занимает только
      часть колонки (подпись 180 + промежуток 36 + текст 520 =
      736), а картинки, схемы и видео разворачиваются во всю
-     ширину — около 970 точек. Этот разрыв и даёт воздух:
-     читаешь узкую строку, смотришь большую картинку. */
-  max-width: 1380px;
+     ширину. Этот разрыв и даёт воздух: читаешь узкую строку,
+     смотришь большую картинку.
+
+     Ширина страницы и панели собраны в переменные ниже:
+     поменяете одно число — подвинется и обложка, и колонки,
+     потому что обложка берёт ширину отсюда же. */
+  max-width: var(--case-width);
   margin: 0 auto;
   padding-inline: var(--pad-side);
 }
@@ -679,7 +706,8 @@
 .researchPhoto img {
   display: block;
   width: 100%;
-  border-radius: var(--radius-sm);
+  /* То же скругление, что у остальных картинок кейса */
+  border-radius: var(--radius);
   border: 1px solid var(--line);
 }
 
@@ -1397,9 +1425,17 @@
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.24));
 }
 
+/* Скругление углов задаётся здесь — одно на все картинки
+   кейса: обложку, плитки, слайдер и снимки страниц целиком.
+   Раньше его не было вовсе, и каждая картинка скруглялась
+   сама по себе: у плиток из макетов было своё скругление
+   в 40 точек, у снимков страниц — 12, у обложки — 20, и на
+   одной странице встречались углы трёх разных радиусов.
+   Поэтому плитки пересняты прямоугольниками. */
 .screenThumb img {
   width: 100%;
   display: block;
+  border-radius: var(--radius);
 }
 
 /* ---------- СНИМОК СТРАНИЦЫ ЦЕЛИКОМ ----------
@@ -1410,7 +1446,7 @@
 .screenThumbTall {
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: var(--radius);
 }
 
 .screenThumbTall img {
@@ -1474,6 +1510,104 @@
   width: 100%;
   max-width: 610px;
   justify-self: center;
+}
+
+/* ============================================================
+   СЛАЙДЕР ЭКРАНОВ
+   ============================================================
+   Экраны листаются по одному. Включается полем slider: true
+   у группы в projects.js. Описание — в ScreenSlider.jsx.
+   ============================================================ */
+.slider {
+  margin-top: 4px;
+}
+
+/* Лента прокручивается вбок силами самого браузера.
+   scroll-snap-type прилипает к границе экрана, поэтому лента
+   никогда не останавливается на половине картинки. */
+.sliderTrack {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  border-radius: var(--radius);
+
+  /* Полосу прокрутки прячем: листают стрелками, точками
+     или смахивающим жестом */
+  scrollbar-width: none;
+}
+
+.sliderTrack::-webkit-scrollbar {
+  display: none;
+}
+
+.sliderSlide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: block;
+  min-width: 0;
+}
+
+.sliderSlide img {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+/* Стрелки и точки под лентой */
+.sliderBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.sliderArrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-white);
+  color: var(--text-strong);
+  font-size: var(--fs-body);
+  line-height: 1;
+  transition: opacity var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+}
+
+.sliderArrow:hover:not(:disabled) {
+  background: var(--bg-grey);
+}
+
+/* Крайний экран: стрелка гаснет, а не исчезает — иначе точки
+   подпрыгивали бы вбок на первом и последнем экране. */
+.sliderArrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.sliderDots {
+  display: flex;
+  gap: 8px;
+}
+
+.sliderDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  opacity: 0.4;
+  transition: opacity var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+}
+
+.sliderDot:hover {
+  opacity: 0.7;
+}
+
+.sliderDotActive {
+  background: var(--accent);
+  opacity: 1;
 }
 
 /* ---------- КОЛЛАЖ НАОБОРОТ ----------
