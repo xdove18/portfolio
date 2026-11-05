@@ -17,6 +17,7 @@ import { asset } from "../utils/asset";
 import RichText from "../components/Case/RichText";
 import DemoVideo from "../components/Case/DemoVideo";
 import Flower from "../components/Flower/Flower";
+import CatMascot from "../components/Cat/CatMascot";
 import { CheckIcon } from "../components/icons/Icons";
 import NotFound from "./NotFound";
 import s from "../components/Case/Case.module.css";
@@ -670,6 +671,14 @@ export default function ProjectDetail() {
                 </a>
               ))}
             </nav>
+
+            {/* Кошка живёт внизу панели. На узком экране панель
+                разворачивается поперёк страницы, и кошка
+                оказывается на черте под «ролью, годом
+                и инструментами» — так и задумано. */}
+            <div className={s.catRail}>
+              <CatMascot />
+            </div>
           </aside>
 
           {/* ================= ПРАВАЯ КОЛОНКА ================= */}
