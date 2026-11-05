@@ -566,7 +566,9 @@ export default function ProjectDetail() {
             <img
               className={s.hero}
               src={asset(project.heroImage)}
-              alt=""
+              /* Подпись для поиска по картинкам и для экранного
+                 диктора: название кейса и о чём он */
+              alt={`${project.title} — ${project.tagline}`}
             />
           ) : (
             <div
@@ -579,11 +581,14 @@ export default function ProjectDetail() {
                   Берём полную картинку, а не уменьшенную копию:
                   обложка теперь во всю ширину страницы, и на
                   лёгкой копии видно, что она мылит. */}
-              {project.cover.map((src) => (
+              {project.cover.map((src, i) => (
                 <img
                   key={src}
                   src={asset(src)}
-                  alt=""
+                  /* Подпись только у первого экрана: остальные
+                     в плашке — та же работа с другого ракурса,
+                     и повторять её название незачем. */
+                  alt={i === 0 ? `${project.title} — ${project.tagline}` : ""}
                   className={s.coverShot}
                 />
               ))}
