@@ -1,4 +1,4 @@
-import { fixHangingWordsDeep } from "../utils/typography";
+import { fixHangingWordsDeep } from "../utils/typography.js";
 
 /* ============================================================
    ТЕКСТЫ САЙТА

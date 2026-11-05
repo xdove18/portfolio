@@ -51,8 +51,20 @@
       content="Портфолио продуктового дизайнера. Проектирую веб- и мобильные продукты для B2B и B2C — от исследования и гипотез до интерфейса, который растит конверсию."
     />
 
+    <!-- Главный адрес страницы. Говорит поисковику: вот
+         настоящий адрес, по нему и показывай. Избавляет от
+         путаницы, если на сайт зайдут с «хвостом» вроде
+         ?utm_source=telegram.
+
+         На страницах кейсов адрес свой — его подставляет
+         сборка, см. vite.config.js. -->
+    <link rel="canonical" href="https://xdovee.ru/" />
+
     <!-- Превью ссылки в Telegram, ВКонтакте и других соцсетях -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://xdovee.ru/" />
+    <meta property="og:site_name" content="Лиза Иванова" />
+    <meta property="og:locale" content="ru_RU" />
     <meta property="og:title" content="Лиза Иванова — продуктовый дизайнер" />
     <meta
       property="og:description"
