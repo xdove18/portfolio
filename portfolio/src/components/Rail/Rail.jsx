@@ -4,6 +4,7 @@ import { asset } from "../../utils/asset";
 import { fixHangingWords } from "../../utils/typography";
 import { TelegramIcon } from "../icons/Icons";
 import Flower from "../Flower/Flower";
+import CatMascot from "../Cat/CatMascot";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import s from "./Rail.module.css";
 
@@ -115,6 +116,12 @@ export default function Rail() {
       </nav>
 
       <div className={s.bottom}>
+        {/* Кошка гуляет по полоске над кнопкой «Написать
+            в Telegram». Поведение — в CatMascot.jsx. */}
+        <div className={s.cat}>
+          <CatMascot />
+        </div>
+
         <a
           className={s.cta}
           href={site.telegramUrl}
