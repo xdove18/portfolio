@@ -1971,12 +1971,13 @@
 @media (max-width: 1200px) {
   /* Одна колонка: оглавление уезжает наверх */
   .layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 40px;
   }
 
   .sidebar {
     position: static;
+    min-width: 0;
     max-height: none;
 
     /* Колонкой — чтобы кошку можно было поставить между
@@ -2020,6 +2021,29 @@
 }
 
 @media (max-width: 640px) {
+  .page {
+    padding-block: 28px 64px;
+  }
+
+  /* Все разделы доступны сразу, без обрезанных пунктов справа. */
+  .toc {
+    flex-wrap: wrap;
+    gap: 8px;
+    overflow: visible;
+    padding-bottom: 0;
+  }
+
+  .tocLink {
+    padding: 8px 12px;
+    min-height: 44px;
+  }
+
+  /* Плитки с экранами на телефоне идут по одной, а не миниатюрами. */
+  .screenRowCollage,
+  .screenRowCollageTop {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   /* На телефоне обложка и так во весь экран — большой отступ
      под ней не нужен */
   .heroWrap {
@@ -2049,7 +2073,7 @@
   }
 
   .hero {
-    aspect-ratio: auto;
+    aspect-ratio: var(--cover);
     height: auto;
   }
 
