@@ -1945,8 +1945,19 @@
 }
 
 .thanksFlower {
+  /* Вращается квадрат цветка, а не растянутая на всю строку grid-ячейка. */
+  width: 64px;
+  height: 64px;
+  justify-self: start;
+  display: grid;
+  place-items: center;
+  line-height: 0;
+  transform-origin: center;
   animation: spin 12s linear infinite;
-  flex-shrink: 0;
+}
+
+.thanksFlower svg {
+  display: block;
 }
 
 .thanksText {
