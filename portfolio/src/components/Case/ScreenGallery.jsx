@@ -130,7 +130,7 @@ export default function ScreenGallery({ groups }) {
                     tall: group.tall,
                   })
                 }
-                aria-label={`Открыть экран ${i + 1} из раздела «${group.title}»`}
+                aria-label={`Открыть экран ${i + 1}${group.title ? ` из раздела «${group.title}»` : ""}`}
                 /* data-cursor="image" — над этим элементом
                    курсор превращается в кольцо с надписью
                    «нажми на меня» */

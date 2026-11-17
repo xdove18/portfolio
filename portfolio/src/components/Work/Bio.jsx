@@ -28,6 +28,25 @@ export default function Bio() {
 
       {/* ---------- ОПЫТ ---------- */}
       <div className={s.rows}>
+        {/* ---------- СИЛЬНЫЕ СТОРОНЫ ----------
+            Берутся из site.js, поле about.strengths. Если
+            список пустой — строка не появляется. */}
+        {about.strengths?.length > 0 && (
+          <div className={s.row}>
+            <div className={s.years}>{fixHangingWords("сильные стороны")}</div>
+            <div className={s.job}>
+              <ul className={s.points}>
+                {about.strengths.map((сторона, i) => (
+                  <li key={i}>
+                    <RichText>{`**${сторона.title}** — ${сторона.text}`}</RichText>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+
         {about.experience.map((место) => (
           <div className={s.row} key={место.years + место.title}>
             <div className={s.years}>{место.years}</div>
@@ -61,24 +80,6 @@ export default function Bio() {
             </div>
           </div>
         ))}
-
-        {/* ---------- СИЛЬНЫЕ СТОРОНЫ ----------
-            Берутся из site.js, поле about.strengths. Если
-            список пустой — строка не появляется. */}
-        {about.strengths?.length > 0 && (
-          <div className={s.row}>
-            <div className={s.years}>{fixHangingWords("сильные стороны")}</div>
-            <div className={s.job}>
-              <ul className={s.points}>
-                {about.strengths.map((сторона, i) => (
-                  <li key={i}>
-                    <RichText>{`**${сторона.title}** — ${сторона.text}`}</RichText>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
 
         {/* ---------- ПИСЬМО ----------
             Карточка ведёт на сам файл в public/letter.pdf.

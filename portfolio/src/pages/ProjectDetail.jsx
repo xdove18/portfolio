@@ -17,8 +17,7 @@ import { asset } from "../utils/asset";
 import RichText from "../components/Case/RichText";
 import DemoVideo from "../components/Case/DemoVideo";
 import Flower from "../components/Flower/Flower";
-import CatMascot from "../components/Cat/CatMascot";
-import { CheckIcon } from "../components/icons/Icons";
+import CaseCat from "../components/Cat/CaseCat";
 import NotFound from "./NotFound";
 import s from "../components/Case/Case.module.css";
 
@@ -34,8 +33,8 @@ import s from "../components/Case/Case.module.css";
    ------------------------------------------------------------
    КАК УСТРОЕНА ВЁРСТКА
    ------------------------------------------------------------
-   Любой текст стоит в ряду <Row label="Подпись">: слева
-   короткая подпись, справа узкая колонка текста. Подробнее —
+   Любой текст стоит в ряду <Row label="Подпись">: сверху
+   короткая подпись, под ней общая колонка текста. Подробнее —
    в файле src/components/Case/Row.jsx.
 
    Картинки, схемы, видео и таблицы в ряд не ставятся: они
@@ -456,7 +455,11 @@ export default function ProjectDetail() {
       <section className={s.block} id="result">
         <h2 className={s.blockTitle}>{назвать("result", "Результат")}</h2>
 
-        <div className={s.results}>
+        {project.resultSummary && (
+          <p className={s.resultSummary}><RichText>{project.resultSummary}</RichText></p>
+        )}
+
+        {project.results?.length > 0 && <div className={s.results}>
           {(project.results || []).map((item, i) => (
             <div className={s.resultCard} key={i}>
               <p className={s.resultValue}>
@@ -465,7 +468,7 @@ export default function ProjectDetail() {
               <p className={s.resultLabel}>{item.label}</p>
             </div>
           ))}
-        </div>
+        </div>}
 
         {/* Честная пометка, откуда взяты цифры */}
         {project.resultsNote && (
@@ -493,50 +496,9 @@ export default function ProjectDetail() {
           </Row>
         )}
 
-        {/* Как автор собирается проверить, что решение сработало.
-            Блок необязательный: заполните поле measure у проекта
-            в src/data/projects.js — и он появится. Пусто — его нет.
-
-            Смысл блока: назвать число, по которому решение можно
-            признать неудачным. Это то, чего почти не бывает
-            в портфолио, и то, что сразу отличает продуктового
-            дизайнера от интерфейсного. */}
-        {project.measure && (
-          <Row label="Как пойму, что сработало">
-            <p className={s.measureText}>
-              <RichText>{project.measure}</RichText>
-            </p>
-          </Row>
-        )}
-
-        {/* Что не получилось. Блок появляется, только если он
-            заполнен у проекта: признаваться не в чем —
-            не признаёмся. */}
-        {project.failures?.length > 0 && (
-          <Row label="Что не получилось">
-            <ul className={s.failures}>
-              {project.failures.map((item, i) => (
-                <li key={i}>
-                  <RichText>{item}</RichText>
-                </li>
-              ))}
-            </ul>
-          </Row>
-        )}
-
-        {/* Идеи для развития — тоже необязательный блок.
-            Если идей нет, лучше его не показывать, чем писать
-            общие слова. */}
-        {project.ideas?.length > 0 && (
-          <Row label="Идеи для развития">
-            <ul className={s.ideasList}>
-              {project.ideas.map((idea, i) => (
-                <li key={i}>
-                  <CheckIcon size={16} color={project.color} />
-                  {idea}
-                </li>
-              ))}
-            </ul>
+        {project.nextStep && (
+          <Row label="Следующий шаг">
+            <p className={s.text}><RichText>{project.nextStep}</RichText></p>
           </Row>
         )}
       </section>
@@ -622,6 +584,7 @@ export default function ProjectDetail() {
 
             <h1 className={s.sidebarTitle}>{project.title}</h1>
             <p className={s.sidebarTagline}>{project.tagline}</p>
+            {project.status && <p className={s.projectStatus}>{project.status}</p>}
 
             {/* Каждая строчка появляется, только если заполнена:
                 у проекта может не быть, например, известного года. */}
@@ -672,13 +635,6 @@ export default function ProjectDetail() {
               ))}
             </nav>
 
-            {/* Кошка живёт внизу панели. На узком экране панель
-                разворачивается поперёк страницы, и кошка
-                оказывается на черте под «ролью, годом
-                и инструментами» — так и задумано. */}
-            <div className={s.catRail}>
-              <CatMascot />
-            </div>
           </aside>
 
           {/* ================= ПРАВАЯ КОЛОНКА ================= */}
@@ -701,6 +657,7 @@ export default function ProjectDetail() {
         </div>
       </main>
 
+      <CaseCat key={slug} />
       <Footer />
     </>
   );

@@ -23,6 +23,22 @@
   pointer-events: none;
 }
 
+/* Сцена прозрачная: ссылки под ней работают вне самой кошки. */
+.viewportRail {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 10;
+  pointer-events: none;
+  --cat-height: 180px;
+}
+
+@media (max-width: 640px) {
+  .viewportRail {
+    display: none;
+  }
+}
+
 /* Точка, в которой кошка стоит. Все кадры ставятся
    относительно неё, поэтому у точки нет размеров. */
 /* Сама кнопка — точка без размеров: от неё отсчитываются

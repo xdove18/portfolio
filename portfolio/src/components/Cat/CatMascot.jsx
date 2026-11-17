@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { asset } from "../../utils/asset";
 import s from "./CatMascot.module.css";
+import { rotateTail } from "./pixelTail";
 
 /* ============================================================
    КОШКА-МАСКОТ
@@ -20,7 +21,7 @@ import s from "./CatMascot.module.css";
    ------------------------------------------------------------
    Кошка занимает всю ширину того места, куда её поставили,
    и стоит на его нижнем краю. На главной это полоска над
-   кнопкой «Написать в Telegram», в кейсе — низ боковой панели.
+   кнопкой «Написать в Telegram», в кейсе — край окна или футера.
 
    Дальность прогулки и прыжка считается от ширины места:
    в узкой панели кошка гуляет на несколько шагов, в широкой —
@@ -88,6 +89,7 @@ export default function CatMascot({
   /* Масштаб кошки. 1 — родной размер кадров: пиксели
      ложатся один в один и картинка самая чёткая. */
   scale = 1,
+  autoWalk = false,
   /* Насколько часто нажатие приводит к прыжку, а не к прогулке */
   jumpChance = 0.3,
   /* На сколько точек кошка уходит за одну прогулку.
@@ -140,6 +142,22 @@ export default function CatMascot({
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
+    const tailCanvas = хвост.current;
+    const tailContext = tailCanvas.getContext("2d");
+    const tailFrames = new Map();
+    let lastTailAngle = null;
+    let disposed = false;
+    const tailImage = new Image();
+    tailImage.onload = () => {
+      if (disposed) return;
+      tailContext.drawImage(tailImage, 0, 0);
+      const source = tailContext.getImageData(0, 0, 88, 135).data;
+      for (let angle = -20; angle <= 0; angle += 4) {
+        tailFrames.set(angle, new ImageData(rotateTail(source, 88, 135, angle), 88, 135));
+      }
+    };
+    tailImage.src = asset("/images/cat/cat_tail.webp");
+
     /* Каждый кадр — своя картинка, загруженная заранее.
        Менять адрес у одной картинки нельзя: пока новый кадр
        грузится, старый успевает растянуться и мигнуть. */
@@ -182,6 +200,7 @@ export default function CatMascot({
       if (!узел) return;
 
       const ширинаСцены = площадка.clientWidth;
+      if (!ширинаСцены || document.hidden) return;
       if (ж.x === null) ж.x = начальноеМесто(ширинаСцены, S);
 
       let кадр = "sit_0";
@@ -271,42 +290,12 @@ export default function CatMascot({
 
       if (тихо) return;
 
-      /* ---------- ХВОСТ ----------
-         Хвост только медленно качается. Резкого взмаха,
-         который был в макете, здесь нет — он убран намеренно.
-
-         Как читать формулу. Два синуса — это два качания
-         разной скорости, наложенные друг на друга: медленное
-         и мелкое. Из-за этого движение не выглядит
-         заведённым по кругу. Первое число — положение покоя,
-         числа перед синусами — размах каждого качания.
-
-         Два правила, которые нельзя нарушать:
-         1. Угол всегда отрицательный. В плюсе хвост
-            поворачивается в другую сторону, и шов, которым
-            он приклеен к телу, открывается щелью. Сейчас
-            размах −21…−1, с запасом.
-         2. Угол округляется до шага в 4 градуса. На плавном
-            повороте пиксельная картинка переливается. */
-      const уголХвоста =
-        Math.round((-11 + 7 * Math.sin(t * 1.5) + 3 * Math.sin(t * 3.7)) / 4) *
-        4;
-      /* Ось поворота — нижний конец шва, которым хвост
-         прилеплен к телу.
-
-         Хвост приклеен не точкой, а вертикальной полосой:
-         тело кончается на 68-й точке, хвост начинается
-         на 69-й, и так все строки со 104-й по 131-ю. Поворот
-         вокруг любой точки уводит часть этой полосы в сторону.
-         Уходит она либо влево — тогда прячется за телом,
-         и шва не видно, — либо вправо, и тогда между телом
-         и хвостом открывается щель.
-
-         Хвост всегда поднимается (угол отрицательный), и при
-         оси внизу вся полоса уходит влево, за тело. Проверено
-         до −48 градусов: щели нет. */
-      хвост.current.style.transformOrigin = `${69 * S}px ${131 * S}px`;
-      хвост.current.style.transform = `rotate(${уголХвоста}deg)`;
+      // Готовые кадры на исходной сетке, без CSS-поворота.
+      const angle = Math.round((-10 + 6 * Math.sin(t * 1.5) + 3 * Math.sin(t * 3.7)) / 4) * 4;
+      if (angle !== lastTailAngle && tailFrames.has(angle)) {
+        tailContext.putImageData(tailFrames.get(angle), 0, 0);
+        lastTailAngle = angle;
+      }
 
       /* Уши: раз в пару секунд дёргается одно из двух */
       if (t > ж.следующееУхо && ж.ухо < 0) {
@@ -393,6 +382,8 @@ export default function CatMascot({
 
     заявка = requestAnimationFrame(шаг);
     return () => {
+      disposed = true;
+      tailImage.onload = null;
       cancelAnimationFrame(заявка);
       Object.values(ж.картинки).forEach((к) => к.remove());
       ж.картинки = {};
@@ -402,6 +393,7 @@ export default function CatMascot({
 
   /* ---------- НАЖАТИЕ ---------- */
   const нажали = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const ж = жизнь.current;
     const площадка = сцена.current;
     if (!площадка || ж.режим !== "сидит") return;
@@ -478,6 +470,17 @@ export default function CatMascot({
     запустить(список, сторона);
   };
 
+  const действие = useRef(null);
+  useEffect(() => { действие.current = нажали; });
+  useEffect(() => {
+    if (!autoWalk) return;
+    const timer = setInterval(() => {
+      if (!document.hidden && !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          && сцена.current?.clientWidth) действие.current?.();
+    }, 12000);
+    return () => clearInterval(timer);
+  }, [autoWalk]);
+
   const запустить = (список, сторона, подъём = 0) => {
     const ж = жизнь.current;
     ж.сторона = сторона;
@@ -486,7 +489,6 @@ export default function CatMascot({
   };
 
   const слои = [
-    ["cat_tail", хвост],
     ["cat_body", null],
     ["cat_earL", ухоЛ],
     ["cat_earR", ухоП],
@@ -507,6 +509,7 @@ export default function CatMascot({
 
         {/* Слои сидящей кошки: хвост, тело, уши, веки */}
         <span className={s.rig} ref={каркас} aria-hidden="true">
+          <canvas ref={хвост} width={88} height={135} className={s.layer} />
           {слои.map(([имя, ссылка]) => (
             <img
               key={имя}
