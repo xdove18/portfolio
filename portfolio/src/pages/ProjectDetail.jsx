@@ -638,7 +638,7 @@ export default function ProjectDetail() {
           </aside>
 
           {/* ================= ПРАВАЯ КОЛОНКА ================= */}
-          <div className={s.content}>
+          <div className={s.content} data-case-content="">
             {sections.map((section) => (
               <Fragment key={section.id}>{блоки[section.id]}</Fragment>
             ))}

@@ -8,21 +8,29 @@ export default function CaseCat() {
 
   useEffect(() => {
     const footer = document.getElementById("contacts");
+    const prose = document.querySelectorAll(
+      "[data-case-content] p, [data-case-content] li, [data-case-content] h2, [data-case-content] h3, [data-case-content] table"
+    );
     let frame = 0;
     const update = () => {
       frame = 0;
       const top = footer?.getBoundingClientRect().top ?? window.innerHeight;
       const bottom = Math.max(0, window.innerHeight - top);
-      const text = document.querySelector("#overview p");
-      const safeLeft = Math.ceil((text?.getBoundingClientRect().right ?? 0) + 24);
       const overFooter = top < window.innerHeight;
-      const hasRoom = window.innerWidth - safeLeft >= 220;
       // Начало сцены не зависит от прокрутки: смена начала координат
       // при появлении футера переносила кошку в другую часть окна.
-      const left = hasRoom ? safeLeft : Math.max(0, window.innerWidth - 260);
+      const left = Math.max(0, document.documentElement.clientWidth - 280);
+      const floor = Math.min(top, window.innerHeight);
+      // Широкий текст теперь доходит до правого края. Не перекрываем
+      // его кошкой: на иллюстрациях и у футера она остаётся видимой.
+      const coversText = !overFooter && [...prose].some((element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.right > left && rect.left < window.innerWidth &&
+          rect.bottom > floor - 140 && rect.top < floor;
+      });
       rail.current.style.left = `${left}px`;
       rail.current.style.bottom = `${Math.round(bottom)}px`;
-      rail.current.hidden = top < 180 || (!overFooter && !hasRoom);
+      rail.current.hidden = top < 180 || coversText;
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
